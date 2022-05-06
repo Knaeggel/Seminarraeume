@@ -1,0 +1,92 @@
+Features:
+
+	login
+		Benutzername,
+		Passwort
+
+	Buchen
+		angemeldet?
+		Räume,
+		Sitzplätze,
+		Art
+		Rolle,
+		Buchungs-ID
+
+	Raum Übersich
+		Benutzername/user-ID,
+		Räume,
+		Art
+
+	logout
+		Benutzername,
+		Passwort
+
+	Buchung Stonieren
+		Buchungs-ID
+
+Model:
+	eigentlich die model klassen/enums von unten
+
+Controller:
+	HomeController
+	BookingController
+
+Views:
+	login
+	booked
+	booking
+		search
+		select
+		options
+
+Klassen:
+
+	Model:
+		User:
+			usr-ID	int
+			username	String
+			password	String
+			role	Enum<Rollen>
+			bookings	liste<String>
+
+		Raum:
+			room-ID: int
+			roomname	String
+			places	int
+			type 	Enum<RaumArten>
+			booked		int(booking-ID)
+
+		Buchung:
+			booking-ID		int
+			roomname	String	
+			user	String
+
+	Controller:
+		HomeController:
+			index() - view(login)
+			logout()
+
+		BookingController:
+			data : dbSet
+			
+			booked() - view(booked)
+			book(int room-ID)
+
+
+
+
+Enums:
+	roles
+	roomtypes
+
+
+	roles:
+		student
+		tutor
+		prof
+		timetable
+
+	roomtypes:
+		PC-Room
+		Labor
+		Vorlesungsraum
