@@ -10,7 +10,7 @@ Features:
 		Sitzplätze,
 		Art
 		Rolle,
-		Buchungs-ID
+		Buchungs-ID 
 
 	Raum Übersich
 		Benutzername/user-ID,
@@ -49,14 +49,14 @@ Klassen:
 			role	Enum<Rollen>
 			bookings	liste<String>
 
-		Raum:
+		Room:
 			room-ID: int
 			roomname	String
 			places	int
 			type 	Enum<RaumArten>
 			booked		int(booking-ID)
 
-		Buchung:
+		Ticket:
 			booking-ID		int
 			roomname	String	
 			user	String
@@ -67,10 +67,10 @@ Klassen:
 			logout()
 
 		BookingController:
-			data : dbSet
+			context : ApplicationDbContext
 			
-			booked() - view(booked)
-			book(int room-ID)
+			Ticketing() - view(booked)
+			//book(int room-ID)
 
 
 
