@@ -53,11 +53,11 @@ Klassen:
 			room-ID: int
 			roomname	String
 			places	int
-			type 	Enum<RaumArten>
+			type 	Enum<roomtypes>
 			booked		int(booking-ID)
 
 		Ticket:
-			booking-ID		int
+			ticket-ID		int
 			room-ID	int	
 			usr-ID	int
 			timeFrom	Timestamp
