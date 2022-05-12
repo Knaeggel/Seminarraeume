@@ -1,0 +1,39 @@
+.loginButton{
+  background-color: lightblue;
+  border: black solid 2px;
+  padding: 5px;
+  text-align: center;
+  border-radius: 8px;
+  margin: 0px 80% 5px;
+  position: relative;
+  width: auto;
+  height: auto;
+}
+
+.container{
+  border: black solid;
+  background-color: lightgrey;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%)
+}
+
+.user{
+  margin: 10px 10px;
+  position: relative;
+  width: auto;
+  height: auto;
+}
+.pw{
+  margin: 10px 10px;
+  position: relative;
+  width: auto;
+  height: auto;
+}
+.psw{
+  margin-left: 14px;
+}
+.uname{
+  margin-left: 10px;
+}
