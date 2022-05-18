@@ -12,7 +12,7 @@ using WebApp.Data;
 namespace WebApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220516165421_addedUserDbSet")]
+    [Migration("20220518190518_addedUserDbSet")]
     partial class addedUserDbSet
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -289,6 +289,9 @@ namespace WebApp.Data.Migrations
 
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Prio")
+                        .HasColumnType("int");
 
                     b.Property<string>("Username")
                         .HasColumnType("nvarchar(max)");
