@@ -12,7 +12,7 @@ using WebApp.Data;
 namespace WebApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220516164726_addedRoomDbSet")]
+    [Migration("20220520131308_addedRoomDbSet")]
     partial class addedRoomDbSet
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
