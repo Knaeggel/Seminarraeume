@@ -6,20 +6,30 @@ namespace WebApp.Dummy
     {
         string[] roles;
 
-        public DummyRoles()
+        public DummyRoles(RoleManager<IdentityRole> roleManager)
         {
             roles = new string[]
             {
                 "Student",
                 "Prof"
             };
+
+            FillDummy(roleManager).Wait();
         }
 
-        public async void FillDummy(IServiceProvider serviceProvider)
+        public async Task FillDummy(RoleManager<IdentityRole> roleManager)
         {
-            var roleManager = serviceProvider.GetService<RoleManager<IdentityRole>>();
 
-            var roleExists = await roleManager.RoleExistsAsync("Student");
+            foreach (var roleName in roles)
+            {
+                var roleExists = await roleManager.RoleExistsAsync(roleName);
+
+                if (roleExists == false)
+                {
+                    await roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+
+            }
         }
     }
 }

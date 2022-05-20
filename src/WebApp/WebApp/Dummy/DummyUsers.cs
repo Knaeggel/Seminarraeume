@@ -4,13 +4,17 @@ namespace WebApp.Dummy
 {
     public class DummyUsers
     {
-        public async void FillDummy(IServiceProvider serviceProvider)
+        public DummyUsers(UserManager<IdentityUser> userManager)
         {
-            var userManager = serviceProvider.GetService<UserManager<IdentityUser>>();
+            FillDummy(userManager).Wait();
+        }
+
+        public async Task FillDummy(UserManager<IdentityUser> userManager)
+        { 
 
             for (int i = 1; i < 51; i++)
             {
-                var user = await userManager.FindByNameAsync("User" + i + "@proOne.de");
+                var user = await userManager.FindByNameAsync("User" + i);
 
                 if (user == null)
                 {
@@ -20,12 +24,19 @@ namespace WebApp.Dummy
                         Email = "User" + i + "@proOne.de"
                     };
 
-                    await userManager.CreateAsync(newUser, "Test" + i);
+                    await userManager.CreateAsync(newUser, "Test" + i + ".");
 
-                    user = await userManager.FindByNameAsync("User" + i + "@proOne.de");
+                    user = await userManager.FindByNameAsync("User" + i);
                 }
 
-                await userManager.AddToRoleAsync(user, "Student");
+                try
+                {
+                    await userManager.AddToRoleAsync(user, "Student");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
             }
         }
     }
