@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using WebApp.Data;
+using WebApp.Dummy;
 using WebApp.Models;
 using WebApp.Dummy;
 
@@ -9,11 +10,20 @@ namespace WebApp.Controllers
 {
     public class HomeController : Controller
     {
+        private static bool first = true;
+        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ApplicationDbContext con)
+        public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleMgr, UserManager<IdentityUser> userMgr)
         {
-            DummyRooms dummyRooms = new DummyRooms();
-            dummyRooms.FillDummy(con);
+            _logger = logger;
+
+            if (first == true)
+            {
+                var dummyRoles = new DummyRoles(roleMgr);
+                var dummyUsers = new DummyUsers(userMgr);
+            }
+
+            first = false;
         }
 
         [Authorize]
