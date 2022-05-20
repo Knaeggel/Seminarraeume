@@ -5,6 +5,7 @@ using System.Diagnostics;
 using WebApp.Dummy;
 using WebApp.Models;
 using WebApp.Dummy;
+using WebApp.Data;
 
 namespace WebApp.Controllers
 {
@@ -13,7 +14,7 @@ namespace WebApp.Controllers
         private static bool first = true;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleMgr, UserManager<IdentityUser> userMgr)
+        public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleMgr, UserManager<IdentityUser> userMgr, ApplicationDbContext con)
         {
             _logger = logger;
 
@@ -21,6 +22,7 @@ namespace WebApp.Controllers
             {
                 var dummyRoles = new DummyRoles(roleMgr);
                 var dummyUsers = new DummyUsers(userMgr);
+                var DummyRooms = new DummyRooms(con);
             }
 
             first = false;

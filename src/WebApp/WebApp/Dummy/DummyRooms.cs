@@ -9,11 +9,13 @@ namespace WebApp.Dummy
 {
     public class DummyRooms
     {
+        public DummyRooms(ApplicationDbContext dbSet)
+        {
+            FillDummy(dbSet);
+        }
 
         public void FillDummy(ApplicationDbContext dbSet)
         {
-
-
 
             for(int i = 0; i < 10; i++)
             {
