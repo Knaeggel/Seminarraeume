@@ -62,8 +62,6 @@ namespace WebApp.Dummy
                     dbSet.SaveChanges();
                 }
             }
-
-
         }
 
     }
