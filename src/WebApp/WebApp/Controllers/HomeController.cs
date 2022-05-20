@@ -1,17 +1,19 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using WebApp.Data;
 using WebApp.Models;
+using WebApp.Dummy;
 
 namespace WebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ApplicationDbContext con)
         {
-            _logger = logger;
+            DummyRooms dummyRooms = new DummyRooms();
+            dummyRooms.FillDummy(con);
         }
 
         [Authorize]
