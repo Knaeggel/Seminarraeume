@@ -11,6 +11,11 @@
             block = Block;
         }
 
+        public Ticket()
+        {
+
+        }
+
 
         public int id { get; set; }
 

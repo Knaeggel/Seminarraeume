@@ -37,5 +37,10 @@
                     Block8 = ticket_id; break;
             }
         }
+
+        public Block()
+        {
+
+        }
     }
 }
