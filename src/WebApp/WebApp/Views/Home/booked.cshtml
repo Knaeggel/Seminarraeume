@@ -5,15 +5,6 @@
 }
 
 <div class="overviewAndmyrooms">
-        <div class="overview">
-            <p>Übersicht</p>
-            <label for="lastname">Name: </label>
-            <br>
-            <label for="firstname">Vorname: </label>
-            <br>
-            <label for="rank">Rang: </label>
-            <br>
-        </div>
 
         <div class="myrooms">
             <p>Reservierte Räume</p>
@@ -21,4 +12,24 @@
                 <li>first</li>
             </ul>
         </div>
+
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Room</th>
+                <th>Block</th>
+            </tr>
+
+            @foreach (var item in ViewBag.Tickets)
+            {
+                <tr>
+                    <td>@item.date</td>
+                    <td>@item.room</td>
+                    <td>@item.block</td>
+                </tr>
+            }
+
+
+        </table>
+        
     </div>
