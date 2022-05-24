@@ -4,11 +4,12 @@
 
     public class Ticket
     {
-        public Ticket(int Room, int User, int Block)
+        public Ticket(int Room, int User, DateTime Date,int Block)
         {
             room = Room;
             user = User;
             block = Block;
+            date = Date;
         }
 
         public Ticket()
@@ -28,7 +29,7 @@
         {
             var ret = false;
 
-            if (this.block == othertTicket.block && this.user == othertTicket.user && this.room == othertTicket.room && this.date == othertTicket.date)
+            if (this.block == othertTicket.block && this.user == othertTicket.user && this.room == othertTicket.room && this.date.Equals(othertTicket.date))
             {
                 ret = true;
             }

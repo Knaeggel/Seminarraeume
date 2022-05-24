@@ -13,16 +13,19 @@ namespace WebApp.Controllers
     {
         private static bool first = true;
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
 
         public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleMgr, UserManager<IdentityUser> userMgr, ApplicationDbContext con)
         {
             _logger = logger;
+            _context = con;
 
             if (first == true)
             {
                 var dummyRoles = new DummyRoles(roleMgr);
                 var dummyUsers = new DummyUsers(userMgr);
                 var DummyRooms = new DummyRooms(con);
+                var dummyTickets = new DummyTickets(con);
             }
 
             first = false;
@@ -31,6 +34,7 @@ namespace WebApp.Controllers
         [Authorize]
         public IActionResult booked()
         {
+            ViewBag.Tickets = _context.Ticktes.ToList();
             return View();
         }
 

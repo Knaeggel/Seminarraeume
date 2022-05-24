@@ -3,6 +3,7 @@
     public class Block
     {
         public int ID { get; set; }
+        public int Room { get; set; }
         public DateTime date { get; set; }
         public int Block1 { get; set; }
         public int Block2 { get; set; }
@@ -13,9 +14,10 @@
         public int Block7 { get; set; }
         public int Block8 { get; set; }
 
-        public Block(DateTime Date, int block, int ticket_id)
+        public Block(DateTime Date, int block, int room, int ticket_id)
         {
             date = Date;
+            Room = room;
 
             switch (block)
             {
