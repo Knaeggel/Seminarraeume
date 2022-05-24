@@ -1,0 +1,43 @@
+﻿.search {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    text-align: center;
+    background-color: bisque;
+}
+
+
+.searchAndPic {
+    display: flex;
+    flex-direction: row;
+    height: 400px;
+}
+
+
+.room {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.seats {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.searchButton {
+    background-color: lightsalmon;
+    border-radius: 8px;
+    border: none;
+    position: relative;
+    margin: auto;
+    height: 20px;
+    width: 80px;
+    font-size: medium;
+    text-align: center;
+}
+
+h1 {
+    margin-top: 0px;
+    text-align: center;
+}
