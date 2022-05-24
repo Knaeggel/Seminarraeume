@@ -40,6 +40,9 @@ namespace WebApp.Controllers
 
         public IActionResult räume()
         {
+            ViewBag.Tickets = _context.Ticktes.ToList();
+            ViewBag.Rooms = _context.Rooms.ToList();
+
             return View();
         }
 

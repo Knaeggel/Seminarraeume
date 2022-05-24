@@ -1,4 +1,5 @@
-﻿.overviewAndmyrooms {
+﻿/*
+.overviewAndmyrooms {
     position: relative;
     display: flex;
     flex-direction: column;
@@ -30,3 +31,4 @@ p {
 label{
     margin-left: 8px;
 }
+    */
