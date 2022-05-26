@@ -25,14 +25,16 @@
             int i = 1;
             foreach (var item in ViewBag.Tickets)
             {
-                if (item.)
-                <tr>
-                    <th scope="row">@i</th>
-                    <td>@item.date</td>
-                    <td>@item.room</td>
-                    <td>@item.Day</td>
-                </tr>
-                i++;
+                if (item.user.Equals(User.Identity.Name))
+                {
+                    <tr>
+                        <th scope="row">@i</th>
+                        <td>@item.date</td>
+                        <td>@item.room</td>
+                        <td>@item.block</td>
+                    </tr>
+                    i++;
+                }
             }
         }
 

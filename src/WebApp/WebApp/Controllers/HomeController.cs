@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebApp.Dummy;
 using WebApp.Models;
-using WebApp.Dummy;
 using WebApp.Data;
 
 namespace WebApp.Controllers
