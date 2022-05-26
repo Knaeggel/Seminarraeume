@@ -27,7 +27,7 @@ namespace WebApp.Dummy
                         var newTicket = new Ticket(random.Next(1, 50), user.UserName, new DateTime(2022, 7, 27 + j), random.Next(1, 8));
 
                         var found = false;
-                        foreach (var item in dbSet.Ticktes.ToList())
+                        foreach (var item in dbSet.Tickets.ToList())
                         {
                             if (newTicket.compare(item))
                             {
@@ -37,7 +37,7 @@ namespace WebApp.Dummy
 
                         if (!found)
                         {
-                            dbSet.Ticktes.Add(newTicket);
+                            dbSet.Tickets.Add(newTicket);
                             dbSet.SaveChanges();
                         }
                     }

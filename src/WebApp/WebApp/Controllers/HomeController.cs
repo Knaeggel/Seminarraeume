@@ -34,14 +34,14 @@ namespace WebApp.Controllers
         [Authorize]
         public IActionResult booked()
         {
-            ViewBag.Tickets = _context.Ticktes.ToList();
+            ViewBag.Tickets = _context.Tickets.ToList();
             return View();
         }
 
         public IActionResult räume()
         {
-            ViewBag.Tickets = _context.Ticktes.ToList();
-            ViewBag.Rooms = _context.Rooms.ToList();
+            //ViewBag.Tickets = _context.Tickets.ToList();
+            //ViewBag.Rooms = _context.Rooms.ToList();
 
             return View();
         }
