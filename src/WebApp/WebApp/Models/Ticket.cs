@@ -4,7 +4,13 @@
 
     public class Ticket
     {
-        public Ticket(int Room, int User, DateTime Date,int Block)
+        public int id { get; set; }
+        public int room { get; set; }
+        public String user { get; set; }
+        public DateTime date { get; set; }
+        public int block { get; set; }
+
+        public Ticket(int Room, String User, DateTime Date,int Block)
         {
             room = Room;
             user = User;
@@ -17,19 +23,11 @@
 
         }
 
-
-        public int id { get; set; }
-
-        public int room { get; set; }
-        public int user { get; set; }
-        public DateTime date { get; set; }
-        public int block { get; set; }
-
         public bool compare(Ticket othertTicket)
         {
             var ret = false;
 
-            if (this.block == othertTicket.block && this.user == othertTicket.user && this.room == othertTicket.room && this.date.Equals(othertTicket.date))
+            if (this.block == othertTicket.block && this.user.Equals(othertTicket.user) && this.room == othertTicket.room && this.date.Equals(othertTicket.date))
             {
                 ret = true;
             }
