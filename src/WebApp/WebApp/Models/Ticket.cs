@@ -1,4 +1,6 @@
-﻿namespace WebApp.Models
+﻿using WebApp.Data;
+
+namespace WebApp.Models
 {
 
 
@@ -33,6 +35,32 @@
             }
 
             return ret;
+        }
+
+        public static void EditCreateDay(ApplicationDbContext dbSet, Ticket ticket)
+        {
+            Day day = null;
+
+            foreach (var item in dbSet.Days.ToList())
+            {
+                if (item.date.Equals(ticket.date) && item.Room == ticket.room)
+                {
+                    day = item;
+                    break;
+                }
+            }
+
+            if (day == null)
+            {
+                day = new Day(ticket.date, ticket.block, ticket.room, ticket.id);
+                dbSet.Days.Add(day);
+            }
+            else
+            {
+                day.setBlock(ticket.block, ticket.id);
+                dbSet.Update(day);
+            }
+            dbSet.SaveChanges();
         }
 
     }

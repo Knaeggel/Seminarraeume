@@ -39,6 +39,15 @@ namespace WebApp.Dummy
                         {
                             dbSet.Tickets.Add(newTicket);
                             dbSet.SaveChanges();
+
+                            foreach (var item in dbSet.Ticktes.ToList())
+                            {
+                                if (item.compare(newTicket))
+                                {
+                                    Ticket.EditCreateDay(dbSet, item);
+                                    break;
+                                }
+                            }
                         }
                     }
                 }

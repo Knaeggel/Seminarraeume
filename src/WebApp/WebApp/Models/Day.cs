@@ -19,6 +19,16 @@
             date = Date;
             Room = room;
 
+            setBlock(block, ticket_id);
+        }
+
+        public Day()
+        {
+
+        }
+
+        public void setBlock(int block, int ticket_id)
+        {
             switch (block)
             {
                 case 1:
@@ -38,11 +48,6 @@
                 case 8:
                     Block8 = ticket_id; break;
             }
-        }
-
-        public Day()
-        {
-
         }
     }
 }
