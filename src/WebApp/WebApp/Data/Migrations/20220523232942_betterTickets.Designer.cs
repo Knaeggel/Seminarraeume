@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApp.Data;
 
@@ -11,9 +12,10 @@ using WebApp.Data;
 namespace WebApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220523232942_betterTickets")]
+    partial class betterTickets
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -224,7 +226,7 @@ namespace WebApp.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("WebApp.Models.Day", b =>
+            modelBuilder.Entity("WebApp.Models.Block", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -256,15 +258,12 @@ namespace WebApp.Data.Migrations
                     b.Property<int>("Block8")
                         .HasColumnType("int");
 
-                    b.Property<int>("Room")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("date")
                         .HasColumnType("datetime2");
 
                     b.HasKey("ID");
 
-                    b.ToTable("Day");
+                    b.ToTable("Blocks");
                 });
 
             modelBuilder.Entity("WebApp.Models.Room", b =>
@@ -312,13 +311,12 @@ namespace WebApp.Data.Migrations
                     b.Property<int>("room")
                         .HasColumnType("int");
 
-                    b.Property<string>("user")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("user")
+                        .HasColumnType("int");
 
                     b.HasKey("id");
 
-                    b.ToTable("Ticket");
+                    b.ToTable("Ticktes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

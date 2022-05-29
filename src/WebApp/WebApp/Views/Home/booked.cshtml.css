@@ -1,0 +1,34 @@
+﻿/*
+.overviewAndmyrooms {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding: 50px;
+}
+
+.overview {
+    display: inline-flex;
+    flex-direction: column;
+    background-color: bisque;
+    border: 2px black solid;
+    border-radius: 4px;
+}
+
+.myrooms {
+    display: inline-flex;
+    flex-direction: column;
+    background-color: bisque;
+    margin-top: 5px;
+    border: 2px black solid;
+    border-radius: 4px;
+}
+
+p {
+    font-size: x-large;
+}
+
+label{
+    margin-left: 8px;
+}
+    */

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebApp.Dummy;
 using WebApp.Models;
-using WebApp.Dummy;
 using WebApp.Data;
 
 namespace WebApp.Controllers
@@ -13,16 +12,20 @@ namespace WebApp.Controllers
     {
         private static bool first = true;
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
 
         public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleMgr, UserManager<IdentityUser> userMgr, ApplicationDbContext con)
         {
             _logger = logger;
+            _context = con;
 
             if (first == true)
             {
                 var dummyRoles = new DummyRoles(roleMgr);
                 var dummyUsers = new DummyUsers(userMgr);
                 var DummyRooms = new DummyRooms(con);
+                var dummyTickets = new DummyTickets(con, userMgr);
+                
             }
 
             first = false;
@@ -31,6 +34,15 @@ namespace WebApp.Controllers
         [Authorize]
         public IActionResult booked()
         {
+            ViewBag.Tickets = _context.Tickets.ToList();
+            return View();
+        }
+
+        public IActionResult räume()
+        {
+            //ViewBag.Tickets = _context.Tickets.ToList();
+            //ViewBag.Rooms = _context.Rooms.ToList();
+
             return View();
         }
 

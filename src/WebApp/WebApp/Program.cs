@@ -46,7 +46,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=booked}/{id?}");
+    pattern: "{controller=Home}/{action=räume}/{id?}");
 app.MapRazorPages();
 
 app.Run();
