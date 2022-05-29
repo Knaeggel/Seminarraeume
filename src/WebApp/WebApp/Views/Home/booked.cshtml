@@ -18,23 +18,20 @@
                 <th scope="col">#</th>
                 <th scope="col">Date</th>
                 <th scope="col">Room</th>
-                <th scope="col">Block</th>
+                <th scope="col">Time</th>
             </tr>
 
         @{
             int i = 1;
             foreach (var item in ViewBag.Tickets)
             {
-                if (item.user.Equals(User.Identity.Name))
-                {
-                    <tr>
-                        <td scope="row">@i</td>
-                        <td>@item.date</td>
-                        <td>@item.room</td>
-                        <td>@item.block</td>
-                    </tr>
-                    i++;
-                }
+                <tr>
+                    <td scope="row">@i</td>
+                    <td>@item.sDate</td>
+                    <td>@item.Room</td>
+                    <td>@item.times</td>
+                </tr>
+                i++;
             }
         }
 

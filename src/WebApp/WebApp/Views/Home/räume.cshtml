@@ -1,12 +1,13 @@
 ﻿@{
     DateTime date = new DateTime();
+    int anzCol = 7;
 }
 
 @model Room
 
 <div class="homeSite container">
     <div class="row">
-        <div class="searchAndPic col">
+        <div class="searchAndPic col-3">
             <div class="search">
                 <h1>Suche</h1>
 
@@ -31,14 +32,14 @@
         @{
             foreach (var item in ViewBag.Rooms)
             {
-                    <form class="" asp-action="räume" asp-route-name="@item.RoomName">
-                        <button type="submit" class="btn btn-primary">@item.RoomName</button>
-                    </form>
+                <form class="rooms col-6" asp-action="räume" asp-route-name="@item.RoomName">
+                    <button type="submit" class="btn btn-primary">@item.RoomName</button>
+                </form>
             }
         }
         </div>
 
-        <div class="col">
+        <div class="col-6">
             <div class="card-header">
                 <h5>Raum</h5>
             </div>
@@ -65,13 +66,126 @@
                             <input asp-for="RoomSize" class="form-control" placeholder="@ViewBag.Room.RoomSize"/>
                         </div>
                     </div>
-                    
-                    <div class="row">
-                        <div class="col form-group">
-                            <label>Tag:</label><br />
-                            <input class="form-control" placeholder="@ViewBag.date.ToString("dd.MM.yyyy")"/>
+
+                    @{
+                    if (ViewBag.Room.RoomName != null)
+                    {
+                        <div class="row">
+                            <div class="col form-group">
+                                <table>
+                                    <tr>
+                                        @{
+                                        DateTime tempDate = new DateTime();
+                                        tempDate = DateTime.Now;
+                                        for (int i = 0; i < anzCol; i++)
+                                        {
+                                            <th>@tempDate.ToString("dd.MM.yyyy")</th>
+                                            
+                                            tempDate = tempDate.AddDays(1);
+                                        }
+                                        }
+                                    </tr>
+
+                                    <tr>
+                                        @{
+                                            
+                                        for (int i = 0; i < anzCol; i++)
+                                        {
+                                            var item = ViewBag.Days.ToArray()[i];
+                                            <td>@item.Block1</td>
+                                        }
+                                        }
+                                    </tr>
+
+                                    <tr>
+                                        @{
+                                            
+                                        for (int i = 0; i < anzCol; i++)
+                                        {
+                                            var item = ViewBag.Days.ToArray()[i];
+                                            <td>@item.Block2</td>
+                                        }
+                                        }
+                                    </tr>
+
+                                    <tr>
+                                        @{
+                                            
+                                        for (int i = 0; i < anzCol; i++)
+                                        {
+                                            var item = ViewBag.Days.ToArray()[i];
+                                            <td>@item.Block3</td>
+                                        }
+                                        }
+                                    </tr>
+
+                                    <tr>
+                                        @{
+                                            
+                                        for (int i = 0; i < anzCol; i++)
+                                        {
+                                            var item = ViewBag.Days.ToArray()[i];
+                                            <td>@item.Block4</td>
+                                        }
+                                        }
+                                    </tr>
+
+                                    <tr>
+                                        @{
+                                            
+                                        for (int i = 0; i < anzCol; i++)
+                                        {
+                                            var item = ViewBag.Days.ToArray()[i];
+                                            <td>@item.Block5</td>
+                                        }
+                                        }
+                                    </tr>
+
+                                    <tr>
+                                        @{
+                                            
+                                        for (int i = 0; i < anzCol; i++)
+                                        {
+                                            var item = ViewBag.Days.ToArray()[i];
+                                            <td>@item.Block6</td>
+                                        }
+                                        }
+                                    </tr>
+
+                                    <tr>
+                                        @{
+                                            
+                                        for (int i = 0; i < anzCol; i++)
+                                        {
+                                            var item = ViewBag.Days.ToArray()[i];
+                                            <td>@item.Block7</td>
+                                        }
+                                        }
+                                    </tr>
+
+                                    <tr>
+                                        @{
+                                            
+                                        for (int i = 0; i < anzCol; i++)
+                                        {
+                                            var item = ViewBag.Days.ToArray()[i];
+                                            <td>@item.Block8</td>
+                                        }
+                                        }
+                                    </tr>
+
+                                </table>
+
+
+                                <!--
+                                <label>Tag:</label><br />
+                                <input class="form-control" placeholder="@ViewBag.date.ToString("dd.MM.yyyy")"/>
+                                -->
+                                
+                            </div>
                         </div>
-                    </div>
+                    }
+                    }
                 </div>
                 
                 <div class="card footer">
