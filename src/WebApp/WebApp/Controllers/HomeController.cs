@@ -13,11 +13,13 @@ namespace WebApp.Controllers
         private static bool first = true;
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
+        private Room selectedRoom;
 
         public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleMgr, UserManager<IdentityUser> userMgr, ApplicationDbContext con)
         {
             _logger = logger;
             _context = con;
+            selectedRoom = new Room();
 
             if (first == true)
             {
@@ -40,11 +42,13 @@ namespace WebApp.Controllers
 
         public IActionResult räume()
         {
-            //ViewBag.Tickets = _context.Tickets.ToList();
-            //ViewBag.Rooms = _context.Rooms.ToList();
+            ViewBag.Rooms = _context.Rooms.ToList();
 
             return View();
         }
+
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -4,8 +4,9 @@
 @{
 }
 
-<div class="homeSite">
-        <div class="searchAndPic">
+<div class="homeSite container">
+    <div class="row">
+        <div class="searchAndPic col">
             <div class="search">
                 <h1>Suche</h1>
 
@@ -25,4 +26,21 @@
 
             </div>
         </div>
+
+        <div class="col">
+        @{
+            foreach (var item in ViewBag.Rooms)
+            {
+                <button type="button" class="btn btn-primary">@item.RoomName</button>
+            }
+        }
+        </div>
+
+        <div class="col">
+            <label>Name:</label><br />
+            <label>Tag:</label><br />
+            <label>Art:</label><br />
+            <label>Größe:</label><br />
+        </div>
     </div>
+</div>
