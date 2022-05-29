@@ -42,7 +42,10 @@ namespace WebApp.Controllers
 
         public IActionResult räume(string name)
         {
-            ViewBag.Rooms = _context.Rooms.ToList();
+            var today = new DateTime();
+            today = DateTime.Now;
+            List<Day> days = new List<Day>();
+
 
             if (name != null)
             {
@@ -54,8 +57,19 @@ namespace WebApp.Controllers
                         break;
                     }
                 }
+
+                foreach (var item in _context.Days.ToList())
+                {
+                    if (item.Room == selectedRoom.Id && item.date.Day > today.Day && item.date.Day < today.Day + 7)
+                    {
+                        days.Add(item);
+                    }
+                }
             }
 
+            ViewBag.Rooms = _context.Rooms.ToList();
+            ViewBag.date = today;
+            ViewBag.Days = days;
             ViewBag.Room = selectedRoom;
 
             return View();
