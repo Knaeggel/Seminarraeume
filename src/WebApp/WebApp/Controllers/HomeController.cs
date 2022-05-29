@@ -40,15 +40,26 @@ namespace WebApp.Controllers
             return View();
         }
 
-        public IActionResult räume()
+        public IActionResult räume(string name)
         {
             ViewBag.Rooms = _context.Rooms.ToList();
 
+            if (name != null)
+            {
+                foreach (var item in _context.Rooms.ToList())
+                {
+                    if (item.RoomName == name)
+                    {
+                        selectedRoom = item;
+                        break;
+                    }
+                }
+            }
+
+            ViewBag.Room = selectedRoom;
+
             return View();
         }
-
-
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
