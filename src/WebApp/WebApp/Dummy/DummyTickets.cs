@@ -15,9 +15,9 @@ namespace WebApp.Dummy
         {
             var random = new Random();
 
-            for (int j = 0; j < 4; j++)
+            for (int j = 0; j < 7; j++)
             {
-                for (int i = 0; i < 30; i++)
+                for (int i = 0; i < 50; i++)
                 {
 
                     var user = await userMgr.FindByNameAsync("User" + random.Next(1, 70) + "@proOne.de");
@@ -28,7 +28,7 @@ namespace WebApp.Dummy
                         newDate = new DateTime(newDate.Year, newDate.Month, newDate.Day);
                         newDate = newDate.AddDays(j);
 
-                        var newTicket = new Ticket(random.Next(1, 50), user.UserName, newDate, random.Next(1, 8));
+                        var newTicket = new Ticket(random.Next(1, 56), user.UserName, newDate, random.Next(1, 8));
 
                         var found = false;
                         foreach (var item in dbSet.Tickets.ToList())
