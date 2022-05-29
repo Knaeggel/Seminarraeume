@@ -22,6 +22,11 @@
             setBlock(block, ticket_id);
         }
 
+        public Day(DateTime Date)
+        {
+            date = Date;
+        }
+
         public Day()
         {
 

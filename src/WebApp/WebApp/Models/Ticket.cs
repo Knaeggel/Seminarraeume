@@ -29,7 +29,7 @@ namespace WebApp.Models
         {
             var ret = false;
 
-            if (this.block == othertTicket.block && this.user.Equals(othertTicket.user) && this.room == othertTicket.room && this.date.Equals(othertTicket.date))
+            if (this.block == othertTicket.block && this.user.Equals(othertTicket.user) && this.room == othertTicket.room && this.date.ToString("dd.MM.yy").Equals(othertTicket.date.ToString("dd.MM.yy")))
             {
                 ret = true;
             }
