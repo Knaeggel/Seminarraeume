@@ -1,6 +1,6 @@
 ﻿@{
-    DateTime date = new DateTime();
-    int anzCol = 7;
+    //DateTime date = new DateTime();
+    //int anzCol = 7;
 }
 
 @model Room
@@ -23,13 +23,19 @@
                 </select>
 
                 <label for="room">Raumnummer</label>
-                <input type="text" name="room" class="room" required>
+                <input id="RoomName" type="text" name="room" class="room" required>
 
                 <label for="seats">Anzahl Sitzplätze</label>
-                <input type="text" name="seats" class="seats" required>
+                <input id="RoomSize" type="text" name="seats" class="seats" required>
 
-                <label for="whatkindofroom">Art des Raums</label>
-                <input type="text" name="whatkindofroom" class="whatkindofroom">
+                <label for="whatkindofroom">Raum Typ</label>
+                <select id="Type" name="whatkindofroom" class="form-select" size="1" aria-label="">
+                    <option value="all" selected>All</option>
+                    <option value="PC-Raum">PC-Raum</option>
+                    <option value="Vorlesungssaal">Vorlesungssaal</option>
+                    <option value="Medienraum">Medienraum</option>
+                    <option value="Labor">Labor</option>
+                </select>
 
                 <button type="submit" id="searchButton" class="searchButton" onclick="search()">suchen</button>
 
@@ -41,7 +47,7 @@
             foreach (var item in ViewBag.Rooms)
             {
                 <form class="rooms">
-                    <button type="button" class="roomButton btn btn-primary">@item.RoomName</button>
+                    <button type="button" class="roomButton btn btn-primary" roomsize="@item.RoomSize" roomtype="@item.KindOfRoom" >@item.RoomName</button>
                 </form>
             }
         }
