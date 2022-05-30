@@ -58,6 +58,13 @@ namespace WebApp.Controllers
 
         public IActionResult räume(string name)
         {
+            ViewBag.Rooms = _context.Rooms.ToList();
+
+            return View();
+        }
+
+        public IActionResult RoomView(string name)
+        {
             var today = new DateTime();
             today = DateTime.Now;
             List<Day> days = new List<Day>();
@@ -99,7 +106,6 @@ namespace WebApp.Controllers
                 var uff = days.ToArray()[0];
             }
 
-            ViewBag.Rooms = _context.Rooms.ToList();
             ViewBag.date = today;
             ViewBag.Days = days;
             ViewBag.Room = selectedRoom;

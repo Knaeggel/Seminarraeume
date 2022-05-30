@@ -28,3 +28,8 @@ function hideUselessButtons(building) {
         }
     }
 }
+
+$(".roomButton").click(function() {
+    let frame = $("#iFrameContainer")
+    frame.innerHtml = ""
+})
