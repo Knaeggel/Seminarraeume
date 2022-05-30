@@ -1,109 +1,58 @@
-﻿using WebApp.Data;
+﻿using Microsoft.AspNetCore.Identity;
+using WebApp.Data;
 using WebApp.Models;
 
 namespace WebApp.Dummy
 {
     public class DummyTickets
     {
-        public DummyTickets(ApplicationDbContext dbSet)
+        public DummyTickets(ApplicationDbContext dbSet, UserManager<IdentityUser> userMgr)
         {
-            FillDummy(dbSet);
+            FillDummy(dbSet, userMgr).Wait();
         }
 
-        public void FillDummy(ApplicationDbContext dbSet)
+        public async Task FillDummy(ApplicationDbContext dbSet, UserManager<IdentityUser> userMgr)
         {
-            /*
-            var tickets = dbSet.Ticktes.ToList();
+            var random = new Random();
 
-            //create Tickets loop
-            for (int i = 0; i < 20; i++)
+            for (int j = 0; j < 7; j++)
             {
-                //proof, that this ticket doesnt exist
-                bool found = false;
-                var newTicket = new Ticket(i, i, (i + 1) % 9);
-
-                foreach (var item in tickets)
+                for (int i = 0; i < 50; i++)
                 {
-                    if (newTicket.block == item.block && newTicket.room == item.room)
-                    {
-                        found = true;
-                        break;
-                    }
-                }
 
-                if (!found)
-                {
-                    //add new Ticket
-                    dbSet.Ticktes.Add(newTicket);
+                    var user = await userMgr.FindByNameAsync("User" + random.Next(1, 70) + "@proOne.de");
 
-                    //Weil wir die ID sonst nicht haben müssen wird das Elem nochmal aus der DB holen
-                    foreach (var item in dbSet.Ticktes.ToList())
+                    if (user != null)
                     {
-                        if (item.compare(newTicket))
+                        var newDate = DateTime.Now;
+                        newDate = new DateTime(newDate.Year, newDate.Month, newDate.Day);
+                        newDate = newDate.AddDays(j);
+
+                        var newTicket = new Ticket(random.Next(1, 56), user.UserName, newDate, random.Next(1, 8));
+
+                        var found = false;
+                        foreach (var item in dbSet.Tickets.ToList())
                         {
-                            newTicket = item;
-                        }
-                    }
-
-                    Room room = null;
-
-                    // search for the room
-                    foreach (var item in dbSet.Rooms.ToList())
-                    {
-                        if (item.Id == i)
-                        {
-                            room = item;
-                        }
-                    }
-
-                    if (room != null)
-                    {
-                        Block block = null;
-
-                        //seach for the block
-                        foreach (var item in dbSet.Blocks.ToList())
-                        {
-                            if (room.BlockID == item.ID)
+                            if (newTicket.compare(item))
                             {
-                                block = item;
+                                found = true;
                             }
                         }
 
-                        if (block != null)
+                        if (!found)
                         {
-                            //add ticket id to the right block
-                            block.Block1 = newTicket.id;
+                            dbSet.Tickets.Add(newTicket);
+                            dbSet.SaveChanges();
+
+                            foreach (var item in dbSet.Ticktes.ToList())
+                            {
+                                if (item.compare(newTicket))
+                                {
+                                    Ticket.EditCreateDay(dbSet, item);
+                                    break;
+                                }
+                            }
                         }
-                        else
-                        {
-                            dbSet.Blocks.Add(new Block(new DateTime(2022, 10, 15), 1, newTicket.id));
-                        }
-
-                    }
-                }
-            }
-            */
-            var random = new Random();
-
-            for (int j = 0; j < 4; j++)
-            {
-                for (int i = 0; i < 30; i++)
-                {
-                    var newTicket = new Ticket(random.Next(1, 50), random.Next(1, 70), new DateTime(2022, 7, 27 + j), random.Next(1, 8));
-
-                    var found = false;
-                    foreach (var item in dbSet.Ticktes.ToList())
-                    {
-                        if (newTicket.compare(item))
-                        {
-                            found = true;
-                        }
-                    }
-
-                    if (!found)
-                    {
-                        dbSet.Ticktes.Add(newTicket);
-                        dbSet.SaveChanges();
                     }
                 }
             }

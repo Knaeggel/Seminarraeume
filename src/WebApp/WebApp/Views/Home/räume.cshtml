@@ -1,12 +1,13 @@
-﻿@model PaginatedList<WebApp.Models.Room>
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    DateTime date = new DateTime();
+    int anzCol = 7;
 }
 
-<div class="homeSite">
-        <div class="searchAndPic">
+@model Room
+
+<div class="homeSite container">
+    <div class="row">
+        <div class="searchAndPic col-3">
             <div class="search">
                 <h1>Suche</h1>
 
@@ -25,52 +26,172 @@
                 <button type="submit" class="searchButton">suchen</button>
 
             </div>
-            <div class="showRooms">
+        </div>
 
-                 <table class="showRooms table table-dark table-hover table-sm">
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Roomname</th>
-                        <th scope="col">Seats</th>
-                        <th scope="col">Roomtype</th>
-                    </tr>
+        <div class="col">
+        @{
+            foreach (var item in ViewBag.Rooms)
+            {
+                <form class="rooms col-6" asp-action="räume" asp-route-name="@item.RoomName">
+                    <button type="submit" class="btn btn-primary">@item.RoomName</button>
+                </form>
+            }
+        }
+        </div>
 
-                @{
-                    int i = 1;
-                    foreach (var item in ViewBag.Rooms)
+        <div class="col-6">
+            <div class="card-header">
+                <h5>Raum</h5>
+            </div>
+
+            <form>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col form-group">
+                            <label>Name:</label><br />
+                            <input asp-for="RoomName" class="form-control" placeholder="@ViewBag.Room.RoomName"/>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col form-group">
+                            <label>Art:</label><br />
+                            <input asp-for="KindOfRoom" class="form-control" placeholder="@ViewBag.Room.KindOfRoom"/>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col form-group">
+                            <label>Größe:</label><br />
+                            <input asp-for="RoomSize" class="form-control" placeholder="@ViewBag.Room.RoomSize"/>
+                        </div>
+                    </div>
+
+                    @{
+                    if (ViewBag.Room.RoomName != null)
                     {
-                        <tr>
-                            <th scope="row">@i</th>
-                            <td>@item.RoomName</td>
-                            <td>@item.RoomSize</td>
-                            <td>@item.KindOfRoom</td>
-                            <td><button asp-action="Bookingprocess">buchen</button></td>
-                        </tr>
-                        i++;
+                        <div class="row">
+                            <div class="col form-group">
+                                <table>
+                                    <tr>
+                                        @{
+                                        DateTime tempDate = new DateTime();
+                                        tempDate = DateTime.Now;
+                                        for (int i = 0; i < anzCol; i++)
+                                        {
+                                            <th>@tempDate.ToString("dd.MM.yyyy")</th>
+                                            
+                                            tempDate = tempDate.AddDays(1);
+                                        }
+                                        }
+                                    </tr>
+
+                                    <tr>
+                                        @{
+                                            
+                                        for (int i = 0; i < anzCol; i++)
+                                        {
+                                            var item = ViewBag.Days.ToArray()[i];
+                                            <td>@item.Block1</td>
+                                        }
+                                        }
+                                    </tr>
+
+                                    <tr>
+                                        @{
+                                            
+                                        for (int i = 0; i < anzCol; i++)
+                                        {
+                                            var item = ViewBag.Days.ToArray()[i];
+                                            <td>@item.Block2</td>
+                                        }
+                                        }
+                                    </tr>
+
+                                    <tr>
+                                        @{
+                                            
+                                        for (int i = 0; i < anzCol; i++)
+                                        {
+                                            var item = ViewBag.Days.ToArray()[i];
+                                            <td>@item.Block3</td>
+                                        }
+                                        }
+                                    </tr>
+
+                                    <tr>
+                                        @{
+                                            
+                                        for (int i = 0; i < anzCol; i++)
+                                        {
+                                            var item = ViewBag.Days.ToArray()[i];
+                                            <td>@item.Block4</td>
+                                        }
+                                        }
+                                    </tr>
+
+                                    <tr>
+                                        @{
+                                            
+                                        for (int i = 0; i < anzCol; i++)
+                                        {
+                                            var item = ViewBag.Days.ToArray()[i];
+                                            <td>@item.Block5</td>
+                                        }
+                                        }
+                                    </tr>
+
+                                    <tr>
+                                        @{
+                                            
+                                        for (int i = 0; i < anzCol; i++)
+                                        {
+                                            var item = ViewBag.Days.ToArray()[i];
+                                            <td>@item.Block6</td>
+                                        }
+                                        }
+                                    </tr>
+
+                                    <tr>
+                                        @{
+                                            
+                                        for (int i = 0; i < anzCol; i++)
+                                        {
+                                            var item = ViewBag.Days.ToArray()[i];
+                                            <td>@item.Block7</td>
+                                        }
+                                        }
+                                    </tr>
+
+                                    <tr>
+                                        @{
+                                            
+                                        for (int i = 0; i < anzCol; i++)
+                                        {
+                                            var item = ViewBag.Days.ToArray()[i];
+                                            <td>@item.Block8</td>
+                                        }
+                                        }
+                                    </tr>
+
+                                </table>
+
+
+                                <!--
+                                <label>Tag:</label><br />
+                                <input class="form-control" placeholder="@ViewBag.date.ToString("dd.MM.yyyy")"/>
+                                -->
+                                
+                            </div>
+                        </div>
                     }
-                }
-
-            </table>
-
-            
-            </div>
-            <div>
-                @{
-                    var prevDisabled = !Model.PreviousPage ? "disabled" : "";
-                    var nextDisabled = !Model.NextPage ? "disabled" : "";
-                }
-
-                 <a asp-action="Rooms" 
-                    asp-route-pageNumber="@Model.PageIndex - 1" 
-                    class="btn btn-default @prevDisabled">
-                    Previous
-                </a>
-
-                <a asp-action="Rooms" 
-                    asp-route-pageNumber="@Model.PageIndex + 1" 
-                    class="btn btn-default @nextDisabled">
-                    Next
-                </a>
-            </div>
+                    }
+                </div>
+                
+                <div class="card footer">
+                    <button type="submit" class="btn btn-primary">Speichern</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>

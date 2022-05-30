@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApp.Data;
 
@@ -11,9 +12,10 @@ using WebApp.Data;
 namespace WebApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220526144428_changedNameAndUserIDtoString")]
+    partial class changedNameAndUserIDtoString
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -264,7 +266,7 @@ namespace WebApp.Data.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Day");
+                    b.ToTable("Blocks");
                 });
 
             modelBuilder.Entity("WebApp.Models.Room", b =>
@@ -318,7 +320,7 @@ namespace WebApp.Data.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("Ticket");
+                    b.ToTable("Ticktes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
