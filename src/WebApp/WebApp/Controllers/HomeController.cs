@@ -56,7 +56,7 @@ namespace WebApp.Controllers
             return View();
         }
 
-        public IActionResult räume(string name)
+        public IActionResult räume()
         {
             ViewBag.Rooms = _context.Rooms.ToList();
 
@@ -110,7 +110,7 @@ namespace WebApp.Controllers
             ViewBag.Days = days;
             ViewBag.Room = selectedRoom;
 
-            return View();
+            return View("RoomView");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

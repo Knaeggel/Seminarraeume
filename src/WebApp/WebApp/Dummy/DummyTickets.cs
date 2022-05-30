@@ -13,43 +13,46 @@ namespace WebApp.Dummy
 
         public async Task FillDummy(ApplicationDbContext dbSet, UserManager<IdentityUser> userMgr)
         {
+
+            if (dbSet.Tickets.ToList().Count < 2000) { 
             var random = new Random();
 
-            for (int j = 0; j < 7; j++)
-            {
-                for (int i = 0; i < 50; i++)
+                for (int j = 0; j < 7; j++)
                 {
-
-                    var user = await userMgr.FindByNameAsync("User" + random.Next(1, 70) + "@proOne.de");
-
-                    if (user != null)
+                    for (int i = 0; i < 50; i++)
                     {
-                        var newDate = DateTime.Now;
-                        newDate = new DateTime(newDate.Year, newDate.Month, newDate.Day);
-                        newDate = newDate.AddDays(j);
 
-                        var newTicket = new Ticket(random.Next(1, 56), user.UserName, newDate, random.Next(1, 8));
+                        var user = await userMgr.FindByNameAsync("User" + random.Next(1, 70) + "@proOne.de");
 
-                        var found = false;
-                        foreach (var item in dbSet.Tickets.ToList())
+                        if (user != null)
                         {
-                            if (newTicket.compare(item))
-                            {
-                                found = true;
-                            }
-                        }
+                            var newDate = DateTime.Now;
+                            newDate = new DateTime(newDate.Year, newDate.Month, newDate.Day);
+                            newDate = newDate.AddDays(j);
 
-                        if (!found)
-                        {
-                            dbSet.Tickets.Add(newTicket);
-                            dbSet.SaveChanges();
+                            var newTicket = new Ticket(random.Next(1, 56), user.UserName, newDate, random.Next(1, 8));
 
-                            foreach (var item in dbSet.Ticktes.ToList())
+                            var found = false;
+                            foreach (var item in dbSet.Tickets.ToList())
                             {
-                                if (item.compare(newTicket))
+                                if (newTicket.compare(item))
                                 {
-                                    Ticket.EditCreateDay(dbSet, item);
-                                    break;
+                                    found = true;
+                                }
+                            }
+
+                            if (!found)
+                            {
+                                dbSet.Tickets.Add(newTicket);
+                                dbSet.SaveChanges();
+
+                                foreach (var item in dbSet.Ticktes.ToList())
+                                {
+                                    if (item.compare(newTicket))
+                                    {
+                                        Ticket.EditCreateDay(dbSet, item);
+                                        break;
+                                    }
                                 }
                             }
                         }

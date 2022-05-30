@@ -30,6 +30,8 @@ function hideUselessButtons(building) {
 }
 
 $(".roomButton").click(function() {
-    let frame = $("#iFrameContainer")
-    frame.innerHtml = ""
+    let buttonName = $(this)[0].innerText.trim()
+    let frame = $("#iFrameContainer")[0]
+    frame.innerHTML = "<iframe src=\"https://localhost:7270/home/RoomView/?name="+ buttonName + "\" height=\"600\" width=\"500\"></iframe>"
+    //frame.innerHTML = "<iframe src=\"https://www.op.gg/\" height=\"200\" width=\"300\"></iframe>"
 })
