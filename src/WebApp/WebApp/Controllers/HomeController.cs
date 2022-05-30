@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebApp.Dummy;
 using WebApp.Models;
-using WebApp.Dummy;
 using WebApp.Data;
 
 namespace WebApp.Controllers
@@ -38,11 +37,14 @@ namespace WebApp.Controllers
             return View();
         }
 
-        public IActionResult räume()
+        public async Task<IActionResult> räume(int pageNumber = 1)
         {
-            ViewBag.Tickets = _context.Ticktes.ToList();
             ViewBag.Rooms = _context.Rooms.ToList();
+            return View(await PaginatedList<Room>.CreateAsync(_context.Rooms, pageNumber, 5));
+        }
 
+        public IActionResult Bookingprocess()
+        {
             return View();
         }
 

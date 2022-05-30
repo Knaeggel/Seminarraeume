@@ -1,4 +1,5 @@
-﻿@*
+﻿@model PaginatedList<WebApp.Models.Room>
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
@@ -16,13 +17,60 @@
                 <input type="text" name="room" class="room" required>
 
                 <label for="seats">Anzahl Sitzplätze</label>
-                <input type="text" name="seats" class="seats" required>
+                <input type="text" name="seats" class="seats">
 
                 <label for="whatkindofroom">Art des Raums</label>
                 <input type="text" name="whatkindofroom" class="whatkindofroom">
 
                 <button type="submit" class="searchButton">suchen</button>
 
+            </div>
+            <div class="showRooms">
+
+                 <table class="showRooms table table-dark table-hover table-sm">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Roomname</th>
+                        <th scope="col">Seats</th>
+                        <th scope="col">Roomtype</th>
+                    </tr>
+
+                @{
+                    int i = 1;
+                    foreach (var item in ViewBag.Rooms)
+                    {
+                        <tr>
+                            <th scope="row">@i</th>
+                            <td>@item.RoomName</td>
+                            <td>@item.RoomSize</td>
+                            <td>@item.KindOfRoom</td>
+                            <td><button asp-action="Bookingprocess">buchen</button></td>
+                        </tr>
+                        i++;
+                    }
+                }
+
+            </table>
+
+            
+            </div>
+            <div>
+                @{
+                    var prevDisabled = !Model.PreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.NextPage ? "disabled" : "";
+                }
+
+                 <a asp-action="Rooms" 
+                    asp-route-pageNumber="@Model.PageIndex - 1" 
+                    class="btn btn-default @prevDisabled">
+                    Previous
+                </a>
+
+                <a asp-action="Rooms" 
+                    asp-route-pageNumber="@Model.PageIndex + 1" 
+                    class="btn btn-default @nextDisabled">
+                    Next
+                </a>
             </div>
         </div>
     </div>

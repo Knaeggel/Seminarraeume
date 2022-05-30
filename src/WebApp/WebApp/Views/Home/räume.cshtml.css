@@ -1,19 +1,23 @@
 ﻿.search {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     position: relative;
     text-align: center;
-    background-color: bisque;
+    margin-top: 0px;
 }
 
 
 .searchAndPic {
     display: flex;
     flex-direction: row;
-    height: 400px;
+    margin: auto;
+    position: relative;
 }
 
+.buildingletter{
+    position: relative;
+    margin-bottom: 20px;
+}
 
 .room {
     position: relative;
@@ -26,15 +30,18 @@
 }
 
 .searchButton {
-    background-color: lightsalmon;
-    border-radius: 8px;
     border: none;
     position: relative;
-    margin: auto;
-    height: 20px;
-    width: 80px;
     font-size: medium;
-    text-align: center;
+    margin-top: 20px;
+}
+
+.showRooms{
+    display: flex;
+    flex-direction: row;
+    margin:auto;
+    position: relative;
+
 }
 
 h1 {
