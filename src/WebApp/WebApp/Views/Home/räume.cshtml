@@ -39,7 +39,7 @@
         }
         </div>
 
-        <div class="col-6">
+        <div class="col-5 card"> 
             <div class="card-header">
                 <h5>Raum</h5>
             </div>
@@ -79,7 +79,7 @@
                                         tempDate = DateTime.Now;
                                         for (int i = 0; i < anzCol; i++)
                                         {
-                                            <th>@tempDate.ToString("dd.MM.yyyy")</th>
+                                            <th>@tempDate.ToString("dd.MM.yy")</th>
                                             
                                             tempDate = tempDate.AddDays(1);
                                         }
