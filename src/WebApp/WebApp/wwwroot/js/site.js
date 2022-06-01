@@ -15,7 +15,6 @@ let type
 
 $("#Building").change(function() {
     //lists
-    collection = $(".rooms")
     buttons = $(".roomButton")
 
     //vars
@@ -29,7 +28,6 @@ $("#Building").change(function() {
 
 $("#RoomName").keyup(function() {
     //lists
-    collection = $(".rooms")
     buttons = $(".roomButton")
 
     //vars
@@ -44,7 +42,6 @@ $("#RoomName").keyup(function() {
 $("#RoomSize").keyup(function() {
 
     //lists
-    collection = $(".rooms")
     buttons = $(".roomButton")
 
     //vars
@@ -58,7 +55,6 @@ $("#RoomSize").keyup(function() {
 
 $("#Type").change(function() {
     //lists
-    collection = $(".rooms")
     buttons = $(".roomButton")
 
     //vars
@@ -71,13 +67,13 @@ $("#Type").change(function() {
 })
 
 function hideButtons() {
-    for (var i = 0; i < collection.length; i++) {
-        collection[i].hidden = false;
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].hidden = false;
     }
 
-    for (var i = 0; i < collection.length; i++) {
-        if (checkB(building, collection[i]) || checkS(size, buttons[i]) || checkN(name, collection[i]) || checkT(type, buttons[i])) {
-            collection[i].hidden = true;
+    for (var i = 0; i < buttons.length; i++) {
+        if (checkB(building, buttons[i]) || checkS(size, buttons[i]) || checkN(name, buttons[i]) || checkT(type, buttons[i])) {
+            buttons[i].hidden = true;
         }
     }
 }

@@ -56,9 +56,9 @@
             //they have to be in a form, because i couldnt hide the buttens by them self
             foreach (var item in ViewBag.Rooms)
             {
-                    <form class="rooms">
+                    
                         <button type="button" class="roomButton btn btn-primary" roomsize="@item.RoomSize" roomtype="@item.KindOfRoom" >@item.RoomName</button>
-                    </form>
+                    
             }
         }
         </div>
