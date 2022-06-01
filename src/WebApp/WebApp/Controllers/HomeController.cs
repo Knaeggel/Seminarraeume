@@ -110,7 +110,7 @@ namespace WebApp.Controllers
             ViewBag.Days = days;
             ViewBag.Room = selectedRoom;
 
-            return View("RoomView");
+            return PartialView("RoomView");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
