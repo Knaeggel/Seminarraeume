@@ -56,7 +56,7 @@ namespace WebApp.Controllers
             return View();
         }
 
-        public IActionResult räume(string name)
+        public async Task<IActionResult> räume(string name, int pageNumber = 1)
         {
             var today = new DateTime();
             today = DateTime.Now;
@@ -104,6 +104,11 @@ namespace WebApp.Controllers
             ViewBag.Days = days;
             ViewBag.Room = selectedRoom;
 
+            return View(await PaginatedList<Room>.CreateAsync(_context.Rooms, pageNumber, 5));
+        }
+
+        public IActionResult Bookingprocess()
+        {
             return View();
         }
 
