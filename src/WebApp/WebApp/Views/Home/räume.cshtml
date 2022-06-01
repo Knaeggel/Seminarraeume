@@ -11,7 +11,7 @@
         <div class="searchAndPic col-3">
             <div class="search">
                 <h1>Suche</h1>
-
+                  <!--Search-->
                 <div class="form-group">
                     <label for="Building">Gebäude</label>
                     <select id="Building" name="Building" class="form-select" size="1" aria-label="">
@@ -52,6 +52,8 @@
 
         <div class="col">
         @{
+            //create buttens with some extra attributes
+            //they have to be in a form, because i couldnt hide the buttens by them self
             foreach (var item in ViewBag.Rooms)
             {
                     <form class="rooms">
@@ -63,8 +65,7 @@
 
         <div id="iFrameContainer" class="col">
             <!--
-            <p>Peenis</p>
-            <iframe src="https://www.op.gg/" height="200" width="300"></iframe>
+                the Jave Script will insert the i frame if a room is selected(clicked)
             -->
         </div>
     </div>

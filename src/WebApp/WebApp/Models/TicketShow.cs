@@ -2,6 +2,7 @@
 {
     public class TicketShow
     {
+        //is a class for better transport the data to the view
         public string sDate { get; set; }
         public string Room { get; set; }
         public string times { get; set; }

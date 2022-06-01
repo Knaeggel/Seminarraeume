@@ -32,6 +32,7 @@
 
         }
 
+        //for easyer set a bolock with the ticket id
         public void setBlock(int block, int ticket_id)
         {
             switch (block)

@@ -8,6 +8,9 @@ using WebApp.Data;
 
 namespace WebApp.Controllers
 {
+
+    //Jede HTTP anfrage wird hier entgegen genommen und bearbeitet
+
     public class HomeController : Controller
     {
         private static bool first = true;
@@ -23,6 +26,7 @@ namespace WebApp.Controllers
 
             if (first == true)
             {
+                //erstellen der dummy Daten
                 var dummyRoles = new DummyRoles(roleMgr);
                 var dummyUsers = new DummyUsers(userMgr);
                 var DummyRooms = new DummyRooms(con);
@@ -33,9 +37,11 @@ namespace WebApp.Controllers
             first = false;
         }
 
+        //shows the booked tickets
         [Authorize]
         public IActionResult booked()
         {
+            //find the booked tickets and slecet them in the list ticktes
             List<TicketShow> tickets = new List<TicketShow>();
             foreach (var item in _context.Tickets.ToList())
             {
@@ -52,17 +58,21 @@ namespace WebApp.Controllers
                 }
             }
 
+            //you can unpack the ViewBag in the View
             ViewBag.Tickets = tickets;
             return View();
         }
 
+        //the room search with view
         public IActionResult räume()
         {
+            //select all rooms
             ViewBag.Rooms = _context.Rooms.ToList();
 
             return View();
         }
 
+        //the Room with boocked days/blocks
         public IActionResult RoomView(string name)
         {
             var today = new DateTime();
@@ -72,6 +82,8 @@ namespace WebApp.Controllers
 
             if (name != null)
             {
+
+                //fiend the room
                 foreach (var item in _context.Rooms.ToList())
                 {
                     if (item.RoomName == name)
@@ -81,8 +93,10 @@ namespace WebApp.Controllers
                     }
                 }
 
+                //get aktuell Date
                 var tempDate = DateTime.Now;
 
+                //create a list with 14 days
                 for (int i = 0; i < 14; i++)
                 {
                     var found = false;
@@ -96,6 +110,7 @@ namespace WebApp.Controllers
                         }
                     }
 
+                    //when the day doesnt exist we're creating a new with only the daystamp
                     if (!found)
                     {
                         days.Add(new Day(tempDate));
@@ -103,9 +118,9 @@ namespace WebApp.Controllers
 
                     tempDate = tempDate.AddDays(1);
                 }
-                var uff = days.ToArray()[0];
             }
 
+            //bring them to the front end
             ViewBag.date = today;
             ViewBag.Days = days;
             ViewBag.Room = selectedRoom;
