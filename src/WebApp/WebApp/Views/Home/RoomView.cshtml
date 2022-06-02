@@ -60,7 +60,7 @@
                                         
                                         for (int i = 0; i < anzCol; i++)
                                         {
-                                             <th>@tempDate.ToString("dd.MM.yy")</th>
+                                                 <th>@tempDate.ToString("dd.MM.yy")</th>
                                             tempDate = tempDate.AddDays(1);
                                         }
                                         }
@@ -69,17 +69,16 @@
                                     @{
                                         for (int i = 0; i < 8; i++)
                                         {
-                                            <tr>
-                                            @{
+                                                <tr>
+                                                @{
                                                 for (int j = 0; j < 7; j++)
-                                                    {
-                                                        
+                                                    {   
                                                         <td>
-                                                            <label class="@ViewBag.Days.ToArray()[j][i].classes" isChecked="false">@ViewBag.Days.ToArray()[j][i].prettyRole</label>
+                                                            <label class="@ViewBag.Days.ToArray()[j][i].classes" isChecked="false" bookable="@ViewBag.Days.ToArray()[j][i].bookable">@ViewBag.Days.ToArray()[j][i].prettyRole</label>
                                                         </td>
                                                     }
-                                            }
-                                            </tr>
+                                                }
+                                                </tr>
                                         }
                                     }
                                    
@@ -94,7 +93,7 @@
                                         
                                         for (int i = anzCol; i < anzCol*2; i++)
                                         {
-                                             <th>@tempDate.ToString("dd.MM.yy")</th>
+                                                 <th>@tempDate.ToString("dd.MM.yy")</th>
                                             tempDate = tempDate.AddDays(1);
                                         }
                                         }
@@ -103,16 +102,16 @@
                                     @{
                                         for (int i = 0; i < 8; i++)
                                         {
-                                            <tr>
+                                                <tr>
                                             @{
                                                 for (int j = anzCol; j < anzCol*2; j++)
                                                 {
                                                     <td>
-                                                        <label class="@ViewBag.Days.ToArray()[j][i].classes" isChecked="false">@ViewBag.Days.ToArray()[j][i].prettyRole</label>
+                                                        <label class="@ViewBag.Days.ToArray()[j][i].classes" isChecked="false" bookable="@ViewBag.Days.ToArray()[j][i].bookable">@ViewBag.Days.ToArray()[j][i].prettyRole</label>
                                                     </td>
                                                 }
-                                            }
-                                            </tr>
+                                                }
+                                                </tr>
                                         }
                                     }
 
@@ -128,6 +127,11 @@
         </form>
     </div>
 </body>
+<footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/RoomView.js" asp-append-version="true"></script>
+</footer>
 </html>
 
 

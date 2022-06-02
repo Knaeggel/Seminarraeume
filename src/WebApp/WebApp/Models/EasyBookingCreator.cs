@@ -7,27 +7,29 @@ namespace WebApp.Models
         public string role;
         public string classes;
         public string prettyRole;
+        public string bookable;
 
         public EasyBookingCreator(string Role)
         {
             role = Role;
-            classes = "buttonEmpty btn btn-outline-primary";
+            classes = "buttonEmpty btncheck btn btn-outline-primary";
             prettyRole = "Empty";
+            bookable = "true";
 
             switch (role)
             {
                 case "Timetable":
-                    classes = "buttonTT btn btn-outline-secondary";
+                    classes = "buttonTT btncheck btn btn-outline-secondary";
                     prettyRole = "TT";
                     break;
 
                 case "Student":
-                    classes = "buttonStud btn btn-outline-success";
+                    classes = "buttonStud btncheck btn btn-outline-success";
                     prettyRole = "Stud";
                     break;
 
                 case "Prof":
-                    classes = "buttonProf btn btn-outline-danger";
+                    classes = "buttonProf btncheck btn btn-outline-danger";
                     prettyRole = "Prof";
                     break;
             }
@@ -81,28 +83,28 @@ namespace WebApp.Models
         }
         */
 
-        public bool Overbookable(bool otherRole)
+        public void Overbookable(string otherRole)
         {
-            var ret = false;
+            var ret = "true";
             switch (role)
             {
                 case "Timetable":
-                    ret = false;
+                    ret = "false";
                     break;
 
                 case "Prof":
-                    ret = false;
+                    ret = "false";
                     break;
 
                 case "Student":
-                    if (otherRole == true)
+                    if (otherRole == "Student")
                     {
-                        ret = true;
+                        ret = "false";
                     }
                     break;
             }
 
-            return otherRole;
+            bookable = ret;
         }
 
         public static async Task<List<EasyBookingCreator[]>> CreateEasyBookingList(List<Day> days, List<Ticket> tickets, UserManager<IdentityUser> userMgr)

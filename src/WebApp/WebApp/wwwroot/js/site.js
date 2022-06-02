@@ -125,4 +125,3 @@ $(".roomButton").click(function() {
     frame.innerHTML = "<iframe src=\"https://localhost:7270/home/RoomView/?name="+ buttonName + "\" height=\"700\" width=\"600\"></iframe>"
     //frame.innerHTML = "<iframe src=\"https://www.op.gg/\" height=\"200\" width=\"300\"></iframe>"
 })
-

@@ -126,6 +126,25 @@ namespace WebApp.Controllers
 
             List<EasyBookingCreator[]> betterDays = await EasyBookingCreator.CreateEasyBookingList(days, _context.Tickets.ToList(), userManager);
 
+            foreach (var item in betterDays)
+            {
+                for(int i = 0; i < 8; i++)
+                {
+                    if (User.IsInRole("Prof"))
+                    {
+                        item[i].Overbookable("Prof");
+                    }
+                    else if (User.IsInRole("Student"))
+                    {
+                        item[i].Overbookable("Student");
+                    }
+                    else
+                    {
+                        item[i].bookable = "false";
+                    }
+                }
+            }
+
             //bring them to the front end
             //ViewBag.date = today;
             ViewBag.Days = betterDays;
