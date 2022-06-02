@@ -14,15 +14,54 @@ namespace WebApp.Dummy
         public async Task FillDummy(ApplicationDbContext dbSet, UserManager<IdentityUser> userMgr)
         {
 
-            if (dbSet.Tickets.ToList().Count < 2000) { 
+            if (dbSet.Tickets.ToList().Count < 3000) { 
             var random = new Random();
 
                 for (int j = 0; j < 14; j++)
                 {
-                    for (int i = 0; i < 50; i++)
+                    for (int i = 0; i < 70; i++)
                     {
 
-                        var user = await userMgr.FindByNameAsync("User" + random.Next(1, 70) + "@proOne.de");
+                        var user = await userMgr.FindByNameAsync("User" + random.Next(1, 50) + "@proOne.de");
+
+                        if (user != null)
+                        {
+                            var newDate = DateTime.Now;
+                            newDate = new DateTime(newDate.Year, newDate.Month, newDate.Day);
+                            newDate = newDate.AddDays(j);
+
+                            var newTicket = new Ticket(random.Next(1, 57), user.UserName, newDate, random.Next(1, 9));
+
+                            var found = false;
+                            foreach (var item in dbSet.Tickets.ToList())
+                            {
+                                if (newTicket.compare(item))
+                                {
+                                    found = true;
+                                }
+                            }
+
+                            if (!found)
+                            {
+                                dbSet.Tickets.Add(newTicket);
+                                dbSet.SaveChanges();
+
+                                foreach (var item in dbSet.Ticktes.ToList())
+                                {
+                                    if (item.compare(newTicket))
+                                    {
+                                        Ticket.EditCreateDay(dbSet, item);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    for (int i = 0; i < 15; i++)
+                    {
+
+                        var user = await userMgr.FindByNameAsync("Prof" + random.Next(1, 11) + "@proOne.de");
 
                         if (user != null)
                         {
@@ -57,6 +96,7 @@ namespace WebApp.Dummy
                             }
                         }
                     }
+
                 }
             }
         }

@@ -5,10 +5,32 @@ namespace WebApp.Models
     public class EasyBookingCreator
     {
         public string role;
+        public string classes;
+        public string prettyRole;
 
         public EasyBookingCreator(string Role)
         {
             role = Role;
+            classes = "buttonEmpty btn btn-outline-primary";
+            prettyRole = "Empty";
+
+            switch (role)
+            {
+                case "Timetable":
+                    classes = "buttonTT btn btn-outline-secondary";
+                    prettyRole = "TT";
+                    break;
+
+                case "Student":
+                    classes = "buttonStud btn btn-outline-success";
+                    prettyRole = "Stud";
+                    break;
+
+                case "Prof":
+                    classes = "buttonProf btn btn-outline-danger";
+                    prettyRole = "Prof";
+                    break;
+            }
         }
         public EasyBookingCreator()
         {
@@ -17,19 +39,19 @@ namespace WebApp.Models
 
         public string getButton()
         {
-            string ret = "<label class=\"buttonEmpty btn btn-outline-primary\" isChecked=\"false\" bookable=\">Empty</label>";
+            string ret = "<label class=\"buttonEmpty btn btn-outline-primary\" isChecked=\"false\" >Empty</label>";
             switch (role)
             {
                 case "Timetable":
-                    ret = "<label class=\"buttonTT btn btn-outline-secondary\" isChecked=\"false\" bookable=\">TT</label>";
+                    ret = "<label class=\"buttonTT btn btn-outline-secondary\" isChecked=\"false\" >TT</label>";
                     break;
 
                 case "Student":
-                    ret = "< label class=\"buttonStud btn btn-outline-success\" isChecked=\"false\" bookable=\">Stud</label>";
+                    ret = "< label class=\"buttonStud btn btn-outline-success\" isChecked=\"false\" >Stud</label>";
                     break;
 
                 case "Prof":
-                    ret = "<label class=\"btn btn-outline - danger\" isChecked=\"false\" bookable=\">Prof</label>";
+                    ret = "<label class=\"btn btn-outline - danger\" isChecked=\"false\" >Prof</label>";
                     break;
             }
 

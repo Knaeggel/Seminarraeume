@@ -75,14 +75,9 @@
                                             @{
                                                 for (int j = 0; j < 7; j++)
                                                     {
+                                                        
                                                         <td>
-                                                        <!--ViewBag.Days.ElementAt(j)[i].getButton() -->
-
-                                                            @{
-                                                                var uff = ViewBag.Days;
-                                                                var ufff = uff.ElementAt(j);
-                                                                var uffff = ufff[1].getButton();
-                                                            }
+                                                            <label class="@ViewBag.Days.ToArray()[j][i].classes" isChecked="false">@ViewBag.Days.ToArray()[j][i].prettyRole</label>
                                                         </td>
                                                     }
                                             }
@@ -113,11 +108,11 @@
                                             <tr>
                                             @{
                                                 for (int j = anzCol; j < anzCol*2; j++)
-                                                    {
-                                                        <td>
-                                                        @ViewBag.Days.ElementAt(j)[i].getButton()
-                                                        </td>
-                                                    }
+                                                {
+                                                    <td>
+                                                        <label class="@ViewBag.Days.ToArray()[j][i].classes" isChecked="false">@ViewBag.Days.ToArray()[j][i].prettyRole</label>
+                                                    </td>
+                                                }
                                             }
                                             </tr>
                                         }
