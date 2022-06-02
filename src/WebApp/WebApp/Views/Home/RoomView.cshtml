@@ -68,93 +68,28 @@
                                         }
                                     </tr>
 
-                                    <tr>
                                     @{
-                                            
-                                        for (int i = 0; i < anzCol; i++)
+                                        for (int i = 0; i < 8; i++)
                                         {
-                                            var item = ViewBag.Days.ToArray()[i];
-                                            <td>@item.Block1</td>
-                                        }
-                                                    }
-                                    </tr>
+                                            <tr>
+                                            @{
+                                                for (int j = 0; j < 7; j++)
+                                                    {
+                                                        <td>
+                                                        <!--ViewBag.Days.ElementAt(j)[i].getButton() -->
 
-                                    <tr>
-                                    @{
-                                            
-                                    for (int i = 0; i < anzCol; i++)
-                                    {
-                                         var item = ViewBag.Days.ToArray()[i];
-                                        <td>@item.Block2</td>
+                                                            @{
+                                                                var uff = ViewBag.Days;
+                                                                var ufff = uff.ElementAt(j);
+                                                                var uffff = ufff[1].getButton();
+                                                            }
+                                                        </td>
+                                                    }
+                                            }
+                                            </tr>
+                                        }
                                     }
-                                                    }
-                                                </tr>
-
-                                                <tr>
-                                                    @{
-                                            
-                                        for (int i = 0; i < anzCol; i++)
-                                        {
-                                            var item = ViewBag.Days.ToArray()[i];
-                                                                    <td>@item.Block3</td>
-                                        }
-                                                    }
-                                                </tr>
-
-                                                <tr>
-                                                    @{
-                                            
-                                        for (int i = 0; i < anzCol; i++)
-                                        {
-                                            var item = ViewBag.Days.ToArray()[i];
-                                                                    <td>@item.Block4</td>
-                                        }
-                                                    }
-                                                </tr>
-
-                                                <tr>
-                                                    @{
-                                            
-                                        for (int i = 0; i < anzCol; i++)
-                                        {
-                                            var item = ViewBag.Days.ToArray()[i];
-                                                                    <td>@item.Block5</td>
-                                        }
-                                                    }
-                                                </tr>
-
-                                                <tr>
-                                                    @{
-                                            
-                                        for (int i = 0; i < anzCol; i++)
-                                        {
-                                            var item = ViewBag.Days.ToArray()[i];
-                                                                    <td>@item.Block6</td>
-                                        }
-                                                    }
-                                                </tr>
-
-                                                <tr>
-                                                    @{
-                                            
-                                        for (int i = 0; i < anzCol; i++)
-                                        {
-                                            var item = ViewBag.Days.ToArray()[i];
-                                                                    <td>@item.Block7</td>
-                                        }
-                                                    }
-                                                </tr>
-
-                                                <tr>
-                                                    @{
-                                            
-                                        for (int i = 0; i < anzCol; i++)
-                                        {
-                                            var item = ViewBag.Days.ToArray()[i];
-                                                                    <td>@item.Block8</td>
-                                        }
-                                        }
-                                    </tr>
+                                   
                                 </table>
                             </div>
                             <duv>
@@ -164,102 +99,30 @@
 
                                         //every loop is one row in the table
                                         
-                                        for (int i = 7; i < anzCol*2; i++)
+                                        for (int i = anzCol; i < anzCol*2; i++)
                                         {
-                                                                    <th>@tempDate.ToString("dd.MM.yy")</th>
-                                            
+                                             <th>@tempDate.ToString("dd.MM.yy")</th>
                                             tempDate = tempDate.AddDays(1);
-                                        }
-                                                    }
-                                                </tr>
-
-                                                <tr>
-                                                    @{
-                                            
-                                        for (int i = 7; i < anzCol*2; i++)
-                                        {
-                                            var item = ViewBag.Days.ToArray()[i];
-                                                                    <td>@item.Block1</td>
-                                        }
-                                                    }
-                                                </tr>
-
-                                                <tr>
-                                                    @{
-                                            
-                                        for (int i = 7; i < anzCol*2; i++)
-                                        {
-                                            var item = ViewBag.Days.ToArray()[i];
-                                                                    <td>@item.Block2</td>
-                                        }
-                                                    }
-                                                </tr>
-
-                                                <tr>
-                                                    @{
-                                            
-                                        for (int i = 7; i < anzCol*2; i++)
-                                        {
-                                            var item = ViewBag.Days.ToArray()[i];
-                                                                    <td>@item.Block3</td>
-                                        }
-                                                    }
-                                                </tr>
-
-                                                <tr>
-                                                    @{
-                                            
-                                        for (int i = 7; i < anzCol*2; i++)
-                                        {
-                                            var item = ViewBag.Days.ToArray()[i];
-                                                                    <td>@item.Block4</td>
-                                        }
-                                                    }
-                                                
-
-                                                <tr>
-                                                    @{
-                                            
-                                        for (int i = 0; i < anzCol; i++)
-                                        {
-                                            var item = ViewBag.Days.ToArray()[i];
-                                                                    <td>@item.Block5</td>
-                                        }
-                                                    }
-                                                </tr>
-
-                                                <tr>
-                                                    @{
-                                            
-                                        for (int i = 7; i < anzCol*2; i++)
-                                        {
-                                            var item = ViewBag.Days.ToArray()[i];
-                                                                    <td>@item.Block6</td>
-                                        }
-                                                    }
-                                                </tr>
-
-                                                <tr>
-                                                    @{
-                                            
-                                        for (int i = 7; i < anzCol*2; i++)
-                                        {
-                                            var item = ViewBag.Days.ToArray()[i];
-                                                                    <td>@item.Block7</td>
-                                        }
-                                                    }
-                                                </tr>
-
-                                                <tr>
-                                                    @{
-                                            
-                                        for (int i = 7; i < anzCol*2; i++)
-                                        {
-                                            var item = ViewBag.Days.ToArray()[i];
-                                                                    <td>@item.Block8</td>
                                         }
                                         }
                                     </tr>
+
+                                    @{
+                                        for (int i = 0; i < 8; i++)
+                                        {
+                                            <tr>
+                                            @{
+                                                for (int j = anzCol; j < anzCol*2; j++)
+                                                    {
+                                                        <td>
+                                                        @ViewBag.Days.ElementAt(j)[i].getButton()
+                                                        </td>
+                                                    }
+                                            }
+                                            </tr>
+                                        }
+                                    }
+
                                 </table>
                             </duv>
                         </ul>          

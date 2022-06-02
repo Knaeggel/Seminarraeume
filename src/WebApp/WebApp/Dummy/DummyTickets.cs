@@ -17,7 +17,7 @@ namespace WebApp.Dummy
             if (dbSet.Tickets.ToList().Count < 2000) { 
             var random = new Random();
 
-                for (int j = 0; j < 7; j++)
+                for (int j = 0; j < 14; j++)
                 {
                     for (int i = 0; i < 50; i++)
                     {
@@ -30,7 +30,7 @@ namespace WebApp.Dummy
                             newDate = new DateTime(newDate.Year, newDate.Month, newDate.Day);
                             newDate = newDate.AddDays(j);
 
-                            var newTicket = new Ticket(random.Next(1, 56), user.UserName, newDate, random.Next(1, 8));
+                            var newTicket = new Ticket(random.Next(1, 56), user.UserName, newDate, random.Next(1, 9));
 
                             var found = false;
                             foreach (var item in dbSet.Tickets.ToList())

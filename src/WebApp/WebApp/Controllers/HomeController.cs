@@ -17,12 +17,15 @@ namespace WebApp.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         private Room selectedRoom;
+        UserManager<IdentityUser> userManager;
+
 
         public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleMgr, UserManager<IdentityUser> userMgr, ApplicationDbContext con)
         {
             _logger = logger;
             _context = con;
             selectedRoom = new Room();
+            userManager = userMgr;
 
             if (first == true)
             {
@@ -73,7 +76,7 @@ namespace WebApp.Controllers
         }
 
         //the Room with boocked days/blocks
-        public IActionResult RoomView(string name)
+        public async Task<IActionResult> RoomView(string name)
         {
             var today = new DateTime();
             today = DateTime.Now;
@@ -120,10 +123,15 @@ namespace WebApp.Controllers
                 }
             }
 
+
+            List<EasyBookingCreator[]> betterDays = await EasyBookingCreator.CreateEasyBookingList(days, _context.Tickets.ToList(), userManager);
+
             //bring them to the front end
-            ViewBag.date = today;
-            ViewBag.Days = days;
+            //ViewBag.date = today;
+            ViewBag.Days = betterDays;
             ViewBag.Room = selectedRoom;
+
+            
 
             return PartialView("RoomView");
         }
