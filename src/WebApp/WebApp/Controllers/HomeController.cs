@@ -158,7 +158,7 @@ namespace WebApp.Controllers
         [HttpPost]
         public IActionResult CreatTickets(BookingClass selected)
         {
-
+            //the method called when you click Save (speicher)
 
             return Ok();
         }

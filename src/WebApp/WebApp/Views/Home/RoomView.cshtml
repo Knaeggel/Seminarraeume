@@ -7,6 +7,7 @@
     tempDate = DateTime.Now;
     
 }
+@*is the class for the "return" values*@
 @model BookingClass
 
 <!DOCTYPE html>
@@ -25,10 +26,12 @@
             <h5>Raum</h5>
         </div>
 
-        <form asp-action="CreatTickets">
+        @*asp-action is the Method wich get called*@
+        <form asp-action="CreatTickets" method="post">
             <div class="card-body">
                 <div class="row">
                     <div class="col form-group">
+                        @*asp-for is the attribut for the input*@
                         <label>Name:</label><br />
                         <input asp-for="room.RoomName" class="form-control" placeholder="@ViewBag.Room.RoomName"/>
                     </div>
