@@ -155,6 +155,18 @@ namespace WebApp.Controllers
             return PartialView("RoomView");
         }
 
+        [HttpPost]
+        public IActionResult CreatTickets(BookingClass selected)
+        {
+
+
+            return Ok();
+        }
+
+
+
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
