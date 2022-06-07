@@ -3,12 +3,10 @@
     public class BookingClass
     {
         public Room room { get; set; }
-        public DaysChecked[]days  { get; set; }
+        public DaysChecked[] days  { get; set; }
 
         public BookingClass()
         {
-            /*
-            room = new Room();
             days = new DaysChecked[14];
 
             DateTime date = DateTime.Now;
@@ -19,7 +17,6 @@
                 days[i] = new DaysChecked(date);
                 date = date.AddDays(1);
             }
-            */
         }
     }
 }

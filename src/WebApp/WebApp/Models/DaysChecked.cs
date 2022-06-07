@@ -3,7 +3,7 @@
     public class DaysChecked
     {
         public DateTime date { get; set; }
-        public string[] blocks { get; set; }
+        public bool[] blocks { get; set; }
 
         public DaysChecked()
         {
@@ -14,7 +14,7 @@
         {
             
             date = Date;
-            blocks = new string[8];
+            blocks = new bool[8];
             
         }
 

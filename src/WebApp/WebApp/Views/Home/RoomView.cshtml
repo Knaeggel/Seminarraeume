@@ -33,21 +33,21 @@
                     <div class="col form-group">
                         @*asp-for is the attribut for the input*@
                         <label>Name:</label><br />
-                        <input asp-for="room.RoomName" class="form-control" placeholder="@ViewBag.Room.RoomName"/>
+                        <input asp-for="room.RoomName" class="form-control" value="@ViewBag.Room.RoomName"/>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col form-group">
                         <label>Art:</label><br />
-                        <input asp-for="room.KindOfRoom" class="form-control" placeholder="@ViewBag.Room.KindOfRoom"/>
+                        <input asp-for="room.KindOfRoom" class="form-control" value="@ViewBag.Room.KindOfRoom"/>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col form-group">
                         <label>Größe:</label><br />
-                        <input asp-for="room.RoomSize" class="form-control" placeholder="@ViewBag.Room.RoomSize"/>
+                        <input asp-for="room.RoomSize" class="form-control" value="@ViewBag.Room.RoomSize"/>
                     </div>
                 </div>
 
@@ -63,7 +63,10 @@
                                         
                                     for (int i = 0; i < anzCol; i++)
                                     {
-                                                <th>@tempDate.ToString("dd.MM.yy")</th>
+                                                <th>
+                                                @tempDate.ToString("dd.MM.yy")
+                                                    <input type="text" asp-for="days[i].date" value="@tempDate.ToString("dd.MM.yy")"  hidden>
+                                                </th>
                                         tempDate = tempDate.AddDays(1);
                                     }
                                     }
@@ -106,7 +109,9 @@
                                         
                                     for (int i = anzCol; i < anzCol*2; i++)
                                     {
-                                                <th>@tempDate.ToString("dd.MM.yy")</th>
+                                                <th>@tempDate.ToString("dd.MM.yy")
+                                                    <input type="text" asp-for="days[i].date" value="@tempDate.ToString("dd.MM.yy")"  hidden>
+                                                </th>
                                         tempDate = tempDate.AddDays(1);
                                     }
                                     }
@@ -120,7 +125,7 @@
                                                 for (int j = anzCol; j < anzCol*2; j++)
                                                 {
                                                     <td class="irgendwasoderso">
-                                                        <input type="checkbox" id="checkbox-@j-@i">
+                                                        <input type="checkbox" asp-for="days[j].blocks[i]" id="checkbox-@j-@i">
                                                         @{
                                                             if (ViewBag.Days.ToArray()[j][i].bookable == "true") {
                                                                 <label class="@ViewBag.Days.ToArray()[j][i].classes" for="checkbox-@j-@i" isChecked="false" bookable="@ViewBag.Days.ToArray()[j][i].bookable">@ViewBag.Days.ToArray()[j][i].prettyRole</label>
