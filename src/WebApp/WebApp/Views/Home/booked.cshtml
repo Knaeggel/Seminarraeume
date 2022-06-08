@@ -26,7 +26,7 @@
             int i = 1;
             foreach (var item in ViewBag.Tickets)
             {
-                <tr>
+                <tr class="@item.getClass()">
                     <td scope="row">@i</td>
                     <td>@item.sDate</td>
                     <td>@item.Room</td>

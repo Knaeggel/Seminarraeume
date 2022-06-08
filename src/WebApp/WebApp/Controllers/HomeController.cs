@@ -54,7 +54,7 @@ namespace WebApp.Controllers
                     {
                         if (elem.Id == item.room)
                         {
-                            tickets.Add(new TicketShow(item.date.ToString("dd.MM.yyyy"), elem.RoomName, item.block));
+                            tickets.Add(new TicketShow(item.date.ToString("dd.MM.yyyy"), elem.RoomName, item.block, item.overbooked));
                             break;
                         }
                     }
