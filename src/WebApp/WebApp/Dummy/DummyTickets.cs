@@ -35,9 +35,10 @@ namespace WebApp.Dummy
                             var found = false;
                             foreach (var item in dbSet.Tickets.ToList())
                             {
-                                if (newTicket.compare(item))
+                                if (newTicket.same(item))
                                 {
                                     found = true;
+                                    break;
                                 }
                             }
 
@@ -74,9 +75,10 @@ namespace WebApp.Dummy
                             var found = false;
                             foreach (var item in dbSet.Tickets.ToList())
                             {
-                                if (newTicket.compare(item))
+                                if (newTicket.same(item))
                                 {
                                     found = true;
+                                    break;
                                 }
                             }
 

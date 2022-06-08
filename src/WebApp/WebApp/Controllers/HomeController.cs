@@ -156,9 +156,97 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreatTickets(BookingClass selected)
+        public async Task<IActionResult> CreatTicketsAsync(BookingClass selected)
         {
             //the method called when you click Save (speichern)
+            List<Ticket> newTickets = new List<Ticket>();
+            Ticket existingTicket = null;
+
+            for (int i = 0; i < selected.days.Length; i++)
+            {
+                for (int j = 0; j < selected.days[i].blocks.Length; j++)
+                {
+                    if (selected.days[i].blocks[j])
+                    {
+                        foreach (var item in _context.Rooms.ToList())
+                        {
+                            if (item.RoomName == selected.room.RoomName)
+                            {
+                                newTickets.Add(new Ticket(item.Id, User.Identity.Name, selected.days[i].date, j+1));
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (var newTicket in newTickets)
+            {
+                bool foundTicket = false;
+                foreach (var oldticket in _context.Ticktes.ToList())
+                {
+                    if (newTicket.same(oldticket))
+                    {
+                        existingTicket = oldticket;
+                        foundTicket = true;
+                        break;
+                    }
+                }
+
+                if (!foundTicket)
+                {
+                    _context.Tickets.Add(newTicket);
+                    _context.SaveChanges();
+                    Ticket ticket = null;
+
+                    foreach (var item in _context.Tickets.ToList())
+                    {
+                        if (item.compare(newTicket))
+                        {
+                            ticket = item;
+                            break;
+                        }
+                    }
+
+                    if (ticket != null)
+                    {
+                        Ticket.EditCreateDay(_context, ticket);
+                    }
+                }
+                else
+                {
+                    IList<string> role = null;
+                    IdentityUser user = null;
+
+                    user = await userManager.FindByNameAsync(existingTicket.user);
+                    role = await userManager.GetRolesAsync(user);
+
+                    if (role.ElementAt(0) == "Student")
+                    {
+                        existingTicket.overbooked = true;
+                        _context.Tickets.Update(existingTicket);
+                        _context.Tickets.Add(newTicket);
+                        _context.SaveChanges();
+
+                        Ticket ticket = null;
+
+                        foreach (var item in _context.Tickets.ToList())
+                        {
+                            if (item.compare(newTicket))
+                            {
+                                ticket = item;
+                                break;
+                            }
+                        }
+
+                        if (ticket != null)
+                        {
+                            Ticket.EditCreateDay(_context, ticket);
+                        }
+                    }
+                }
+
+            }
 
             return Ok();
         }

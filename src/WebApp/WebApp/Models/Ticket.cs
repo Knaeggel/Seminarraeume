@@ -11,6 +11,7 @@ namespace WebApp.Models
         public String user { get; set; }
         public DateTime date { get; set; }
         public int block { get; set; }
+        public bool overbooked { get; set; }
 
         public Ticket(int Room, String User, DateTime Date,int Block)
         {
@@ -22,7 +23,7 @@ namespace WebApp.Models
 
         public Ticket()
         {
-
+            overbooked = false;
         }
 
         public bool compare(Ticket othertTicket)
@@ -30,6 +31,18 @@ namespace WebApp.Models
             var ret = false;
 
             if (this.block == othertTicket.block && this.user.Equals(othertTicket.user) && this.room == othertTicket.room && this.date.ToString("dd.MM.yy").Equals(othertTicket.date.ToString("dd.MM.yy")))
+            {
+                ret = true;
+            }
+
+            return ret;
+        }
+
+        public bool same(Ticket otherTicket)
+        {
+            var ret = false;
+
+            if (this.block == otherTicket.block && this.room == otherTicket.room && this.date.ToString("dd.MM.yy").Equals(otherTicket.date.ToString("dd.MM.yy")))
             {
                 ret = true;
             }

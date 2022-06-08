@@ -81,7 +81,7 @@
                                                 {   
                                                     <td>
                                                         @{
-                                                            <input type="checkbox" asp-for="days[j].blocks[i]" id="checkbox-@j-@i">
+                                                            <input type="checkbox" asp-for="days[j].blocks[i]" id="checkbox-@j-@i" hidden>
                                                         
                                                             if (ViewBag.Days.ToArray()[j][i].bookable == "true") {
                                                                 <label class="@ViewBag.Days.ToArray()[j][i].classes" for="checkbox-@j-@i" isChecked="false" bookable="@ViewBag.Days.ToArray()[j][i].bookable">@ViewBag.Days.ToArray()[j][i].prettyRole</label>
@@ -125,7 +125,7 @@
                                                 for (int j = anzCol; j < anzCol*2; j++)
                                                 {
                                                     <td class="irgendwasoderso">
-                                                        <input type="checkbox" asp-for="days[j].blocks[i]" id="checkbox-@j-@i">
+                                                        <input type="checkbox" asp-for="days[j].blocks[i]" id="checkbox-@j-@i" hidden>
                                                         @{
                                                             if (ViewBag.Days.ToArray()[j][i].bookable == "true") {
                                                                 <label class="@ViewBag.Days.ToArray()[j][i].classes" for="checkbox-@j-@i" isChecked="false" bookable="@ViewBag.Days.ToArray()[j][i].bookable">@ViewBag.Days.ToArray()[j][i].prettyRole</label>

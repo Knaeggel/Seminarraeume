@@ -51,7 +51,7 @@ namespace WebApp.Dummy
                         Email = "Prof" + i + "@proOne.de"
                     };
 
-                    await userManager.CreateAsync(newUser, "Test" + i + ".");
+                    await userManager.CreateAsync(newUser, "Prof" + i + "@proOne.de");
 
                     user = await userManager.FindByNameAsync("Prof" + i + "@proOne.de");
                 }
