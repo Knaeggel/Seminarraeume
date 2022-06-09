@@ -117,7 +117,7 @@ namespace WebApp.Models
 
                 for (int i = 0; i < 8; i++)
                 {
-                    int id = day.getTicketId(i);
+                    int id = day.getTicketId(i+1);
                     EasyBookingCreator newBooking = null;
 
                     if (id != 0)

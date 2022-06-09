@@ -7,11 +7,14 @@
         public string Room { get; set; }
         public string times { get; set; }
 
-        public TicketShow(string sDate, string room, int block)
+        public bool overbooked { get; set; }
+
+        public TicketShow(string sDate, string room, int block, bool Overbooked)
         {
             this.sDate = sDate;
             Room = room;
             this.times = GetTimes(block);
+            overbooked = Overbooked;
         }
 
         public static string GetTimes(int block)
@@ -47,6 +50,18 @@
 
                 default:
                     break;
+            }
+
+            return ret;
+        }
+
+        public string getClass()
+        {
+            string ret = "";
+
+            if (overbooked)
+            {
+                ret = "overBooked";
             }
 
             return ret;
