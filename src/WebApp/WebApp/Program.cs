@@ -16,9 +16,6 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(
     options => {
         options.SignIn.RequireConfirmedAccount = false;
-        options.Password.RequiredLength = 0;
-        options.Password.RequireUppercase = false;
-        options.Password.RequireDigit = false;
         })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
