@@ -5,6 +5,7 @@ using System.Diagnostics;
 using WebApp.Dummy;
 using WebApp.Models;
 using WebApp.Data;
+using WebApp.Feature;
 
 namespace WebApp.Controllers
 {
@@ -34,7 +35,7 @@ namespace WebApp.Controllers
                 var dummyUsers = new DummyUsers(userMgr);
                 var DummyRooms = new DummyRooms(con);
                 var dummyTickets = new DummyTickets(con, userMgr);
-                
+
             }
 
             first = false;
@@ -221,7 +222,7 @@ namespace WebApp.Controllers
                     user = await userManager.FindByNameAsync(existingTicket.user);
                     role = await userManager.GetRolesAsync(user);
 
-                    if (role.ElementAt(0) == "Student")
+                    if (User.IsInRole("Prof") && role.ElementAt(0) == "Student")
                     {
                         existingTicket.overbooked = true;
                         _context.Tickets.Update(existingTicket);
@@ -243,6 +244,9 @@ namespace WebApp.Controllers
                         {
                             Ticket.EditCreateDay(_context, ticket);
                         }
+
+                        // Auto antwort wegen überbuchten tickets
+                        Mail.AutoEmail(existingTicket);
                     }
                 }
 

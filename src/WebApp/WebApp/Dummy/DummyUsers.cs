@@ -10,8 +10,8 @@ namespace WebApp.Dummy
         }
 
         public async Task FillDummy(UserManager<IdentityUser> userManager)
-        { 
-
+        {
+            
             for (int i = 1; i < 51; i++)
             {
                 var user = await userManager.FindByNameAsync("User" + i + "@proOne.de");
