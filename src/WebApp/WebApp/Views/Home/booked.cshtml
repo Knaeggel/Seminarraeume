@@ -19,6 +19,7 @@
                 <th scope="col">Date</th>
                 <th scope="col">Room</th>
                 <th scope="col">Time</th>
+                <th scope="col">Stornieren</th>
             </tr>
 
         @{
@@ -31,6 +32,9 @@
                     <td>@item.sDate</td>
                     <td>@item.Room</td>
                     <td>@item.times</td>
+                    <td>
+                        <button id="stornoButton" class = "btn btn-danger">Stornieren</button>
+                    </td>
                 </tr>
                 i++;
             }
