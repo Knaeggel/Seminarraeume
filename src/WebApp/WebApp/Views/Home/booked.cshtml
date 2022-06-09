@@ -4,15 +4,13 @@
 @{
 }
 
-<div class="overviewAndmyrooms">
+<div class="overviewAndmyrooms card">
 
-        <div>
+        <div class="card-header">
             <h2>Reservierte Räume</h2>
-            <ul>
-
-            </ul>
         </div>
 
+        <div class="card-body">
         <table class="myrooms table table-dark table-hover table-sm">
             <tr>
                 <th scope="col">#</th>
@@ -48,13 +46,12 @@
             }
         }
 
-        <div>
-            <form asp-action = "räume">
-                <button type="submit" class="btn-primary">Home</button>
-            </form>
+        </table>
         </div>
 
-
-        </table>
-        
+        <div class="card-body">
+            <form asp-action = "räume">
+                <button type="submit" class="btn btn-primary form-group">+ Ticket</button>
+            </form>
+        </div>
     </div>
