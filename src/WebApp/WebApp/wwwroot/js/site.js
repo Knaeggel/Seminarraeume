@@ -122,6 +122,6 @@ function checkT(Type, elem) {
 $(".roomButton").click(function() {
     let buttonName = $(this)[0].innerText.trim()
     let frame = $("#iFrameContainer")[0]
-    frame.innerHTML = "<iframe src=\"https://raumbuchenhs-offenburg.de/home/RoomView/?name="+ buttonName + "\" height=\"700\" width=\"600\"></iframe>"
+    frame.innerHTML = "<iframe src=\"/home/RoomView/?name="+ buttonName + "\" height=\"700\" width=\"600\"></iframe>"
     //frame.innerHTML = "<iframe src=\"https://www.op.gg/\" height=\"200\" width=\"300\"></iframe>"
 })
