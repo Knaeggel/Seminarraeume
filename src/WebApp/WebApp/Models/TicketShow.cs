@@ -8,13 +8,15 @@
         public string times { get; set; }
 
         public bool overbooked { get; set; }
+        public int id { get; set; }
 
-        public TicketShow(string sDate, string room, int block, bool Overbooked)
+        public TicketShow(string sDate, string room, int block, bool Overbooked, int id)
         {
             this.sDate = sDate;
             Room = room;
             this.times = GetTimes(block);
             overbooked = Overbooked;
+            this.id = id;
         }
 
         public static string GetTimes(int block)

@@ -54,7 +54,7 @@ namespace WebApp.Controllers
                     {
                         if (elem.Id == item.room)
                         {
-                            tickets.Add(new TicketShow(item.date.ToString("dd.MM.yyyy"), elem.RoomName, item.block, item.overbooked));
+                            tickets.Add(new TicketShow(item.date.ToString("dd.MM.yyyy"), elem.RoomName, item.block, item.overbooked, item.id));
                             break;
                         }
                     }
@@ -250,9 +250,56 @@ namespace WebApp.Controllers
 
             return Ok();
         }
+        
+        public IActionResult removeTicket(int id)
+        {
+
+            var tickedInDb = _context.Tickets.Find(id);            
+            
+            if(tickedInDb != null)
+            {
+                Day day = null;
+
+                foreach(var item in _context.Days.ToList())
+                {
+                    if(item.date == tickedInDb.date && item.Room == tickedInDb.room)
+                    {
+                        day = item;
+                        break;
+                    }
+                }
+
+                if (day != null)
+                {
+                    var ticketid = day.getTicketId(tickedInDb.block);
+                    var ticket = _context.Tickets.Find(ticketid);
+                    if(ticket != null)
+                    {
+                        if (ticket.compare(tickedInDb))
+                        {
+                            day.setBlock(tickedInDb.block, 0);
+                        }
+                        else
+                        {
+                            return BadRequest("This is not your Ticket ;)");
+                        }
+                    }
+                }
+                //_context.Tickets.Remove(tickedInDb);
+                tickedInDb.overbooked = true;
+                _context.Tickets.Update(tickedInDb);
 
 
 
+                _context.SaveChanges();
+            }
+            else
+            {
+                return BadRequest();
+            }
+            return RedirectToAction("booked");
+        }
+        
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

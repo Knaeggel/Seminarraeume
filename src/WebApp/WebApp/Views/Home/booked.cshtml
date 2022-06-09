@@ -19,7 +19,7 @@
                 <th scope="col">Date</th>
                 <th scope="col">Room</th>
                 <th scope="col">Time</th>
-                <th scope="col">Stornieren</th>
+                <th scope="col">Action</th>
             </tr>
 
         @{
@@ -33,12 +33,26 @@
                     <td>@item.Room</td>
                     <td>@item.times</td>
                     <td>
-                        <button id="stornoButton" class = "btn btn-danger">Stornieren</button>
+                        <form asp-action = "removeTicket" asp-route-id = "@item.id">
+                            @if(item.getClass() != "") {
+                                <button disabled id="stornoButton" type = "submit" class = "btn btn-secondary">Stornieren</button>
+                            } 
+                            else
+                            {
+                                <button id="stornoButton" type = "submit" class = "btn btn-danger">Stornieren</button>
+                            }
+                        </form>
                     </td>
                 </tr>
                 i++;
             }
         }
+
+        <div>
+            <form asp-action = "räume">
+                <button type="submit" class="btn-primary">Home</button>
+            </form>
+        </div>
 
 
         </table>
