@@ -23,8 +23,8 @@ namespace WebApp.Feature
                     Password = "9zYS3R5ZVrhxnjk",
                 },
             };
-            MailAddress FromEmail = new MailAddress("raumbuchenhs.offenburg@gmail.com", "Text keine Ahnung");
-            MailAddress ToEmail = new MailAddress(ticket.user, "Naechster Text");
+            MailAddress FromEmail = new MailAddress("raumbuchenhs.offenburg@gmail.com");
+            MailAddress ToEmail = new MailAddress(ticket.user);
             MailMessage messageToSend = new MailMessage()
             {
                 From = FromEmail,
