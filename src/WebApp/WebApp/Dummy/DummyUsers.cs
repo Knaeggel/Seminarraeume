@@ -12,7 +12,7 @@ namespace WebApp.Dummy
         public async Task FillDummy(UserManager<IdentityUser> userManager)
         {
             //dein Name fehlt
-            string mail = "";
+            string mail = "nec.oezcay@gmail.com";
             var tryUser = await userManager.FindByEmailAsync(mail);
 
             if (tryUser != null)

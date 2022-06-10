@@ -6,22 +6,39 @@ namespace WebApp.Feature
 {
     public class Mail
     {
-        public static async Task AutoEmail(Ticket ticket)
+        public static async void AutoEmail(Ticket ticket)
         {
 
             MailMessage message = new MailMessage();
-            SmtpClient smtp = new SmtpClient();
-            message.From = new MailAddress("raumbuchenhs.offenburg@gmail.com");
-            message.To.Add(new MailAddress(ticket.user));
-            message.Subject = "Ihr ausgewählter Raum wude überbucht" +" Raum: " + ticket.room + " Block: "+ticket.block.ToString();
-            message.IsBodyHtml = true; //to make message body as html  
-            smtp.Port = 465;
-            smtp.Host = "smtp.gmail.com"; //for gmail host  
-            smtp.EnableSsl = true;
-            smtp.UseDefaultCredentials = false;
-            smtp.Credentials = new NetworkCredential("raumbuchenhs.offenburg", "9zYS3R5ZVrhxnjk");
-            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-            smtp.Send(message);
+            SmtpClient smtp = new SmtpClient()
+            {
+                Host = "smpt.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential()
+                {
+                    UserName = "raumbuchenhs.offenburg.com",
+                    Password = "9zYS3R5ZVrhxnjk",
+                },
+            };
+            MailAddress FromEmail = new MailAddress("raumbuchenhs.offenburg@gmail.com", "Text keine Ahnung");
+            MailAddress ToEmail = new MailAddress(ticket.user, "Naechster Text");
+            MailMessage messageToSend = new MailMessage()
+            {
+                From = FromEmail,
+                Subject = "Raum ueberbucht",
+                Body = "Dein Raum wurde überbucht von einer Person mit höherer Priorität. Raum: " + ticket.room + " Block: " + ticket.block,
+            };
+            message.To.Add(ToEmail);
+            try
+            {
+                smtp.Send(messageToSend);
+            }catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 }
