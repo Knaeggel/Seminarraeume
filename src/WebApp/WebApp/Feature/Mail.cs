@@ -6,7 +6,7 @@ namespace WebApp.Feature
 {
     public class Mail
     {
-        public static async void AutoEmail(Ticket ticket)
+        public static async Task AutoEmail(Ticket ticket)
         {
 
             MailMessage message = new MailMessage();
