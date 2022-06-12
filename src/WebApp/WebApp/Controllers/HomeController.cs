@@ -31,12 +31,14 @@ namespace WebApp.Controllers
             if (first == true)
             {
                 //erstellen der dummy Daten
+                
                 var dummyRoles = new DummyRoles(roleMgr);
                 var dummyUsers = new DummyUsers(userMgr);
                 var DummyRooms = new DummyRooms(con);
                 var dummyTickets = new DummyTickets(con, userMgr);
 
             }
+
 
             first = false;
         }
@@ -71,7 +73,7 @@ namespace WebApp.Controllers
         public IActionResult räume()
         {
             //select all rooms
-            ViewBag.Rooms = _context.Rooms.ToList();
+                ViewBag.Rooms = _context.Rooms.ToList();
 
             return View();
         }
@@ -246,7 +248,7 @@ namespace WebApp.Controllers
                         }
 
                         // Auto antwort wegen überbuchten tickets
-                        Mail.AutoEmail(existingTicket);
+                        Mail.AutoEmail(existingTicket, _context);
                     }
                 }
 
