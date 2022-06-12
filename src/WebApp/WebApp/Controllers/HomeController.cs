@@ -248,7 +248,7 @@ namespace WebApp.Controllers
                         }
 
                         // Auto antwort wegen überbuchten tickets
-                        Mail.AutoEmail(existingTicket, _context);
+                        //Mail.AutoEmail(existingTicket, _context);
                     }
                 }
 

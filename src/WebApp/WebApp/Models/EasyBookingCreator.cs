@@ -145,9 +145,13 @@ namespace WebApp.Models
                             role = await userMgr.GetRolesAsync(user);
                         }
 
-                        if (role != null)
+                        if (role != null && role.Count() > 0)
                         {
                             newBooking = new EasyBookingCreator(role.ElementAt(0));
+                        }
+                        else
+                        {
+
                         }
                     }
                     else
