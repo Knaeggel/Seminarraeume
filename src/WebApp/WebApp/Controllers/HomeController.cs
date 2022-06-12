@@ -25,7 +25,6 @@ namespace WebApp.Controllers
         {
             _logger = logger;
             _context = con;
-            selectedRoom = new Room();
             userManager = userMgr;
 
             if (first == true)
@@ -73,7 +72,7 @@ namespace WebApp.Controllers
         public IActionResult räume()
         {
             //select all rooms
-                ViewBag.Rooms = _context.Rooms.ToList();
+            ViewBag.Rooms = _context.Rooms.ToList();
 
             return View();
         }
@@ -84,6 +83,7 @@ namespace WebApp.Controllers
             var today = new DateTime();
             today = DateTime.Now;
             List<Day> days = new List<Day>();
+            Room selectedRoom = new Room();
 
 
             if (name != null)
