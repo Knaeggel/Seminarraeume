@@ -19,6 +19,22 @@
             date = Date;
             Room = room;
 
+            setBlock(block, ticket_id);
+        }
+
+        public Day(DateTime Date)
+        {
+            date = Date;
+        }
+
+        public Day()
+        {
+
+        }
+
+        //for easyer set a bolock with the ticket id
+        public void setBlock(int block, int ticket_id)
+        {
             switch (block)
             {
                 case 1:
@@ -40,9 +56,30 @@
             }
         }
 
-        public Day()
+        public int getTicketId(int block)
         {
+            int id = 0;
 
+            switch (block)
+            {
+                case 1:
+                    id = Block1; break;
+                case 2:
+                    id = Block2; break;
+                case 3:
+                    id = Block3; break;
+                case 4:
+                    id = Block4; break;
+                case 5:
+                    id = Block5; break;
+                case 6:
+                    id = Block6; break;
+                case 7:
+                    id = Block7; break;
+                case 8:
+                    id = Block8; break;
+            }
+            return id;
         }
     }
 }

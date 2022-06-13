@@ -1,0 +1,170 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var anzCol = 7;
+    DateTime tempDate = new DateTime();
+    tempDate = DateTime.Now;
+    
+}
+@*is the class for the "return" values*@
+@model BookingClass
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RoomView</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebApp.styles.css" asp-append-version="true" />
+    <style>
+        .bookButtons{
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-header">
+            <h5>Raum</h5>
+        </div>
+
+        @*asp-action is the Method wich get called*@
+        <form asp-action="CreatTickets" method="post">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col form-group">
+                        @*asp-for is the attribut for the input*@
+                        <label>Name:</label><br />
+                        <input asp-for="room.RoomName" class="form-control" value="@ViewBag.Room.RoomName"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col form-group">
+                        <label>Art:</label><br />
+                        <input asp-for="room.KindOfRoom" class="form-control" value="@ViewBag.Room.KindOfRoom"/>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col form-group">
+                        <label>Größe:</label><br />
+                        <input asp-for="room.RoomSize" class="form-control" value="@ViewBag.Room.RoomSize"/>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col form-group">
+                        <div>
+                            <table class="table">
+                                <tr>
+                                    @{
+
+                                    //every loop is one row in the table
+                                        
+                                    for (int i = 0; i < anzCol; i++)
+                                    {
+                                                <th>
+                                                @tempDate.ToString("dd.MM.yy")
+                                                    <input type="text" asp-for="days[i].date" value="@tempDate.ToString("dd.MM.yy")"  hidden>
+                                                </th>
+                                        tempDate = tempDate.AddDays(1);
+                                    }
+                                    }
+                                </tr>
+
+                                @{
+                                    for (int i = 0; i < 8; i++)
+                                    {
+                                        <tr>
+                                            @{
+                                            for (int j = 0; j < 7; j++)
+                                                {   
+                                                    <td>
+                                                        @{
+                                                            <input type="checkbox" asp-for="days[j].blocks[i]" id="checkbox-@j-@i" hidden>
+                                                        
+                                                            if (ViewBag.Days.ToArray()[j][i].bookable == "true") {
+                                                                <label class="@ViewBag.Days.ToArray()[j][i].classes" for="checkbox-@j-@i" isChecked="false" bookable="@ViewBag.Days.ToArray()[j][i].bookable">@ViewBag.Days.ToArray()[j][i].prettyRole</label>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label class="@ViewBag.Days.ToArray()[j][i].classes" isChecked="false" bookable="@ViewBag.Days.ToArray()[j][i].bookable">@ViewBag.Days.ToArray()[j][i].prettyRole</label>
+                                                            }
+                                                        }
+                                                    </td>
+                                                }
+                                            }
+                                        </tr>
+                                    }
+                                }
+                                   
+                            </table>
+                        </div>
+                        <duv>
+                            <table class="table">
+                                <tr>
+                                    @{
+
+                                    //every loop is one row in the table
+                                        
+                                    for (int i = anzCol; i < anzCol*2; i++)
+                                    {
+                                                <th>@tempDate.ToString("dd.MM.yy")
+                                                    <input type="text" asp-for="days[i].date" value="@tempDate.ToString("dd.MM.yy")"  hidden>
+                                                </th>
+                                        tempDate = tempDate.AddDays(1);
+                                    }
+                                    }
+                                </tr>
+
+                                @{
+                                    for (int i = 0; i < 8; i++)
+                                    {
+                                        <tr>
+                                            @{
+                                                for (int j = anzCol; j < anzCol*2; j++)
+                                                {
+                                                    <td class="irgendwasoderso">
+                                                        <input type="checkbox" asp-for="days[j].blocks[i]" id="checkbox-@j-@i" hidden>
+                                                        @{
+                                                            if (ViewBag.Days.ToArray()[j][i].bookable == "true") {
+                                                                <label class="@ViewBag.Days.ToArray()[j][i].classes" for="checkbox-@j-@i" isChecked="false" bookable="@ViewBag.Days.ToArray()[j][i].bookable">@ViewBag.Days.ToArray()[j][i].prettyRole</label>
+                                                            }
+                                                            else
+                                                            {
+                                                                <label class="@ViewBag.Days.ToArray()[j][i].classes" isChecked="false" bookable="@ViewBag.Days.ToArray()[j][i].bookable">@ViewBag.Days.ToArray()[j][i].prettyRole</label>
+                                                            }
+                                                        }
+                                                    </td>
+                                                }
+                                            }
+                                        </tr>
+                                    }
+                                }
+
+                            </table>
+                        </duv>         
+                    </div>
+                </div>
+            </div>
+                    
+            <div class="card footer">
+                <button type="submit" class="btn btn-primary">Speichern</button>
+            </div>
+        </form>
+    </div>
+</body>
+<footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/RoomView.js" asp-append-version="true"></script>
+</footer>
+</html>
+
+

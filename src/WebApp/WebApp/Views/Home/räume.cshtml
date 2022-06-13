@@ -1,28 +1,75 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    //DateTime date = new DateTime();
+    //int anzCol = 7;
 }
 
-<div class="homeSite">
-        <div class="searchAndPic">
-            <div class="search">
-                <h1>Suche</h1>
+@model Room
 
-                <label for="buildingletter">Gebäude</label>
-                <input type="text" name="buildingletter" class="buildingletter" required>
+<script language="javascript" type="text/javascript" src="\wwwroot\js\site.js"></script>
+<div class="homeSite container">
+    <div class="row">
 
-                <label for="room">Raumnummer</label>
-                <input type="text" name="room" class="room" required>
+        <div class="col">
+            <div class="search card">
+                <div class="card-header">
+                    <h1>Suche</h1>
+                </div>
+                  <!--Search-->
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="Building">Gebäude</label>
+                        <select id="Building" name="Building" class="form-select" size="1" aria-label="">
+                            <option value="all" selected>All</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                            <option value="E">E</option>
+                        </select>
+                    </div>
 
-                <label for="seats">Anzahl Sitzplätze</label>
-                <input type="text" name="seats" class="seats" required>
+                    <div class="form-group">
+                        <label for="room">Raumnummer</label>
+                        <input id="RoomName" type="text" name="room" class="room form-control" required>
+                    </div>
 
-                <label for="whatkindofroom">Art des Raums</label>
-                <input type="text" name="whatkindofroom" class="whatkindofroom">
+                    <div class="form-group">
+                        <label for="seats">Anzahl Sitzplätze</label>
+                        <input id="RoomSize" type="text" name="seats" class="seats form-control" required>
+                    </div>
 
-                <button type="submit" class="searchButton">suchen</button>
-
+                    <div class="form-group">
+                        <label for="whatkindofroom">Raum Typ</label>
+                        <select id="Type" name="whatkindofroom" class="form-select" size="1" aria-label="">
+                            <option value="all" selected>All</option>
+                            <option value="PC-Raum">PC-Raum</option>
+                            <option value="Vorlesungssaal">Vorlesungssaal</option>
+                            <option value="Medienraum">Medienraum</option>
+                            <option value="Labor">Labor</option>
+                        </select>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <div class="col">
+        @{
+            //create buttens with some extra attributes
+            //they have to be in a form, because i couldnt hide the buttens by them self
+            foreach (var item in ViewBag.Rooms)
+            {
+                    
+                        <button type="button" class="roomButton btn btn-primary" roomsize="@item.RoomSize" roomtype="@item.KindOfRoom" >@item.RoomName</button>
+                    
+            }
+        }
+        </div>
+
+        <div id="iFrameContainer" class="col">
+            <!--
+                the Jave Script will insert the i frame if a room is selected(clicked)
+            -->
+        </div>
+
     </div>
+</div>

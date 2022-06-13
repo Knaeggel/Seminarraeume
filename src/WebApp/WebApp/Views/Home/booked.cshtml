@@ -4,41 +4,54 @@
 @{
 }
 
-<div class="overviewAndmyrooms">
+<div class="overviewAndmyrooms card">
 
-        <div>
+        <div class="card-header">
             <h2>Reservierte Räume</h2>
-            <ul>
-
-            </ul>
         </div>
 
+        <div class="card-body">
         <table class="myrooms table table-dark table-hover table-sm">
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Date</th>
                 <th scope="col">Room</th>
-                <th scope="col">Block</th>
+                <th scope="col">Time</th>
+                <th scope="col">Action</th>
             </tr>
 
         @{
+            //list of tickets
             int i = 1;
             foreach (var item in ViewBag.Tickets)
             {
-                if (item.user.Equals(User.Identity.Name))
-                {
-                    <tr>
-                        <th scope="row">@i</th>
-                        <td>@item.date</td>
-                        <td>@item.room</td>
-                        <td>@item.block</td>
-                    </tr>
-                    i++;
-                }
+                <tr class="@item.getClass()">
+                    <td scope="row">@i</td>
+                    <td>@item.sDate</td>
+                    <td>@item.Room</td>
+                    <td>@item.times</td>
+                    <td>
+                        <form asp-action = "removeTicket" asp-route-id = "@item.id">
+                            @if(item.getClass() != "") {
+                                <button disabled id="stornoButton" type = "submit" class = "btn btn-secondary">Stornieren</button>
+                            } 
+                            else
+                            {
+                                <button id="stornoButton" type = "submit" class = "btn btn-danger">Stornieren</button>
+                            }
+                        </form>
+                    </td>
+                </tr>
+                i++;
             }
         }
 
-
         </table>
-        
+        </div>
+
+        <div class="card-body">
+            <form asp-action = "räume">
+                <button type="submit" class="btn btn-primary form-group">+ Ticket</button>
+            </form>
+        </div>
     </div>
