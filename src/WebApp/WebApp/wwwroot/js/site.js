@@ -102,7 +102,7 @@ function checkS(Size, elem) {
 //check the name
 function checkN(Name, elem) {
     let ret = false;
-    let elemName = elem.innerText.trim().substring(0, Name.length)
+    let elemName = elem.innerText.trim().substring(1, Name.length + 1)
     if(elemName != Name && Name.length > 0) {
         ret = true;
     }
