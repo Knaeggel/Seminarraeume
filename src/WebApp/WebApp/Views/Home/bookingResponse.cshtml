@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>bookingResponse</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebApp.styles.css" asp-append-version="true" />
+</head>
+
+<body>
+
+    
+
+    <table class="myrooms table table-dark table-hover table-sm">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Date</th>
+                <th scope="col">Room</th>
+                <th scope="col">Time</th>
+                <th scope="col">Booked</th>
+            </tr>
+
+        @{
+        //list of tickets
+        int i = 1;
+        foreach (var item in ViewBag.bookedList)
+        {
+            <tr class="@item.getBookingResultClass()">
+                <td scope="row">@i</td>
+                <td>@item.sDate</td>
+                <td>@item.Room</td>
+                <td>@item.times</td>
+                <td>@item.suc</td>
+            </tr>
+            i++;
+        }
+    }
+
+    </table>
+
+</body>
+</html>

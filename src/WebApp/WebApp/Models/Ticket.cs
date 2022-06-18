@@ -152,6 +152,10 @@ namespace WebApp.Models
 
         }
 
+        public string getRoomName(ApplicationDbContext con)
+        {
+            return con.Rooms.Find(room).RoomName;
+        }
     
     }
 

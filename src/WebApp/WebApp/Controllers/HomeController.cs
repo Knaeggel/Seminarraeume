@@ -222,6 +222,8 @@ namespace WebApp.Controllers
                 }
             }
 
+            List<BookingResult> bookedList = new List<BookingResult>();
+            
             foreach (var newTicket in newTickets)
             {
                 bool foundTicket = false;
@@ -253,6 +255,7 @@ namespace WebApp.Controllers
                     if (ticket != null)
                     {
                         Ticket.EditCreateDay(_context, ticket);
+                        bookedList.Add(new BookingResult(ticket.date.ToString("dd.MM.yyyy"), ticket.getRoomName(_context), ticket.block, true));
                     }
                 }
                 else
@@ -283,12 +286,19 @@ namespace WebApp.Controllers
                         if (ticket != null)
                         {
                             Ticket.EditCreateDay(_context, ticket);
+                            bookedList.Add(new BookingResult(ticket.date.ToString("dd.MM.yyyy"), ticket.getRoomName(_context), ticket.block, true));
                         }
+
+                    }
+                    else
+                    {
+                        bookedList.Add(new BookingResult(newTicket.date.ToString("dd.MM.yyyy"), newTicket.getRoomName(_context), newTicket.block, false));
+                        //return BadRequest("Huh was ist den da Passiert, da war wohl jemand etwas schneller ;)");
                     }
                 }
             }
-
-            return Ok();
+            ViewBag.bookedList = bookedList;
+            return PartialView("bookingResponse");
         }
         
         public IActionResult removeTicket(int id)
