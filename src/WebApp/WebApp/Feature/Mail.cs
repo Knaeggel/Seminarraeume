@@ -7,7 +7,7 @@ namespace WebApp.Feature
 {
     public class Mail
     {
-        public static async Task AutoEmail(Ticket ticket, ApplicationDbContext con)
+        public static async Task AutoEmail(Ticket ticket, string con)
         {
 
            
@@ -24,14 +24,14 @@ namespace WebApp.Feature
                     Password = "iamdupzzvmabhmjl",
                 },
             };
-            var room = con.Rooms.Find(ticket.room);
+
             MailAddress FromEmail = new MailAddress("raumbuchenhs.offenburg@gmail.com", "Buchungssystem HS-Offenburg");
             MailAddress ToEmail = new MailAddress(ticket.user, "someone");
             MailMessage messageToSend = new MailMessage()
             {
                 From = FromEmail,
                 Subject = "Raum ueberbucht",
-                Body = "Dein Raum wurde überbucht von einer Person mit höherer Priorität. Raum: " + room.RoomName + " Block: " + ticket.block + " am " + ticket.date.ToString("dd.MM.yyyy")
+                Body = "Dein Raum wurde überbucht von einer Person mit höherer Priorität. Raum: " + con + " Uhrzeit: " + ticket.getTicketTime().ToString("HH:mm:ss") + " am " + ticket.date.ToString("dd.MM.yyyy")
             };
             messageToSend.To.Add(ToEmail);
             try

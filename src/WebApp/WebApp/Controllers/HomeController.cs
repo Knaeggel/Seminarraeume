@@ -289,6 +289,11 @@ namespace WebApp.Controllers
                         {
                             Ticket.EditCreateDay(_context, ticket);
                             bookedList.Add(new BookingResult(ticket.date.ToString("dd.MM.yyyy"), ticket.getRoomName(_context), ticket.block, true));
+                            if (!existingTicket.user.Contains("Prof") && !existingTicket.user.Contains("Tutor") && !existingTicket.user.Contains("User"))
+                            {
+                                Mail.AutoEmail(existingTicket, existingTicket.getRoomName(_context));
+                            }
+                            
                         }
 
                     }
@@ -302,6 +307,8 @@ namespace WebApp.Controllers
             ViewBag.bookedList = bookedList;
             return PartialView("bookingResponse");
         }
+
+        
         
         public IActionResult removeTicket(int id)
         {
