@@ -13,19 +13,19 @@ namespace WebApp.Feature
            
             SmtpClient smtp = new SmtpClient()
             {
-                Host = "smtp.gmail.com",
+                Host = "smtp.ionos.de",
                 Port = 587,
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential()
                 {
-                    UserName = "raumbuchenhs.offenburg@gmail.com",
-                    Password = "iamdupzzvmabhmjl",
+                    UserName = "necip.oezcay@raumbuchenhs-offenburg.de",
+                    Password = "Kai123!Nick",
                 },
             };
 
-            MailAddress FromEmail = new MailAddress("raumbuchenhs.offenburg@gmail.com", "Buchungssystem HS-Offenburg");
+            MailAddress FromEmail = new MailAddress("necip.oezcay@raumbuchenhs-offenburg.de", "Buchungssystem HS-Offenburg");
             MailAddress ToEmail = new MailAddress(ticket.user, "someone");
             MailMessage messageToSend = new MailMessage()
             {
