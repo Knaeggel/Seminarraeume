@@ -5,6 +5,7 @@ using System.Diagnostics;
 using WebApp.Dummy;
 using WebApp.Models;
 using WebApp.Data;
+using WebApp.Feature;
 using WebApp.Manager;
 
 namespace WebApp.Controllers
@@ -25,12 +26,12 @@ namespace WebApp.Controllers
         {
             _logger = logger;
             _context = con;
-            selectedRoom = new Room();
             userManager = userMgr;
 
             if (first == true)
             {
                 //erstellen der dummy Daten
+                
                 var dummyRoles = new DummyRoles(roleMgr);
                 var dummyUsers = new DummyUsers(userMgr);
                 var DummyRooms = new DummyRooms(con);
@@ -40,6 +41,7 @@ namespace WebApp.Controllers
                 }
                 
             }
+
 
             first = false;
         }
