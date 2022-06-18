@@ -52,7 +52,34 @@ namespace WebApp.Controllers
             List<TicketShow> tickets = new List<TicketShow>();
             foreach (var item in _context.Tickets.ToList())
             {
-                if (item.user.Equals(User.Identity.Name))
+                if (item.user.Equals(User.Identity.Name) && (DateTime.Now <= item.getTicketTime()))
+                {
+                    foreach (var elem in _context.Rooms.ToList())
+                    {
+                        if (elem.Id == item.room)
+                        {
+                            tickets.Add(new TicketShow(item.date.ToString("dd.MM.yyyy"), elem.RoomName, item.block, item.overbooked, item.id));
+                            break;
+                        }
+                    }
+                }
+            }
+
+            //you can unpack the ViewBag in the View
+            ViewBag.Tickets = tickets;
+            return View();
+        }
+
+        //shows history page
+        [Authorize]
+        public IActionResult history()
+        {
+            //find the booked tickets and slecet them in the list ticktes
+            List<TicketShow> tickets = new List<TicketShow>();
+            foreach (var item in _context.Tickets.ToList())
+            {
+
+                if ((item.user.Equals(User.Identity.Name)) && (DateTime.Now > item.getTicketTime()))
                 {
                     foreach (var elem in _context.Rooms.ToList())
                     {
