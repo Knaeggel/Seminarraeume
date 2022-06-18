@@ -1,0 +1,46 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="overviewAndmyrooms card">
+
+        <div class="card-header">
+            <h2>Reservierte Räume</h2>
+        </div>
+
+        <div class="card-body">
+        <table class="myrooms table table-dark table-hover table-sm">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Date</th>
+                <th scope="col">Room</th>
+                <th scope="col">Time</th>
+
+            </tr>
+
+        @{
+            //list of tickets
+            int i = 1;
+            foreach (var item in ViewBag.Tickets)
+            {
+                <tr class="@item.getClass()">
+                    <td scope="row">@i</td>
+                    <td>@item.sDate</td>
+                    <td>@item.Room</td>
+                    <td>@item.times</td>
+                </tr>
+                i++;
+            }
+        }
+
+        </table>
+        </div>
+
+        <div class="card-body">
+            <form asp-action = "räume">
+                <button type="submit" class="btn btn-primary form-group">+ Ticket</button>
+            </form>
+        </div>
+    </div>
