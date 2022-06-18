@@ -1,15 +1,16 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using WebApp.Manager;
 
 namespace WebApp.Models
 {
     public class EasyBookingCreator
     {
-        public string role;
+        public UserRoles role;
         public string classes;
         public string prettyRole;
-        public string bookable;
+        public string bookable = "false";
 
-        public EasyBookingCreator(string Role)
+        public EasyBookingCreator(UserRoles Role)
         {
             role = Role;
             classes = "buttonEmpty btncheck btn btn-outline-primary";
@@ -18,17 +19,17 @@ namespace WebApp.Models
 
             switch (role)
             {
-                case "Timetable":
+                case UserRoles.TimeTable:
                     classes = "buttonTT btncheck btn btn-outline-secondary";
                     prettyRole = "TT";
                     break;
 
-                case "Student":
+                case UserRoles.Student:
                     classes = "buttonStud btncheck btn btn-outline-success";
                     prettyRole = "Stud";
                     break;
 
-                case "Prof":
+                case UserRoles.Prof:
                     classes = "buttonProf btncheck btn btn-outline-danger";
                     prettyRole = "Prof";
                     break;
@@ -44,15 +45,15 @@ namespace WebApp.Models
             string ret = "<label class=\"buttonEmpty btn btn-outline-primary\" isChecked=\"false\" >Empty</label>";
             switch (role)
             {
-                case "Timetable":
+                case UserRoles.TimeTable:
                     ret = "<label class=\"buttonTT btn btn-outline-secondary\" isChecked=\"false\" >TT</label>";
                     break;
 
-                case "Student":
+                case UserRoles.Student:
                     ret = "< label class=\"buttonStud btn btn-outline-success\" isChecked=\"false\" >Stud</label>";
                     break;
 
-                case "Prof":
+                case UserRoles.Prof:
                     ret = "<label class=\"btn btn-outline - danger\" isChecked=\"false\" >Prof</label>";
                     break;
             }
@@ -83,25 +84,35 @@ namespace WebApp.Models
         }
         */
 
-        public void Overbookable(string otherRole)
+        public void Overbookable(UserRoles otherRole)
         {
-            var ret = "true";
+            var ret = "false";
+            
             switch (role)
             {
-                case "Timetable":
+                case UserRoles.TimeTable:
                     ret = "false";
                     break;
 
-                case "Prof":
+                case UserRoles.Prof:
                     ret = "false";
                     break;
 
-                case "Student":
-                    if (otherRole == "Student")
+                case UserRoles.Student:
+                    if (otherRole == UserRoles.Student)
                     {
                         ret = "false";
                     }
+                    else
+                    {
+                        ret = "true";
+                    }
                     break;
+            }
+
+            if (role == UserRoles.empty)
+            {
+                ret = "true";
             }
 
             bookable = ret;
@@ -139,20 +150,12 @@ namespace WebApp.Models
                         {
                             user = await userMgr.FindByNameAsync(ticket.user);
                         }
-
-                        if (user != null)
-                        {
-                            role = await userMgr.GetRolesAsync(user);
-                        }
-
-                        if (role != null)
-                        {
-                            newBooking = new EasyBookingCreator(role.ElementAt(0));
-                        }
+                        
+                        newBooking = new EasyBookingCreator(await RoleManagerP.getRole(userMgr, user));
                     }
                     else
                     {
-                        newBooking = new EasyBookingCreator("");
+                        newBooking = new EasyBookingCreator(UserRoles.empty);
                     }
 
                     tempArr[i] = newBooking;

@@ -5,6 +5,7 @@ using System.Diagnostics;
 using WebApp.Dummy;
 using WebApp.Models;
 using WebApp.Data;
+using WebApp.Manager;
 
 namespace WebApp.Controllers
 {
@@ -72,6 +73,11 @@ namespace WebApp.Controllers
         //the room search with view
         public IActionResult räume()
         {
+            if (User.Identity != null && User.Identity.Name != null)
+            {
+                addDefaultRole(User.Identity.Name).Wait();
+            }
+
             //select all rooms
             ViewBag.Rooms = _context.Rooms.ToList();
 
@@ -84,10 +90,15 @@ namespace WebApp.Controllers
             var today = new DateTime();
             today = DateTime.Now;
             List<Day> days = new List<Day>();
-
+            IdentityUser user = null;
 
             if (name != null)
             {
+                if (User.Identity != null && User.Identity.Name != null)
+                {
+                    user = await userManager.FindByNameAsync(User.Identity.Name);
+                }
+
 
                 //fiend the room
                 foreach (var item in _context.Rooms.ToList())
@@ -129,21 +140,22 @@ namespace WebApp.Controllers
 
             List<EasyBookingCreator[]> betterDays = await EasyBookingCreator.CreateEasyBookingList(days, _context.Tickets.ToList(), userManager);
 
+            UserRoles role = UserRoles.empty;
+            if (user != null)
+            {
+                role = await RoleManagerP.getRole(userManager, user);
+            }
+
             foreach (var item in betterDays)
             {
                 for(int i = 0; i < 8; i++)
                 {
-                    if (User.IsInRole("Prof"))
+                    item[i].bookable = "false";
+
+                    if (user != null)
                     {
-                        item[i].Overbookable("Prof");
-                    }
-                    else if (User.IsInRole("Student"))
-                    {
-                        item[i].Overbookable("Student");
-                    }
-                    else
-                    {
-                        item[i].bookable = "false";
+                        //increase search speed
+                        item[i].Overbookable(role);
                     }
                 }
             }
@@ -248,7 +260,6 @@ namespace WebApp.Controllers
                         }
                     }
                 }
-
             }
 
             return Ok();
@@ -292,8 +303,6 @@ namespace WebApp.Controllers
                 tickedInDb.overbooked = true;
                 _context.Tickets.Update(tickedInDb);
 
-
-
                 _context.SaveChanges();
             }
             else
@@ -309,6 +318,19 @@ namespace WebApp.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private async Task addDefaultRole(string userName)
+        {
+            var user = await userManager.FindByNameAsync(userName);
+            if (user != null)
+            {
+                var role = await RoleManagerP.getRole(userManager, user);
+                if (role == UserRoles.empty)
+                {
+                    await userManager.AddToRoleAsync(user, "Student");
+                }
+            }
         }
     }
 }
