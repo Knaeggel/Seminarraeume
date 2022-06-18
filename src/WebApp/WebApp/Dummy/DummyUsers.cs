@@ -39,6 +39,34 @@ namespace WebApp.Dummy
                 }
             }
 
+            for (int i = 1; i < 20; i++)
+            {
+                var user = await userManager.FindByNameAsync("Tutor" + i + "@proOne.de");
+
+                if (user == null)
+                {
+                    var newUser = new IdentityUser()
+                    {
+                        UserName = "Tutor" + i + "@proOne.de",
+                        Email = "Tutor" + i + "@proOne.de"
+                    };
+
+                    await userManager.CreateAsync(newUser, "Tutor" + i + "@proOne.de");
+
+                    user = await userManager.FindByNameAsync("Tutor" + i + "@proOne.de");
+                }
+
+                try
+                {
+                    await userManager.AddToRoleAsync(user, "Tutor");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+
+
             for (int i = 1; i < 11; i++)
             {
                 var user = await userManager.FindByNameAsync("Prof" + i + "@proOne.de");
@@ -65,8 +93,6 @@ namespace WebApp.Dummy
                     Console.WriteLine(ex.ToString());
                 }
             }
-
-
         }
     }
 }

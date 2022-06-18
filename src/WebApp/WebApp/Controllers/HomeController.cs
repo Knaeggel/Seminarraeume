@@ -230,13 +230,12 @@ namespace WebApp.Controllers
                 }
                 else
                 {
-                    IList<string> role = null;
                     IdentityUser user = null;
 
-                    user = await userManager.FindByNameAsync(existingTicket.user);
-                    role = await userManager.GetRolesAsync(user);
+                    user = await userManager.FindByNameAsync(User.Identity.Name);
+                    var role = await RoleManagerP.getRole(userManager, user);
 
-                    if (role.ElementAt(0) == "Student")
+                    if (await existingTicket.isOverbookable(userManager, role))
                     {
                         existingTicket.overbooked = true;
                         _context.Tickets.Update(existingTicket);

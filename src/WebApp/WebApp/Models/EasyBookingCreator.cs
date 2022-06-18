@@ -33,6 +33,11 @@ namespace WebApp.Models
                     classes = "buttonProf btncheck btn btn-outline-danger";
                     prettyRole = "Prof";
                     break;
+
+                case UserRoles.Tutor:
+                    classes = "buttonTutor btncheck btn btn-outline-warning";
+                    prettyRole = "Tutor";
+                    break;
             }
         }
         public EasyBookingCreator()
@@ -96,6 +101,18 @@ namespace WebApp.Models
 
                 case UserRoles.Prof:
                     ret = "false";
+                    break;
+
+                case UserRoles.Tutor:
+                    switch (otherRole)
+                    {
+                        case UserRoles.Prof:
+                            ret = "true";
+                            break;
+                        default:
+                            ret = "false";
+                            break;
+                    }
                     break;
 
                 case UserRoles.Student:

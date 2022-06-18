@@ -9,21 +9,28 @@ namespace WebApp.Manager
         public static async Task<UserRoles> getRole(UserManager<IdentityUser> userManager, IdentityUser user)
         {
             var role = UserRoles.empty;
-            if (await userManager.IsInRoleAsync(user, "Prof"))
+            var userRoles = await userManager.GetRolesAsync(user);
+
+            if (userRoles.Count > 0)
             {
-                role = UserRoles.Prof;
-            }
-            if (await userManager.IsInRoleAsync(user, "Tutor"))
-            {
-                role = UserRoles.Tutor;
-            }
-            if (await userManager.IsInRoleAsync(user, "Timetable"))
-            {
-                role = UserRoles.TimeTable;
-            }
-            if (await userManager.IsInRoleAsync(user, "Student"))
-            {
-                role = UserRoles.Student;
+                switch(userRoles.ElementAt(0))
+                {
+                    case "Timetable":
+                        role = UserRoles.TimeTable;
+                        break;
+
+                    case "Prof":
+                        role = UserRoles.Prof;
+                        break;
+
+                    case "Tutor":
+                        role = UserRoles.Tutor;
+                        break;
+
+                    case "Student":
+                        role = UserRoles.Student;
+                        break;
+                }
             }
 
             return role;

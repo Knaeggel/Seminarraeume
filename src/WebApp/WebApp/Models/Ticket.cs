@@ -1,4 +1,6 @@
-﻿using WebApp.Data;
+﻿using Microsoft.AspNetCore.Identity;
+using WebApp.Data;
+using WebApp.Manager;
 
 namespace WebApp.Models
 {
@@ -74,6 +76,44 @@ namespace WebApp.Models
                 dbSet.Update(day);
             }
             dbSet.SaveChanges();
+        }
+
+        public async Task<bool> isOverbookable(UserManager<IdentityUser> userMgr, UserRoles otherRole)
+        {
+            var ret = false;
+            var tempUser = await userMgr.FindByNameAsync(user);
+            var role = await RoleManagerP.getRole(userMgr, tempUser);
+
+            switch (role)
+            {
+                //wenn jemand will kann er gerne die cases vervollständigen
+                case UserRoles.TimeTable:
+                    ret = false;
+                    break;
+                case UserRoles.Prof:
+                    ret = false;
+                    break;
+                case UserRoles.Tutor:
+                    switch (otherRole)
+                    {
+                        case UserRoles.Prof:
+                            ret = true;
+                            break;
+                        default:
+                            ret = false;
+                            break;
+                    }
+                    break;
+                case UserRoles.Student:
+                    if (otherRole != UserRoles.Student)
+                    {
+                        ret = true;
+                    }
+                    break;
+            }
+
+            return ret;
+
         }
 
     }

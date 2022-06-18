@@ -23,6 +23,11 @@ $(".btncheck").click(function () {
 					ret = "btn-danger";
 					break;
 
+				case "btn-outline-warning":
+					this.classList.remove("btn-outline-warning")
+					ret = "btn-warning";
+					break;
+
 				default:
 					ret = "";
 					break;
@@ -49,6 +54,11 @@ $(".btncheck").click(function () {
 				case "btn-danger":
 					this.classList.remove("btn-danger")
 					ret = "btn-outline-danger";
+					break;
+
+				case "btn-warning":
+					this.classList.remove("btn-warning")
+					ret = "btn-outline-warning";
 					break;
 
 				default:
