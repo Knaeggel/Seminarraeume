@@ -51,7 +51,7 @@ namespace WebApp.Controllers
             List<TicketShow> tickets = new List<TicketShow>();
             foreach (var item in _context.Tickets.ToList())
             {
-                if (item.user.Equals(User.Identity.Name) && (DateTime.Now <= item.date))
+                if (item.user.Equals(User.Identity.Name) && (DateTime.Now <= item.getTicketTime()))
                 {
                     foreach (var elem in _context.Rooms.ToList())
                     {
@@ -77,7 +77,8 @@ namespace WebApp.Controllers
             List<TicketShow> tickets = new List<TicketShow>();
             foreach (var item in _context.Tickets.ToList())
             {
-                if ((item.user.Equals(User.Identity.Name)) && (DateTime.Now > item.date))
+
+                if ((item.user.Equals(User.Identity.Name)) && (DateTime.Now > item.getTicketTime()))
                 {
                     foreach (var elem in _context.Rooms.ToList())
                     {
