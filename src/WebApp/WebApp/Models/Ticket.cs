@@ -42,7 +42,7 @@ namespace WebApp.Models
         {
             var ret = false;
 
-            if (this.block == otherTicket.block && this.room == otherTicket.room && this.date.ToString("dd.MM.yy").Equals(otherTicket.date.ToString("dd.MM.yy")))
+            if (this.block == otherTicket.block && this.room == otherTicket.room && this.date.ToString("dd.MM.yy").Equals(otherTicket.date.ToString("dd.MM.yy")) && !this.overbooked && !otherTicket.overbooked)
             {
                 ret = true;
             }
