@@ -334,7 +334,7 @@ namespace WebApp.Controllers
                     var ticket = _context.Tickets.Find(ticketid);
                     if(ticket != null)
                     {
-                        if (ticket.compare(tickedInDb))
+                        if (tickedInDb.user == User.Identity.Name)
                         {
                             day.setBlock(tickedInDb.block, 0);
                         }
