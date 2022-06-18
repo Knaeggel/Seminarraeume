@@ -66,13 +66,14 @@
                                     @{
 
                                     //every loop is one row in the table
+                                    <th></th>
                                         
                                     for (int i = 0; i < anzCol; i++)
                                     {
-                                                <th>
-                                                @tempDate.ToString("dd.MM.yy")
-                                                    <input type="text" asp-for="days[i].date" value="@tempDate.ToString("dd.MM.yy")"  hidden>
-                                                </th>
+                                        <th>
+                                        @tempDate.ToString("dd.MM.yy")
+                                            <input type="text" asp-for="days[i].date" value="@tempDate.ToString("dd.MM.yy")"  hidden>
+                                        </th>
                                         tempDate = tempDate.AddDays(1);
                                     }
                                     }
@@ -81,26 +82,30 @@
                                 @{
                                     for (int i = 0; i < 8; i++)
                                     {
-                                        <tr>
-                                            @{
+                                            <tr>
+                                                <td>
+                                                @TicketShow.GetTimes(i+1)
+                                                </td>
+
+                                                @{
                                             for (int j = 0; j < 7; j++)
                                                 {   
-                                                    <td>
-                                                        @{
-                                                            <input type="checkbox" asp-for="days[j].blocks[i]" id="checkbox-@j-@i" hidden>
+                                                            <td>
+                                                                @{
+                                                                        <input type="checkbox" asp-for="days[j].blocks[i]" id="checkbox-@j-@i" hidden>
                                                         
                                                             if (ViewBag.Days.ToArray()[j][i].bookable == "true") {
-                                                                <label class="@ViewBag.Days.ToArray()[j][i].classes" for="checkbox-@j-@i" isChecked="false" bookable="@ViewBag.Days.ToArray()[j][i].bookable">@ViewBag.Days.ToArray()[j][i].prettyRole</label>
+                                                                            <label class="@ViewBag.Days.ToArray()[j][i].classes" for="checkbox-@j-@i" isChecked="false" bookable="@ViewBag.Days.ToArray()[j][i].bookable">@ViewBag.Days.ToArray()[j][i].prettyRole</label>
                                                             }
                                                             else
                                                             {
-                                                                <label class="@ViewBag.Days.ToArray()[j][i].classes" isChecked="false" bookable="@ViewBag.Days.ToArray()[j][i].bookable">@ViewBag.Days.ToArray()[j][i].prettyRole</label>
+                                                                            <label class="@ViewBag.Days.ToArray()[j][i].classes" isChecked="false" bookable="@ViewBag.Days.ToArray()[j][i].bookable">@ViewBag.Days.ToArray()[j][i].prettyRole</label>
                                                             }
-                                                        }
-                                                    </td>
+                                                                }
+                                                            </td>
                                                 }
-                                            }
-                                        </tr>
+                                                }
+                                            </tr>
                                     }
                                 }
                                    
@@ -111,13 +116,13 @@
                                 <tr>
                                     @{
 
+                                    <th></th>
                                     //every loop is one row in the table
-                                        
                                     for (int i = anzCol; i < anzCol*2; i++)
                                     {
-                                                <th>@tempDate.ToString("dd.MM.yy")
-                                                    <input type="text" asp-for="days[i].date" value="@tempDate.ToString("dd.MM.yy")"  hidden>
-                                                </th>
+                                                    <th>@tempDate.ToString("dd.MM.yy")
+                                                        <input type="text" asp-for="days[i].date" value="@tempDate.ToString("dd.MM.yy")"  hidden>
+                                                    </th>
                                         tempDate = tempDate.AddDays(1);
                                     }
                                     }
@@ -126,23 +131,28 @@
                                 @{
                                     for (int i = 0; i < 8; i++)
                                     {
+                                        
                                         <tr>
+                                            <td>
+                                            @TicketShow.GetTimes(i+1)
+                                            </td>
                                             @{
-                                                for (int j = anzCol; j < anzCol*2; j++)
-                                                {
-                                                    <td class="irgendwasoderso">
-                                                        <input type="checkbox" asp-for="days[j].blocks[i]" id="checkbox-@j-@i" hidden>
-                                                        @{
-                                                            if (ViewBag.Days.ToArray()[j][i].bookable == "true") {
+                                            for (int j = anzCol; j < anzCol*2; j++)
+                                            {
+                                                    
+                                                <td class="irgendwasoderso">
+                                                    <input type="checkbox" asp-for="days[j].blocks[i]" id="checkbox-@j-@i" hidden>
+                                                    @{
+                                                if (ViewBag.Days.ToArray()[j][i].bookable == "true") {
                                                                 <label class="@ViewBag.Days.ToArray()[j][i].classes" for="checkbox-@j-@i" isChecked="false" bookable="@ViewBag.Days.ToArray()[j][i].bookable">@ViewBag.Days.ToArray()[j][i].prettyRole</label>
-                                                            }
-                                                            else
-                                                            {
-                                                                <label class="@ViewBag.Days.ToArray()[j][i].classes" isChecked="false" bookable="@ViewBag.Days.ToArray()[j][i].bookable">@ViewBag.Days.ToArray()[j][i].prettyRole</label>
-                                                            }
-                                                        }
-                                                    </td>
                                                 }
+                                                else
+                                                {
+                                                                <label class="@ViewBag.Days.ToArray()[j][i].classes" isChecked="false" bookable="@ViewBag.Days.ToArray()[j][i].bookable">@ViewBag.Days.ToArray()[j][i].prettyRole</label>
+                                                }
+                                                    }
+                                                </td>
+                                            }
                                             }
                                         </tr>
                                     }

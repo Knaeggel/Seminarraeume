@@ -102,7 +102,7 @@ function checkS(Size, elem) {
 //check the name
 function checkN(Name, elem) {
     let ret = false;
-    let elemName = elem.innerText.trim().substring(0, Name.length)
+    let elemName = elem.innerText.trim().substring(1, Name.length + 1)
     if(elemName != Name && Name.length > 0) {
         ret = true;
     }
@@ -122,6 +122,6 @@ function checkT(Type, elem) {
 $(".roomButton").click(function() {
     let buttonName = $(this)[0].innerText.trim()
     let frame = $("#iFrameContainer")[0]
-    frame.innerHTML = "<iframe src=\"/home/RoomView/?name="+ buttonName + "\" height=\"700\" width=\"600\"></iframe>"
+    frame.innerHTML = "<iframe src=\"/home/RoomView/?name="+ buttonName + "\" height=\"700\" width=\"650\"></iframe>"
     //frame.innerHTML = "<iframe src=\"https://www.op.gg/\" height=\"200\" width=\"300\"></iframe>"
 })
