@@ -26,28 +26,28 @@
             switch (block)
             {
                 case 1:
-                    ret = "8:00 - 9:30";
+                    ret = "08:00 - 09:30";
                     break;
                 case 2:
-                    ret = "9:45-11:15";
+                    ret = "09:45 - 11:15";
                     break;
                 case 3:
-                    ret = "11:35-13:05";
+                    ret = "11:35 - 13:05";
                     break;
                 case 4:
-                    ret = "14:00-15:30";
+                    ret = "14:00 - 15:30";
                     break;
                 case 5:
-                    ret = "15:45-17:15";
+                    ret = "15:45 - 17:15";
                     break;
                 case 6:
-                    ret = "17:30-19:00";
+                    ret = "17:30 - 19:00";
                     break;
                 case 7:
-                    ret = "19:15-20:45";
+                    ret = "19:15 - 20:45";
                     break;
                 case 8:
-                    ret = "21:00-22:30";
+                    ret = "21:00 - 22:30";
                     break;
 
                 default:

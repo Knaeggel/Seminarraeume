@@ -12,7 +12,8 @@ namespace WebApp.Dummy
             {
                 "Student",
                 "Prof",
-                "Timetable"
+                "Timetable",
+                "Tutor"
             };
 
             FillDummy(roleManager).Wait();

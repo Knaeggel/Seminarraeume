@@ -10,8 +10,8 @@ namespace WebApp.Dummy
         }
 
         public async Task FillDummy(UserManager<IdentityUser> userManager)
-        { 
-
+        {
+            //dein Name fehlt
             for (int i = 1; i < 51; i++)
             {
                 var user = await userManager.FindByNameAsync("User" + i + "@proOne.de");
@@ -27,17 +27,45 @@ namespace WebApp.Dummy
                     await userManager.CreateAsync(newUser, "User" + i + "@proOne.de");
 
                     user = await userManager.FindByNameAsync("User" + i + "@proOne.de");
+
+                    try
+                    {
+                        await userManager.AddToRoleAsync(user, "Student");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                    }
+                }
+            }
+
+            for (int i = 1; i < 20; i++)
+            {
+                var user = await userManager.FindByNameAsync("Tutor" + i + "@proOne.de");
+
+                if (user == null)
+                {
+                    var newUser = new IdentityUser()
+                    {
+                        UserName = "Tutor" + i + "@proOne.de",
+                        Email = "Tutor" + i + "@proOne.de"
+                    };
+
+                    await userManager.CreateAsync(newUser, "Tutor" + i + "@proOne.de");
+
+                    user = await userManager.FindByNameAsync("Tutor" + i + "@proOne.de");
                 }
 
                 try
                 {
-                    await userManager.AddToRoleAsync(user, "Student");
+                    await userManager.AddToRoleAsync(user, "Tutor");
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.ToString());
                 }
             }
+
 
             for (int i = 1; i < 11; i++)
             {
@@ -54,19 +82,17 @@ namespace WebApp.Dummy
                     await userManager.CreateAsync(newUser, "Prof" + i + "@proOne.de");
 
                     user = await userManager.FindByNameAsync("Prof" + i + "@proOne.de");
-                }
 
-                try
-                {
-                    await userManager.AddToRoleAsync(user, "Prof");
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
+                    try
+                    {
+                        await userManager.AddToRoleAsync(user, "Prof");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                    }
                 }
             }
-
-
         }
     }
 }

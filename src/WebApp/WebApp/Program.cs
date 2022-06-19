@@ -4,12 +4,12 @@ using WebApp.Data;
 using WebApp.Dummy;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-// Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+// Add services to the container
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(connectionString));;
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -56,7 +56,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=r‰ume}/{id?}");
+    pattern: "{controller=Home}/{action=r√§ume}/{id?}");
 app.MapRazorPages();
 
 app.Run();

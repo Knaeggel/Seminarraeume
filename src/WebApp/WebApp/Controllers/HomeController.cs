@@ -5,6 +5,8 @@ using System.Diagnostics;
 using WebApp.Dummy;
 using WebApp.Models;
 using WebApp.Data;
+using WebApp.Feature;
+using WebApp.Manager;
 
 namespace WebApp.Controllers
 {
@@ -24,18 +26,22 @@ namespace WebApp.Controllers
         {
             _logger = logger;
             _context = con;
-            selectedRoom = new Room();
             userManager = userMgr;
 
             if (first == true)
             {
                 //erstellen der dummy Daten
+                
                 var dummyRoles = new DummyRoles(roleMgr);
                 var dummyUsers = new DummyUsers(userMgr);
                 var DummyRooms = new DummyRooms(con);
-                var dummyTickets = new DummyTickets(con, userMgr);
+                if (false)
+                {
+                    var dummyTickets = new DummyTickets(con, userMgr);
+                }
                 
             }
+
 
             first = false;
         }
@@ -48,7 +54,34 @@ namespace WebApp.Controllers
             List<TicketShow> tickets = new List<TicketShow>();
             foreach (var item in _context.Tickets.ToList())
             {
-                if (item.user.Equals(User.Identity.Name))
+                if (item.user.Equals(User.Identity.Name) && (DateTime.Now <= item.getTicketTime()))
+                {
+                    foreach (var elem in _context.Rooms.ToList())
+                    {
+                        if (elem.Id == item.room)
+                        {
+                            tickets.Add(new TicketShow(item.date.ToString("dd.MM.yyyy"), elem.RoomName, item.block, item.overbooked, item.id));
+                            break;
+                        }
+                    }
+                }
+            }
+
+            //you can unpack the ViewBag in the View
+            ViewBag.Tickets = tickets;
+            return View();
+        }
+
+        //shows history page
+        [Authorize]
+        public IActionResult history()
+        {
+            //find the booked tickets and slecet them in the list ticktes
+            List<TicketShow> tickets = new List<TicketShow>();
+            foreach (var item in _context.Tickets.ToList())
+            {
+
+                if ((item.user.Equals(User.Identity.Name)) && (DateTime.Now > item.getTicketTime()))
                 {
                     foreach (var elem in _context.Rooms.ToList())
                     {
@@ -69,6 +102,11 @@ namespace WebApp.Controllers
         //the room search with view
         public IActionResult räume()
         {
+            if (User.Identity != null && User.Identity.Name != null)
+            {
+                addDefaultRole(User.Identity.Name).Wait();
+            }
+
             //select all rooms
             ViewBag.Rooms = _context.Rooms.ToList();
 
@@ -81,10 +119,15 @@ namespace WebApp.Controllers
             var today = new DateTime();
             today = DateTime.Now;
             List<Day> days = new List<Day>();
-
+            IdentityUser user = null;
 
             if (name != null)
             {
+                if (User.Identity != null && User.Identity.Name != null)
+                {
+                    user = await userManager.FindByNameAsync(User.Identity.Name);
+                }
+
 
                 //fiend the room
                 foreach (var item in _context.Rooms.ToList())
@@ -126,21 +169,22 @@ namespace WebApp.Controllers
 
             List<EasyBookingCreator[]> betterDays = await EasyBookingCreator.CreateEasyBookingList(days, _context.Tickets.ToList(), userManager);
 
+            UserRoles role = UserRoles.empty;
+            if (user != null)
+            {
+                role = await RoleManagerP.getRole(userManager, user);
+            }
+
             foreach (var item in betterDays)
             {
                 for(int i = 0; i < 8; i++)
                 {
-                    if (User.IsInRole("Prof"))
+                    item[i].bookable = "false";
+
+                    if (user != null)
                     {
-                        item[i].Overbookable("Prof");
-                    }
-                    else if (User.IsInRole("Student"))
-                    {
-                        item[i].Overbookable("Student");
-                    }
-                    else
-                    {
-                        item[i].bookable = "false";
+                        //increase search speed
+                        item[i].Overbookable(role);
                     }
                 }
             }
@@ -180,6 +224,8 @@ namespace WebApp.Controllers
                 }
             }
 
+            List<BookingResult> bookedList = new List<BookingResult>();
+            
             foreach (var newTicket in newTickets)
             {
                 bool foundTicket = false;
@@ -211,17 +257,17 @@ namespace WebApp.Controllers
                     if (ticket != null)
                     {
                         Ticket.EditCreateDay(_context, ticket);
+                        bookedList.Add(new BookingResult(ticket.date.ToString("dd.MM.yyyy"), ticket.getRoomName(_context), ticket.block, true));
                     }
                 }
                 else
                 {
-                    IList<string> role = null;
                     IdentityUser user = null;
 
-                    user = await userManager.FindByNameAsync(existingTicket.user);
-                    role = await userManager.GetRolesAsync(user);
+                    user = await userManager.FindByNameAsync(User.Identity.Name);
+                    var role = await RoleManagerP.getRole(userManager, user);
 
-                    if (role.ElementAt(0) == "Student")
+                    if (await existingTicket.isOverbookable(userManager, role))
                     {
                         existingTicket.overbooked = true;
                         _context.Tickets.Update(existingTicket);
@@ -242,14 +288,27 @@ namespace WebApp.Controllers
                         if (ticket != null)
                         {
                             Ticket.EditCreateDay(_context, ticket);
+                            bookedList.Add(new BookingResult(ticket.date.ToString("dd.MM.yyyy"), ticket.getRoomName(_context), ticket.block, true));
+                            if (!existingTicket.user.Contains("Prof") && !existingTicket.user.Contains("Tutor") && !existingTicket.user.Contains("User"))
+                            {
+                                Mail.AutoEmail(existingTicket, existingTicket.getRoomName(_context));
+                            }
+                            
                         }
+
+                    }
+                    else
+                    {
+                        bookedList.Add(new BookingResult(newTicket.date.ToString("dd.MM.yyyy"), newTicket.getRoomName(_context), newTicket.block, false));
+                        //return BadRequest("Huh was ist den da Passiert, da war wohl jemand etwas schneller ;)");
                     }
                 }
-
             }
-
-            return Ok();
+            ViewBag.bookedList = bookedList;
+            return PartialView("bookingResponse");
         }
+
+        
         
         public IActionResult removeTicket(int id)
         {
@@ -275,7 +334,7 @@ namespace WebApp.Controllers
                     var ticket = _context.Tickets.Find(ticketid);
                     if(ticket != null)
                     {
-                        if (ticket.compare(tickedInDb))
+                        if (tickedInDb.user == User.Identity.Name)
                         {
                             day.setBlock(tickedInDb.block, 0);
                         }
@@ -288,8 +347,6 @@ namespace WebApp.Controllers
                 //_context.Tickets.Remove(tickedInDb);
                 tickedInDb.overbooked = true;
                 _context.Tickets.Update(tickedInDb);
-
-
 
                 _context.SaveChanges();
             }
@@ -306,6 +363,19 @@ namespace WebApp.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private async Task addDefaultRole(string userName)
+        {
+            var user = await userManager.FindByNameAsync(userName);
+            if (user != null)
+            {
+                var role = await RoleManagerP.getRole(userManager, user);
+                if (role == UserRoles.empty)
+                {
+                    await userManager.AddToRoleAsync(user, "Student");
+                }
+            }
         }
     }
 }
