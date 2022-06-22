@@ -1,4 +1,4 @@
-﻿@model Ticket
+﻿@model TicketShow
 
 <div class="card">
     <div class="card-header">
@@ -6,30 +6,36 @@
     </div>
 
     <div class="card-body">
-        <table>
+        <table class="myrooms table table-dark table-hover table-sm">
             <tr>
-                <th>Raum</th>
-                <th>Zeit</th>
-                <th>Action</th>
+                <th scope="col">#</th>
+                <th scope="col">Raum</th>
+                <th scope="col">Zeit</th>
+                <th scope="col">Action</th>
             </tr>
 
             @{
+                int i = 1;
                 foreach(var item in ViewBag.items)
                 {
                     <tr>
-                        <form asp-action="BookWithTicket" method="post">
-                            <input type="text" asp-for="date" value="@item.sDate" hidden disabled />
-                            <td><input type="text" asp-for="room" value="@item.room" hidden disabled /> @item.room</td>
-                            <td><input type="text" asp-for="block" value="@item.getBlock()" hidden disabled />@item.times</td>
-                            <td><button class="btn btn-primary" type="submit">Buchen</button></td>
+                        <form asp-action="BookWithTicket">
+                            <td scope="row"><input type="text" asp-for="sDate" value="@item.sDate" hidden /> @i</td>
+                            <td scope="row"><input type="text" asp-for="Room" value="@item.Room" hidden /> @item.Room</td>
+                            <td scope="row"><input type="text" asp-for="times" value="@item.times" hidden />@item.times</td>
+                            <input type="number" asp-for="id" value="@item.id" hidden disabled />
+                            <td scope="row"><button class="btn btn-primary" type="submit">Buchen</button></td>
                         </form>
                     </tr>
+                    i++;
                 }
             }
         </table>
     </div>
 
     <div class="card-footer">
-        <button class="btn btn-primary" type="submit" asp-controller="Home" asp-action="räume">Home</button>
+        <form asp-action="räume">
+            <button class="btn btn-primary" type="submit">Home</button>
+        </form>
     </div>
 </div>

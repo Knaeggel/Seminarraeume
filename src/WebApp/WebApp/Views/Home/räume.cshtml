@@ -3,7 +3,7 @@
     //int anzCol = 7;
 }
 
-@model Room
+@model Ticket
 
 <div class="homeSite container">
     <div class="row">
@@ -61,12 +61,12 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label for="inputDate">Datum</label>
-                            <input type="date" id="inputDate" class="form-control" asp-route-date=""/>
+                            <input type="date" id="inputDate" class="form-control" asp-for="date"/>
                         </div>
                         
                         <div class="form-group">
                             <label for="inputNumber">block</label>
-                            <input type="number" id="inputNumber" class="form-control" asp-route-block=""/>
+                            <input type="number" id="inputNumber" class="form-control" asp-for="block"/>
                         </div>
                     </div>
 

@@ -362,58 +362,74 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult DateSearch(DateTime date, int block)
+        public IActionResult DateSearch(Ticket ticket)
         {
-            List<TicketShow> items = new List<TicketShow>();
-
-            foreach (var room in _context.Rooms.ToList())
+            if (ticket.date != null && ticket.block != 0)
             {
-                var found = false;
-                var refDay = new DateTime(date.Year, date.Month, date.Day);
-                foreach (var day in _context.Days.ToList())
+                DateTime date = ticket.getTicketTime().AddMinutes(-90);
+                List<TicketShow> items = new List<TicketShow>();
+
+                foreach (var room in _context.Rooms.ToList())
                 {
-                    if (day.date == refDay && day.Room == room.Id)
+                    var found = false;
+                    var refDay = new DateTime(date.Year, date.Month, date.Day);
+                    foreach (var day in _context.Days.ToList())
                     {
-                        var ticketid = day.getTicketIdByDate(date);
-                        if (ticketid == 0)
+                        if (day.date == refDay && day.Room == room.Id)
                         {
-                            items.Add(new TicketShow(date.ToString("dd.MM.yyyy"), room.RoomName, date.ToString("HH:mm")));
+                            var ticketid = day.getTicketIdByDate(date);
+                            if (ticketid == 0)
+                            {
+                                items.Add(new TicketShow(date.ToString("dd.MM.yyyy"), room.RoomName, TicketShow.GetTimes(ticket.block), room.Id));
+                            }
+                            found = true;
                         }
-                        found = true;
+                    }
+
+                    if (!found)
+                    {
+                        items.Add(new TicketShow(date.ToString("dd.MM.yyyy"), room.RoomName, TicketShow.GetTimes(ticket.block), room.Id));
                     }
                 }
 
-                if (!found)
-                {
-                    items.Add(new TicketShow(date.ToString("dd.MM.yyyy"), room.RoomName, date.ToString("HH:mm")));
-                }
+                ViewBag.items = items;
+                return View();
             }
-
-            ViewBag.items = items;
-            return View();
+            return BadRequest("deine Angaben sind nicht möglich");
         }
 
         [HttpPost]
-        public IActionResult BookWithTicket(Ticket ticket)
+        public IActionResult BookWithTicket(TicketShow ticket)
         {
-            var addTicket = new Ticket(ticket.room, User.Identity.Name, new DateTime(ticket.date.Year, ticket.date.Month, ticket.date.Day), ticket.block);
-            _context.Tickets.Add(addTicket);
-            _context.SaveChanges();
+            Ticket addTicket = null;
+            foreach (var item in _context.Rooms.ToList())
+            {
+                if (ticket.Room == item.RoomName)
+                {
+                    addTicket = new Ticket(item.Id, User.Identity.Name, ticket.getDate(), ticket.getBlock());
+                }
+            }
 
             Ticket newTicket = null;
 
-            var found = false;
-            foreach (var item in _context.Ticktes.ToList())
+            if (addTicket != null)
             {
-                if (addTicket.same(item))
+                var found = false;
+                foreach (var item in _context.Ticktes.ToList())
                 {
-                    found = true;
-                    break;
+                    if (addTicket.same(item))
+                    {
+                        found = true;
+                        break;
+               
                 }
             }
 
             if (!found)
             {
+                _context.Tickets.Add(addTicket);
+                _context.SaveChanges();
+
                 foreach (var item in _context.Ticktes.ToList())
                 {
                     if (addTicket.compare(item))
@@ -423,16 +439,12 @@ namespace WebApp.Controllers
                     }
                 }
 
-                foreach (var item in _context.Days.ToList())
-                {
-                    if (newTicket.room == item.Room)
-                    {
+                
                         Ticket.EditCreateDay(_context, newTicket);
-                    }
                 }
             }
 
-            return View("räume");
+            return RedirectToAction("räume");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

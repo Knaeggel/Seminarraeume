@@ -6,7 +6,6 @@
         public string sDate { get; set; }
         public string Room { get; set; }
         public string times { get; set; }
-
         public bool overbooked { get; set; }
         public int id { get; set; }
 
@@ -19,11 +18,17 @@
             this.id = id;
         }
 
-        public TicketShow(string sDate, string room, string time)
+        public TicketShow(string sDate, string room, string time, int id)
         {
             this.sDate = sDate;
             this.Room = room;
             this.times = time;
+            this.id = id;
+        }
+
+        public TicketShow()
+        {
+
         }
 
         public static string GetTimes(int block)
@@ -110,6 +115,11 @@
             }
 
             return ret;
+        }
+
+        public DateTime getDate()
+        {
+            return DateTime.Parse(sDate);
         }
     }
 }
