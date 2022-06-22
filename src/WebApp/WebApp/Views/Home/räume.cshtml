@@ -49,6 +49,32 @@
                     </div>
                 </div>
             </div>
+
+            <form asp-action="DateSearch">
+                <div class="card">
+                    <!--
+                    <div class="card-header">
+                        <h1>Suche nach einem freien Block</h1>
+                    </div>
+                    -->
+
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="inputDate">Datum</label>
+                            <input type="date" id="inputDate" class="form-control" asp-route-date=""/>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="inputNumber">block</label>
+                            <input type="number" id="inputNumber" class="form-control" asp-route-block=""/>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Suchen</button>
+                    </div>
+                </div>
+            </form>
         </div>
 
         <div class="col">

@@ -362,7 +362,7 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult DateSearch(DateTime date)
+        public IActionResult DateSearch(DateTime date, int block)
         {
             List<TicketShow> items = new List<TicketShow>();
 
