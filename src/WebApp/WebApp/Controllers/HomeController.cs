@@ -380,7 +380,7 @@ namespace WebApp.Controllers
                             var ticketid = day.getTicketIdByDate(date);
                             if (ticketid == 0)
                             {
-                                items.Add(new TicketShow(date.ToString("dd.MM.yyyy"), room.RoomName, TicketShow.GetTimes(ticket.block), room.Id));
+                                items.Add(new TicketShow(date.ToString("dd.MM.yyyy"), room.RoomName, TicketShow.GetTimes(ticket.block)));
                             }
                             found = true;
                         }
@@ -388,11 +388,12 @@ namespace WebApp.Controllers
 
                     if (!found)
                     {
-                        items.Add(new TicketShow(date.ToString("dd.MM.yyyy"), room.RoomName, TicketShow.GetTimes(ticket.block), room.Id));
+                        items.Add(new TicketShow(date.ToString("dd.MM.yyyy"), room.RoomName, TicketShow.GetTimes(ticket.block)));
                     }
                 }
 
                 ViewBag.items = items;
+                ViewBag.rooms = _context.Rooms.ToList();
                 return View();
             }
             return BadRequest("deine Angaben sind nicht möglich");
