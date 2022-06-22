@@ -347,6 +347,10 @@ namespace WebApp.Controllers
                 //_context.Tickets.Remove(tickedInDb);
                 tickedInDb.overbooked = true;
                 _context.Tickets.Update(tickedInDb);
+                if (day != null)
+                {
+                    _context.Days.Update(day);
+                }
 
                 _context.SaveChanges();
             }
@@ -387,6 +391,48 @@ namespace WebApp.Controllers
 
             ViewBag.items = items;
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult BookWithTicket(Ticket ticket)
+        {
+            var addTicket = new Ticket(ticket.room, User.Identity.Name, new DateTime(ticket.date.Year, ticket.date.Month, ticket.date.Day), ticket.block);
+            _context.Tickets.Add(addTicket);
+            _context.SaveChanges();
+
+            Ticket newTicket = null;
+
+            var found = false;
+            foreach (var item in _context.Ticktes.ToList())
+            {
+                if (addTicket.same(item))
+                {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                foreach (var item in _context.Ticktes.ToList())
+                {
+                    if (addTicket.compare(item))
+                    {
+                        newTicket = item;
+                        break;
+                    }
+                }
+
+                foreach (var item in _context.Days.ToList())
+                {
+                    if (newTicket.room == item.Room)
+                    {
+                        Ticket.EditCreateDay(_context, newTicket);
+                    }
+                }
+            }
+
+            return View("räume");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
