@@ -356,8 +356,23 @@ namespace WebApp.Controllers
             }
             return RedirectToAction("booked");
         }
-        
 
+        [HttpPost]
+        public async Task<IActionResult> SearchByDate(DateTime date)
+        {
+            List<TicketShow> items = new List<TicketShow>();
+
+            foreach (var room in _context.Rooms.ToList())
+            {
+                var refDay = DateTime.Now;
+                foreach (var day in _context.Days.ToList())
+                {
+
+                }
+            }
+            
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
