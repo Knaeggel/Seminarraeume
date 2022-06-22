@@ -19,6 +19,13 @@
             this.id = id;
         }
 
+        public TicketShow(string sDate, string room, string time)
+        {
+            this.sDate = sDate;
+            this.Room = room;
+            this.times = time;
+        }
+
         public static string GetTimes(int block)
         {
             string ret = "";

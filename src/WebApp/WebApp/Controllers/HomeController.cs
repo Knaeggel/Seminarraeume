@@ -358,19 +358,34 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SearchByDate(DateTime date)
+        public IActionResult DateSearch(DateTime date)
         {
             List<TicketShow> items = new List<TicketShow>();
 
             foreach (var room in _context.Rooms.ToList())
             {
-                var refDay = DateTime.Now;
+                var found = false;
+                var refDay = new DateTime(date.Year, date.Month, date.Day);
                 foreach (var day in _context.Days.ToList())
                 {
+                    if (day.date == refDay && day.Room == room.Id)
+                    {
+                        var ticketid = day.getTicketIdByDate(date);
+                        if (ticketid == 0)
+                        {
+                            items.Add(new TicketShow(date.ToString("dd.MM.yyyy"), room.RoomName, date.ToString("HH:mm")));
+                        }
+                        found = true;
+                    }
+                }
 
+                if (!found)
+                {
+                    items.Add(new TicketShow(date.ToString("dd.MM.yyyy"), room.RoomName, date.ToString("HH:mm")));
                 }
             }
-            
+
+            ViewBag.items = items;
             return View();
         }
 
