@@ -22,7 +22,7 @@
                 ret = false;
             }
 
-            if (paras.roomnumber != this.RoomName.Substring(1, paras.roomnumber.ToString().Length))
+            if (paras.roomnumber != null && paras.roomnumber != this.RoomName.Substring(1, paras.roomnumber.ToString().Length))
             {
                 ret = false;
             }
@@ -32,7 +32,7 @@
                 ret = false;
             }
 
-            if (paras.room.KindOfRoom != "All" && this.KindOfRoom != paras.room.KindOfRoom)
+            if (paras.room.KindOfRoom != "all" && this.KindOfRoom != paras.room.KindOfRoom)
             {
                 ret = false;
             }

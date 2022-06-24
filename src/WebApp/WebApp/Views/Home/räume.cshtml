@@ -16,8 +16,8 @@
                         <!--Search-->
                     <div class="card-body">
                         <div class="form-group">
-                            <label for="Building">Gebäude</label>
-                            <select id="Building" name="Building" class="form-select" asp-for="building" size="1" aria-label="">
+                            <label>Gebäude</label>
+                            <select id="Building" class="form-select" asp-for="building" size="1" aria-label="">
                                 <option value="all" selected>All</option>
                                 <option value="A">A</option>
                                 <option value="B">B</option>
@@ -28,18 +28,18 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="room">Raumnummer</label>
-                            <input id="RoomName" type="text" name="room" class="room form-control" asp-for="roomnumber">
+                            <label>Raumnummer</label>
+                            <input id="RoomName" type="text" class="room form-control" asp-for="roomnumber">
                         </div>
 
                         <div class="form-group">
-                            <label for="seats">Anzahl Sitzplätze</label>
-                            <input id="RoomSize" type="number" name="seats" class="seats form-control" asp-for="room.RoomSize">
+                            <label>Anzahl Sitzplätze</label>
+                            <input id="RoomSize" type="number" class="seats form-control" asp-for="room.RoomSize">
                         </div>
 
                         <div class="form-group">
-                            <label for="whatkindofroom">Raum Typ</label>
-                            <select id="Type" name="whatkindofroom" class="form-select" asp-for="room.KindOfRoom" size="1" aria-label="">
+                            <label>Raum Typ</label>
+                            <select id="Type" class="form-select" asp-for="room.KindOfRoom" size="1" aria-label="">
                                 <option value="all" selected>All</option>
                                 <option value="PC-Raum">PC-Raum</option>
                                 <option value="Vorlesungssaal">Vorlesungssaal</option>
@@ -48,13 +48,22 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="inputDate">Datum</label>
-                            <input type="date" name="inputDate" class="form-control" asp-for="ticket.date" min="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.AddDays(14).ToString("yyyy-MM-dd")" required/>
+                            <label>Datum</label>
+                            <input type="date" class="form-control" asp-for="ticket.date" min="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.AddDays(14).ToString("yyyy-MM-dd")" required/>
                         </div>
                         
                         <div class="form-group">
-                            <label for="inputNumber">block</label>
-                            <input type="number" name="inputNumber" class="form-control" asp-for="ticket.block" min="1" max="8" required/>
+                            <label>block</label>
+                            <select id="Building" class="form-select" asp-for="ticket.block" size="1" required>
+                                <option value="1">@TicketShow.GetTimes(1)</option>
+                                <option value="2">@TicketShow.GetTimes(2)</option>
+                                <option value="3">@TicketShow.GetTimes(3)</option>
+                                <option value="4">@TicketShow.GetTimes(4)</option>
+                                <option value="5">@TicketShow.GetTimes(5)</option>
+                                <option value="6">@TicketShow.GetTimes(6)</option>
+                                <option value="7">@TicketShow.GetTimes(7)</option>
+                                <option value="8">@TicketShow.GetTimes(8)</option>
+                            </select>
                         </div>
                     </div>
                     <div class="card-footer">
