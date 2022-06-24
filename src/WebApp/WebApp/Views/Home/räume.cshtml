@@ -7,19 +7,17 @@
 
 <div class="homeSite container">
     <div class="row">
-        
-
-        <form asp-action="DateSearch">
-            <div class="col">
+        <div class="col">
+            <form asp-action="DateSearch">
                 <div class="search card">
                     <div class="card-header">
                         <h1>Suche</h1>
                     </div>
-                      <!--Search-->
+                        <!--Search-->
                     <div class="card-body">
                         <div class="form-group">
                             <label for="Building">Gebäude</label>
-                            <select id="Building" name="Building" class="form-select" asp-for="Building" size="1" aria-label="">
+                            <select id="Building" name="Building" class="form-select" asp-for="building" size="1" aria-label="">
                                 <option value="all" selected>All</option>
                                 <option value="A">A</option>
                                 <option value="B">B</option>
@@ -31,12 +29,12 @@
 
                         <div class="form-group">
                             <label for="room">Raumnummer</label>
-                            <input id="RoomName" type="text" name="room" class="room form-control" asp-for="Roomnumber" required>
+                            <input id="RoomName" type="text" name="room" class="room form-control" asp-for="roomnumber">
                         </div>
 
                         <div class="form-group">
                             <label for="seats">Anzahl Sitzplätze</label>
-                            <input id="RoomSize" type="text" name="seats" class="seats form-control" asp-for="room.RoomSize" required>
+                            <input id="RoomSize" type="number" name="seats" class="seats form-control" asp-for="room.RoomSize">
                         </div>
 
                         <div class="form-group">
@@ -49,27 +47,16 @@
                                 <option value="Labor">Labor</option>
                             </select>
                         </div>
-                    </div>
-                </div>
-                <div class="card">
-                    <!--
-                    <div class="card-header">
-                        <h1>Suche nach einem freien Block</h1>
-                    </div>
-                    -->
-
-                    <div class="card-body">
                         <div class="form-group">
                             <label for="inputDate">Datum</label>
-                            <input type="date" id="inputDate" class="form-control" asp-for="ticket.date" min="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.AddDays(14).ToString("yyyy-MM-dd")"/>
+                            <input type="date" name="inputDate" class="form-control" asp-for="ticket.date" min="@DateTime.Now.ToString("yyyy-MM-dd")" max="@DateTime.Now.AddDays(14).ToString("yyyy-MM-dd")" required/>
                         </div>
                         
                         <div class="form-group">
                             <label for="inputNumber">block</label>
-                            <input type="number" id="inputNumber" class="form-control" asp-for="ticket.block" min="1" max="8"/>
+                            <input type="number" name="inputNumber" class="form-control" asp-for="ticket.block" min="1" max="8" required/>
                         </div>
                     </div>
-
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">Suchen</button>
                     </div>
@@ -83,9 +70,7 @@
             //they have to be in a form, because i couldnt hide the buttens by them self
             foreach (var item in ViewBag.Rooms)
             {
-                    
-                        <button type="button" class="roomButton btn btn-primary" roomsize="@item.RoomSize" roomtype="@item.KindOfRoom" >@item.RoomName</button>
-                    
+                <button type="button" class="roomButton btn btn-primary" roomsize="@item.RoomSize" roomtype="@item.KindOfRoom" >@item.RoomName</button>
             }
         }
         </div>

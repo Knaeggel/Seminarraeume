@@ -13,48 +13,26 @@
         //useless
         public bool Status { get; set; }
 
-        public bool validateRoom(Room Paras)
+        public bool validateRoom(SearchValues paras)
         {
             var ret = true;
 
-            if (this.RoomName != Paras.RoomName && Paras.RoomName.Length > 0)
-            {
-                if (!Paras.RoomName.Contains("All"))
-                {
-                    char building = Paras.RoomName.ElementAt(0);
-                    char thisbuilding = RoomName.ElementAt(0);
-                    if (thisbuilding != building)
-                    {
-                        ret = false;
-                    }
-
-
-                    string Number = Paras.RoomName.Substring(1, Paras.RoomName.Length - 1);
-                    string thisNumber = RoomName.Substring(1, Paras.RoomName.Length - 1);
-
-                    if (thisNumber != Number)
-                    {
-                        ret = false;
-                    }
-                }
-                else
-                {
-                    string Number = Paras.RoomName.Substring(3, Paras.RoomName.Length - 3);
-                    string thisNumber = RoomName.Substring(1, Paras.RoomName.Length - 3);
-
-                    if (thisNumber != Number)
-                    {
-                        ret = false;
-                    }
-                }
-            }
-
-            if (this.RoomSize < Paras.RoomSize)
+            if (paras.building != "all" && paras.building.ElementAt(0) != this.RoomName.ElementAt(0))
             {
                 ret = false;
             }
 
-            if (Paras.KindOfRoom != "All" && this.KindOfRoom != Paras.KindOfRoom)
+            if (paras.roomnumber != this.RoomName.Substring(1, paras.roomnumber.ToString().Length))
+            {
+                ret = false;
+            }
+
+            if (this.RoomSize < paras.room.RoomSize)
+            {
+                ret = false;
+            }
+
+            if (paras.room.KindOfRoom != "All" && this.KindOfRoom != paras.room.KindOfRoom)
             {
                 ret = false;
             }

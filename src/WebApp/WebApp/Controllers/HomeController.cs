@@ -371,7 +371,7 @@ namespace WebApp.Controllers
 
                 foreach (var room in _context.Rooms.ToList())
                 {
-                    if (room.validateRoom(SearchParas.room))
+                    if (room.validateRoom(SearchParas))
                     {
                         var found = false;
                         var refDay = new DateTime(date.Year, date.Month, date.Day);
