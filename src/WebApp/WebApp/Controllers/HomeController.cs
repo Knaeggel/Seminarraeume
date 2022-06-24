@@ -362,33 +362,36 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult DateSearch(Ticket ticket)
+        public IActionResult DateSearch(SearchValues SearchParas)
         {
-            if (ticket.date != null && ticket.block != 0)
+            if (SearchParas.ticket.date != null && SearchParas.ticket.block != 0)
             {
-                DateTime date = ticket.getTicketTime().AddMinutes(-90);
+                DateTime date = SearchParas.ticket.getTicketTime().AddMinutes(-90);
                 List<TicketShow> items = new List<TicketShow>();
 
                 foreach (var room in _context.Rooms.ToList())
                 {
-                    var found = false;
-                    var refDay = new DateTime(date.Year, date.Month, date.Day);
-                    foreach (var day in _context.Days.ToList())
+                    if (room.validateRoom(SearchParas.room))
                     {
-                        if (day.date == refDay && day.Room == room.Id)
+                        var found = false;
+                        var refDay = new DateTime(date.Year, date.Month, date.Day);
+                        foreach (var day in _context.Days.ToList())
                         {
-                            var ticketid = day.getTicketIdByDate(date);
-                            if (ticketid == 0)
+                            if (day.date == refDay && day.Room == room.Id)
                             {
-                                items.Add(new TicketShow(date.ToString("dd.MM.yyyy"), room.RoomName, TicketShow.GetTimes(ticket.block)));
+                                var ticketid = day.getTicketIdByDate(date);
+                                if (ticketid == 0)
+                                {
+                                    items.Add(new TicketShow(date.ToString("dd.MM.yyyy"), room.RoomName, TicketShow.GetTimes(SearchParas.ticket.block)));
+                                }
+                                found = true;
                             }
-                            found = true;
                         }
-                    }
 
-                    if (!found)
-                    {
-                        items.Add(new TicketShow(date.ToString("dd.MM.yyyy"), room.RoomName, TicketShow.GetTimes(ticket.block)));
+                        if (!found)
+                        {
+                            items.Add(new TicketShow(date.ToString("dd.MM.yyyy"), room.RoomName, TicketShow.GetTimes(SearchParas.ticket.block)));
+                        }
                     }
                 }
 
