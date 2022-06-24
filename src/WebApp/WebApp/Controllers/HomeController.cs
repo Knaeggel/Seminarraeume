@@ -364,7 +364,7 @@ namespace WebApp.Controllers
         [HttpPost]
         public IActionResult DateSearch(SearchValues SearchParas)
         {
-            if (SearchParas.ticket.date != null && SearchParas.ticket.block != 0)
+            if (SearchParas != null && SearchParas.ticket.date != null && SearchParas.ticket.block != 0)
             {
                 DateTime date = SearchParas.ticket.getTicketTime().AddMinutes(-90);
                 List<TicketShow> items = new List<TicketShow>();
@@ -402,52 +402,59 @@ namespace WebApp.Controllers
             return BadRequest("deine Angaben sind nicht möglich");
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult BookWithTicket(TicketShow ticket)
         {
-            Ticket addTicket = null;
-            foreach (var item in _context.Rooms.ToList())
+            if (ticket != null)
             {
-                if (ticket.Room == item.RoomName)
-                {
-                    addTicket = new Ticket(item.Id, User.Identity.Name, ticket.getDate(), ticket.getBlock());
-                }
-            }
+                bool res = false;
 
-            Ticket newTicket = null;
-
-            if (addTicket != null)
-            {
-                var found = false;
-                foreach (var item in _context.Ticktes.ToList())
+                Ticket addTicket = null;
+                foreach (var item in _context.Rooms.ToList())
                 {
-                    if (addTicket.same(item))
+                    if (ticket.Room == item.RoomName)
                     {
-                        found = true;
-                        break;
-               
-                }
-            }
-
-            if (!found)
-            {
-                _context.Tickets.Add(addTicket);
-                _context.SaveChanges();
-
-                foreach (var item in _context.Ticktes.ToList())
-                {
-                    if (addTicket.compare(item))
-                    {
-                        newTicket = item;
-                        break;
+                        addTicket = new Ticket(item.Id, User.Identity.Name, ticket.getDate(), ticket.getBlock());
                     }
                 }
 
-                
-                        Ticket.EditCreateDay(_context, newTicket);
-                }
-            }
+                Ticket newTicket = null;
 
+                if (addTicket != null)
+                {
+                    var found = false;
+                    foreach (var item in _context.Ticktes.ToList())
+                    {
+                        if (addTicket.same(item))
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found)
+                    {
+                        _context.Tickets.Add(addTicket);
+                        _context.SaveChanges();
+
+                        foreach (var item in _context.Ticktes.ToList())
+                        {
+                            if (addTicket.compare(item))
+                            {
+                                newTicket = item;
+                                break;
+                            }
+                        }
+
+                        Ticket.EditCreateDay(_context, newTicket);
+                        res = true;
+                    }
+                }
+
+                ViewBag.response = res;
+                return View("Response");
+            }
             return RedirectToAction("räume");
         }
 

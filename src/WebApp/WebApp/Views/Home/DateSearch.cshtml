@@ -35,8 +35,16 @@
                                         break;
                                     }
                                 }
+
+                                if (User.Identity.Name != null)
+                                {
+                                    <td scope="row"><button class="btn btn-primary" type="submit">Buchen</button></td>
+                                }
+                                else
+                                {
+                                    <td scope="row"><button class="btn btn-primary" type="submit" disabled>Buchen</button></td>
+                                }
                             }
-                            <td scope="row"><button class="btn btn-primary" type="submit">Buchen</button></td>
                         </form>
                     </tr>
                     i++;
