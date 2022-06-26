@@ -6,7 +6,6 @@
         public string sDate { get; set; }
         public string Room { get; set; }
         public string times { get; set; }
-
         public bool overbooked { get; set; }
         public int id { get; set; }
 
@@ -17,6 +16,19 @@
             this.times = GetTimes(block);
             overbooked = Overbooked;
             this.id = id;
+        }
+
+        public TicketShow(string sDate, string room, string time)
+        {
+            this.sDate = sDate;
+            this.Room = room;
+            this.times = time;
+            this.id = id;
+        }
+
+        public TicketShow()
+        {
+
         }
 
         public static string GetTimes(int block)
@@ -67,6 +79,47 @@
             }
 
             return ret;
+        }
+        public int getBlock()
+        {
+            var ret = 0;
+            switch (times)
+            {
+                case "08:00 - 09:30":
+                    ret = 1;
+                    break;
+                case "09:45 - 11:15":
+                    ret = 2;
+                    break;
+                case "11:35 - 13:05":
+                    ret = 3;
+                    break;
+                case "14:00 - 15:30":
+                    ret = 4;
+                    break;
+                case "15:45 - 17:15":
+                    ret = 5;
+                    break;
+                case "17:30 - 19:00":
+                    ret = 6;
+                    break;
+                case "19:15 - 20:45":
+                    ret = 7;
+                    break;
+                case "21:00 - 22:30":
+                    ret = 8;
+                    break;
+
+                default:
+                    break;
+            }
+
+            return ret;
+        }
+
+        public DateTime getDate()
+        {
+            return DateTime.Parse(sDate);
         }
     }
 }

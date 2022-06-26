@@ -31,7 +31,7 @@ namespace WebApp.Feature
             {
                 From = FromEmail,
                 Subject = "Raum ueberbucht",
-                Body = "Dein Raum wurde überbucht von einer Person mit höherer Priorität. Raum: " + con + " Uhrzeit: " + ticket.getTicketTime().ToString("HH:mm:ss") + " am " + ticket.date.ToString("dd.MM.yyyy")
+                Body = "Dein Raum wurde überbucht von einer Person mit höherer Priorität. Raum: " + con + " Uhrzeit: " + TicketShow.GetTimes(ticket.block) + " am " + ticket.date.ToString("dd.MM.yyyy")
             };
             messageToSend.To.Add(ToEmail);
             try

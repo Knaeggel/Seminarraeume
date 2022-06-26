@@ -334,7 +334,7 @@ namespace WebApp.Controllers
                     var ticket = _context.Tickets.Find(ticketid);
                     if(ticket != null)
                     {
-                        if (ticket.compare(tickedInDb))
+                        if (tickedInDb.user == User.Identity.Name)
                         {
                             day.setBlock(tickedInDb.block, 0);
                         }
@@ -347,6 +347,10 @@ namespace WebApp.Controllers
                 //_context.Tickets.Remove(tickedInDb);
                 tickedInDb.overbooked = true;
                 _context.Tickets.Update(tickedInDb);
+                if (day != null)
+                {
+                    _context.Days.Update(day);
+                }
 
                 _context.SaveChanges();
             }
@@ -356,8 +360,103 @@ namespace WebApp.Controllers
             }
             return RedirectToAction("booked");
         }
-        
 
+        [HttpPost]
+        public IActionResult DateSearch(SearchValues SearchParas)
+        {
+            if (SearchParas != null && SearchParas.ticket.date != null && SearchParas.ticket.block != 0)
+            {
+                DateTime date = SearchParas.ticket.getTicketTime().AddMinutes(-90);
+                List<TicketShow> items = new List<TicketShow>();
+
+                foreach (var room in _context.Rooms.ToList())
+                {
+                    if (room.validateRoom(SearchParas))
+                    {
+                        var found = false;
+                        var refDay = new DateTime(date.Year, date.Month, date.Day);
+                        foreach (var day in _context.Days.ToList())
+                        {
+                            if (day.date == refDay && day.Room == room.Id)
+                            {
+                                var ticketid = day.getTicketIdByDate(date);
+                                if (ticketid == 0)
+                                {
+                                    items.Add(new TicketShow(date.ToString("dd.MM.yyyy"), room.RoomName, TicketShow.GetTimes(SearchParas.ticket.block)));
+                                }
+                                found = true;
+                            }
+                        }
+
+                        if (!found)
+                        {
+                            items.Add(new TicketShow(date.ToString("dd.MM.yyyy"), room.RoomName, TicketShow.GetTimes(SearchParas.ticket.block)));
+                        }
+                    }
+                }
+
+                ViewBag.items = items;
+                ViewBag.rooms = _context.Rooms.ToList();
+                return View();
+            }
+            return BadRequest("deine Angaben sind nicht möglich");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult BookWithTicket(TicketShow ticket)
+        {
+            if (ticket != null)
+            {
+                bool res = false;
+
+                Ticket addTicket = null;
+                foreach (var item in _context.Rooms.ToList())
+                {
+                    if (ticket.Room == item.RoomName)
+                    {
+                        addTicket = new Ticket(item.Id, User.Identity.Name, ticket.getDate(), ticket.getBlock());
+                    }
+                }
+
+                Ticket newTicket = null;
+
+                if (addTicket != null)
+                {
+                    var found = false;
+                    foreach (var item in _context.Ticktes.ToList())
+                    {
+                        if (addTicket.same(item))
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found)
+                    {
+                        _context.Tickets.Add(addTicket);
+                        _context.SaveChanges();
+
+                        foreach (var item in _context.Ticktes.ToList())
+                        {
+                            if (addTicket.compare(item))
+                            {
+                                newTicket = item;
+                                break;
+                            }
+                        }
+
+                        Ticket.EditCreateDay(_context, newTicket);
+                        res = true;
+                    }
+                }
+
+                ViewBag.response = res;
+                return View("Response");
+            }
+            return RedirectToAction("räume");
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

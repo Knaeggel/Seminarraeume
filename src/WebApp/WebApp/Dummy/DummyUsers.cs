@@ -12,26 +12,6 @@ namespace WebApp.Dummy
         public async Task FillDummy(UserManager<IdentityUser> userManager)
         {
             //dein Name fehlt
-            string mail = "nec.oezcay@gmail.com";
-            var tryUser = await userManager.FindByEmailAsync(mail);
-
-            if (tryUser != null)
-            {
-                await userManager.AddToRoleAsync(tryUser, "Student");
-            }
-            else
-            {
-                var newUser = new IdentityUser()
-                {
-                    UserName = mail,
-                    Email = mail
-                };
-                await userManager.CreateAsync(newUser, "Test123.");
-
-                newUser = await userManager.FindByEmailAsync(mail);
-                await userManager.AddToRoleAsync(newUser, "student");
-            }
-
             for (int i = 1; i < 51; i++)
             {
                 var user = await userManager.FindByNameAsync("User" + i + "@proOne.de");

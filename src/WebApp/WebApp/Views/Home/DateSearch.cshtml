@@ -1,0 +1,61 @@
+﻿@model TicketShow
+
+<div class="card">
+    <div class="card-header">
+
+    </div>
+
+    <div class="card-body">
+        <table class="myrooms table table-dark table-hover table-sm">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Raum</th>
+                <th scope="col">Zeit</th>
+                <th scope="col">Typ</th>
+                <th scope="col">Größe</th>
+                <th scope="col">Action</th>
+            </tr>
+
+            @{
+                int i = 1;
+                foreach(var item in ViewBag.items)
+                {
+                    <tr>
+                        <form asp-action="BookWithTicket">
+                            <td scope="row"><input type="text" asp-for="sDate" value="@item.sDate" hidden /> @i</td>
+                            <td scope="row"><input type="text" asp-for="Room" value="@item.Room" hidden /> @item.Room</td>
+                            <td scope="row"><input type="text" asp-for="times" value="@item.times" hidden />@item.times</td>
+                            @{
+                                foreach(var room in ViewBag.rooms)
+                                {
+                                    if (room.RoomName == item.Room)
+                                    {
+                                        <td scope="row">@room.KindOfRoom</td>
+                                        <td scope="row">@room.RoomSize</td>
+                                        break;
+                                    }
+                                }
+
+                                if (User.Identity.Name != null)
+                                {
+                                    <td scope="row"><button class="btn btn-primary" type="submit">Buchen</button></td>
+                                }
+                                else
+                                {
+                                    <td scope="row"><button class="btn btn-primary" type="submit" disabled>Buchen</button></td>
+                                }
+                            }
+                        </form>
+                    </tr>
+                    i++;
+                }
+            }
+        </table>
+    </div>
+
+    <div class="card-footer">
+        <form asp-action="räume">
+            <button class="btn btn-primary" type="submit">Home</button>
+        </form>
+    </div>
+</div>
