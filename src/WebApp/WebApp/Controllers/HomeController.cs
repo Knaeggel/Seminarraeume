@@ -455,6 +455,13 @@ namespace WebApp.Controllers
             return RedirectToAction("räume");
         }
 
+        public IActionResult fillTickets()
+        {
+            DummyTickets tickets = new DummyTickets(_context, userManager);
+
+            return RedirectToAction("räume");
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
