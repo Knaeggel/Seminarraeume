@@ -22,7 +22,14 @@
                 ret = false;
             }
 
-            if (paras.roomnumber != null && paras.roomnumber != this.RoomName.Substring(1, paras.roomnumber.ToString().Length))
+            if (paras.roomnumber != null && paras.roomnumber.Length < this.RoomName.Length)
+            {
+                if ( paras.roomnumber != this.RoomName.Substring(1, paras.roomnumber.ToString().Length))
+                {
+                    ret = false;
+                }
+            }
+            else
             {
                 ret = false;
             }
