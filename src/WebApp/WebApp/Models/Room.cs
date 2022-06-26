@@ -12,5 +12,33 @@
         public int BlockID { get; set; }
         //useless
         public bool Status { get; set; }
+
+        public bool validateRoom(SearchValues paras)
+        {
+            var ret = true;
+
+            if (paras.building != "all" && paras.building.ElementAt(0) != this.RoomName.ElementAt(0))
+            {
+                ret = false;
+            }
+
+            if (paras.roomnumber != null && paras.roomnumber != this.RoomName.Substring(1, paras.roomnumber.ToString().Length))
+            {
+                ret = false;
+            }
+
+            if (this.RoomSize < paras.room.RoomSize)
+            {
+                ret = false;
+            }
+
+            if (paras.room.KindOfRoom != "all" && this.KindOfRoom != paras.room.KindOfRoom)
+            {
+                ret = false;
+            }
+
+
+            return ret;
+        }
     }
 }

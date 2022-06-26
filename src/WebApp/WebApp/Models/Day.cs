@@ -81,5 +81,32 @@
             }
             return id;
         }
+
+        public int getTicketIdByDate(DateTime date)
+        {
+            int id = 0;
+
+            switch (date.ToString("HH:mm"))
+            {
+                case "08:00":
+                    id = Block1; break;
+                case "09:45":
+                    id = Block2; break;
+                case "11:35":
+                    id = Block3; break;
+                case "14:00":
+                    id = Block4; break;
+                case "15:45":
+                    id = Block5; break;
+                case "17:30":
+                    id = Block6; break;
+                case "19:15":
+                    id = Block7; break;
+                case "21:00":
+                    id = Block8; break;
+            }
+
+            return id;
+        }
     }
 }
