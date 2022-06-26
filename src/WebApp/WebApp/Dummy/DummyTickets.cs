@@ -14,7 +14,7 @@ namespace WebApp.Dummy
         public async Task FillDummy(ApplicationDbContext dbSet, UserManager<IdentityUser> userMgr)
         {
 
-            if (dbSet.Tickets.ToList().Count < 3000) { 
+     
             var random = new Random();
 
                 for (int j = 0; j < 14; j++)
@@ -57,7 +57,7 @@ namespace WebApp.Dummy
                                 }
                             }
                         }
-                    }
+                    
 
                     for (int i = 0; i < 15; i++)
                     {
