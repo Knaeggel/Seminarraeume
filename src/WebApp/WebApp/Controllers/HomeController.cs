@@ -35,10 +35,7 @@ namespace WebApp.Controllers
                 var dummyRoles = new DummyRoles(roleMgr);
                 var dummyUsers = new DummyUsers(userMgr);
                 var DummyRooms = new DummyRooms(con);
-                if (false)
-                {
-                    var dummyTickets = new DummyTickets(con, userMgr);
-                }
+             //   var dummyTickets = new DummyTickets(con, userMgr);
                 
             }
 
