@@ -13,9 +13,6 @@ Tag. Räume können unter einer bestimmten Priorisierung gebucht werden. Profess
 Tutoren, welche Vorrang vor Studenten haben. In der gleichen Reihenfolge können auch die Räume überbucht 
 werden. Vom Benutzer gebuchte Räume können eingesehen werden. 
 
-Abnahmekriterien: (Lesbarkeit okay bei 95% der Nutzer sollen nach 3 Monaten zufrieden sein, 2 Jahre 
-Fehlerfrei) 
-
 Abnahmekriterien: (Lesbarkeit okay bei 95% der Nutzer sollen nach 3 Monaten zufrieden sein, 2 Jahre Fehlerfrei) 
 
 Endergebnisse: Webanwendung mit einer Datenbank und einer online Einsicht.
