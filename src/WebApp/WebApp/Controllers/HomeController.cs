@@ -21,8 +21,7 @@ namespace WebApp.Controllers
         private Room selectedRoom;
         UserManager<IdentityUser> userManager;
 
-        SemaphoreSlim sem = new SemaphoreSlim(1);
-        private static bool lastHope = true;
+        public static SemaphoreSlim sem = new SemaphoreSlim(1);
 
         public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleMgr, UserManager<IdentityUser> userMgr, ApplicationDbContext con)
         {
@@ -199,13 +198,9 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatTicketsAsync(BookingClass selected)
+        public IActionResult CreatTicketsAsync(BookingClass selected)
         {
-            while (!lastHope)
-            {
-            }
-
-            lastHope = false;
+            sem.Wait();
             //the method called when you click Save (speichern)
             List<Ticket> newTickets = new List<Ticket>();
             Ticket existingTicket = null;
@@ -268,10 +263,19 @@ namespace WebApp.Controllers
                 {
                     IdentityUser user = null;
 
-                    user = await userManager.FindByNameAsync(User.Identity.Name);
-                    var role = await RoleManagerP.getRole(userManager, user);
+                    var taskUser = userManager.FindByNameAsync(User.Identity.Name);
+                    taskUser.Wait();
+                    user = taskUser.Result;
 
-                    if (await existingTicket.isOverbookable(userManager, role))
+                    var taskRole = RoleManagerP.getRole(userManager, user);
+                    taskRole.Wait();
+                    var role = taskRole.Result;
+
+                    var taskOverbookable = existingTicket.isOverbookable(userManager, role);
+                    taskOverbookable.Wait();
+                    var Overbookable = taskOverbookable.Result;
+
+                    if (Overbookable)
                     {
                         existingTicket.overbooked = true;
                         _context.Tickets.Update(existingTicket);
@@ -308,8 +312,9 @@ namespace WebApp.Controllers
                     }
                 }
             }
+
             ViewBag.bookedList = bookedList;
-            lastHope = true;
+            sem.Release();
             return PartialView("bookingResponse");
         }
 
@@ -465,6 +470,22 @@ namespace WebApp.Controllers
         public IActionResult fillTickets()
         {
             DummyTickets tickets = new DummyTickets(_context, userManager);
+
+            return RedirectToAction("räume");
+        }
+        public IActionResult dropTicketsAndDays()
+        {
+            foreach (var item in _context.Tickets.ToList())
+            {
+                _context.Tickets.Remove(item);
+            }
+
+            foreach (var item in _context.Days.ToList())
+            {
+                _context.Days.Remove(item);
+            }
+
+            _context.SaveChanges();
 
             return RedirectToAction("räume");
         }
