@@ -314,6 +314,7 @@ namespace WebApp.Controllers
             }
 
             ViewBag.bookedList = bookedList;
+            sem.Release();
             return PartialView("bookingResponse");
         }
 
