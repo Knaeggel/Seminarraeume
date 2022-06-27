@@ -21,6 +21,8 @@ namespace WebApp.Controllers
         private Room selectedRoom;
         UserManager<IdentityUser> userManager;
 
+        public static SemaphoreSlim sem = new SemaphoreSlim(1);
+
         public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleMgr, UserManager<IdentityUser> userMgr, ApplicationDbContext con)
         {
             _logger = logger;
@@ -30,12 +32,12 @@ namespace WebApp.Controllers
             if (first == true)
             {
                 //erstellen der dummy Daten
-                
+
                 var dummyRoles = new DummyRoles(roleMgr);
                 var dummyUsers = new DummyUsers(userMgr);
                 var DummyRooms = new DummyRooms(con);
-             //   var dummyTickets = new DummyTickets(con, userMgr);
-                
+                //   var dummyTickets = new DummyTickets(con, userMgr);
+
             }
 
 
@@ -173,7 +175,7 @@ namespace WebApp.Controllers
 
             foreach (var item in betterDays)
             {
-                for(int i = 0; i < 8; i++)
+                for (int i = 0; i < 8; i++)
                 {
                     item[i].bookable = "false";
 
@@ -190,14 +192,15 @@ namespace WebApp.Controllers
             ViewBag.Days = betterDays;
             ViewBag.Room = selectedRoom;
 
-            
+
 
             return PartialView("RoomView");
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreatTicketsAsync(BookingClass selected)
+        public IActionResult CreatTicketsAsync(BookingClass selected)
         {
+            sem.Wait();
             //the method called when you click Save (speichern)
             List<Ticket> newTickets = new List<Ticket>();
             Ticket existingTicket = null;
@@ -212,7 +215,7 @@ namespace WebApp.Controllers
                         {
                             if (item.RoomName == selected.room.RoomName)
                             {
-                                newTickets.Add(new Ticket(item.Id, User.Identity.Name, selected.days[i].date, j+1));
+                                newTickets.Add(new Ticket(item.Id, User.Identity.Name, selected.days[i].date, j + 1));
                                 break;
                             }
                         }
@@ -221,7 +224,7 @@ namespace WebApp.Controllers
             }
 
             List<BookingResult> bookedList = new List<BookingResult>();
-            
+
             foreach (var newTicket in newTickets)
             {
                 bool foundTicket = false;
@@ -260,10 +263,19 @@ namespace WebApp.Controllers
                 {
                     IdentityUser user = null;
 
-                    user = await userManager.FindByNameAsync(User.Identity.Name);
-                    var role = await RoleManagerP.getRole(userManager, user);
+                    var taskUser = userManager.FindByNameAsync(User.Identity.Name);
+                    taskUser.Wait();
+                    user = taskUser.Result;
 
-                    if (await existingTicket.isOverbookable(userManager, role))
+                    var taskRole = RoleManagerP.getRole(userManager, user);
+                    taskRole.Wait();
+                    var role = taskRole.Result;
+
+                    var taskOverbookable = existingTicket.isOverbookable(userManager, role);
+                    taskOverbookable.Wait();
+                    var Overbookable = taskOverbookable.Result;
+
+                    if (Overbookable)
                     {
                         existingTicket.overbooked = true;
                         _context.Tickets.Update(existingTicket);
@@ -289,7 +301,7 @@ namespace WebApp.Controllers
                             {
                                 Mail.AutoEmail(existingTicket, existingTicket.getRoomName(_context));
                             }
-                            
+
                         }
 
                     }
@@ -300,24 +312,24 @@ namespace WebApp.Controllers
                     }
                 }
             }
+
             ViewBag.bookedList = bookedList;
             return PartialView("bookingResponse");
         }
 
-        
-        
+
         public IActionResult removeTicket(int id)
         {
 
-            var tickedInDb = _context.Tickets.Find(id);            
-            
-            if(tickedInDb != null)
+            var tickedInDb = _context.Tickets.Find(id);
+
+            if (tickedInDb != null)
             {
                 Day day = null;
 
-                foreach(var item in _context.Days.ToList())
+                foreach (var item in _context.Days.ToList())
                 {
-                    if(item.date == tickedInDb.date && item.Room == tickedInDb.room)
+                    if (item.date == tickedInDb.date && item.Room == tickedInDb.room)
                     {
                         day = item;
                         break;
@@ -328,7 +340,7 @@ namespace WebApp.Controllers
                 {
                     var ticketid = day.getTicketId(tickedInDb.block);
                     var ticket = _context.Tickets.Find(ticketid);
-                    if(ticket != null)
+                    if (ticket != null)
                     {
                         if (tickedInDb.user == User.Identity.Name)
                         {
@@ -457,6 +469,22 @@ namespace WebApp.Controllers
         public IActionResult fillTickets()
         {
             DummyTickets tickets = new DummyTickets(_context, userManager);
+
+            return RedirectToAction("räume");
+        }
+        public IActionResult dropTicketsAndDays()
+        {
+            foreach (var item in _context.Tickets.ToList())
+            {
+                _context.Tickets.Remove(item);
+            }
+
+            foreach (var item in _context.Days.ToList())
+            {
+                _context.Days.Remove(item);
+            }
+
+            _context.SaveChanges();
 
             return RedirectToAction("räume");
         }
