@@ -21,6 +21,8 @@ namespace WebApp.Controllers
         private Room selectedRoom;
         UserManager<IdentityUser> userManager;
 
+        public static SemaphoreSlim sem = new SemaphoreSlim(1);
+
 
         public HomeController(ILogger<HomeController> logger, RoleManager<IdentityRole> roleMgr, UserManager<IdentityUser> userMgr, ApplicationDbContext con)
         {
@@ -199,6 +201,7 @@ namespace WebApp.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatTicketsAsync(BookingClass selected)
         {
+            await sem.WaitAsync();
             //the method called when you click Save (speichern)
             List<Ticket> newTickets = new List<Ticket>();
             Ticket existingTicket = null;
@@ -302,6 +305,7 @@ namespace WebApp.Controllers
                 }
             }
             ViewBag.bookedList = bookedList;
+            sem.Release();
             return PartialView("bookingResponse");
         }
 
