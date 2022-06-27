@@ -35,10 +35,7 @@ namespace WebApp.Controllers
                 var dummyRoles = new DummyRoles(roleMgr);
                 var dummyUsers = new DummyUsers(userMgr);
                 var DummyRooms = new DummyRooms(con);
-                if (false)
-                {
-                    var dummyTickets = new DummyTickets(con, userMgr);
-                }
+             //   var dummyTickets = new DummyTickets(con, userMgr);
                 
             }
 
@@ -455,6 +452,13 @@ namespace WebApp.Controllers
                 ViewBag.response = res;
                 return View("Response");
             }
+            return RedirectToAction("räume");
+        }
+
+        public IActionResult fillTickets()
+        {
+            DummyTickets tickets = new DummyTickets(_context, userManager);
+
             return RedirectToAction("räume");
         }
 
