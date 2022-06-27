@@ -31,7 +31,10 @@
             }
             else
             {
-                ret = false;
+                if (paras.roomnumber != null && paras.roomnumber != "")
+                {
+                    ret = false;
+                }
             }
 
             if (this.RoomSize < paras.room.RoomSize)
